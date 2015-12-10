@@ -1,3 +1,5 @@
+Documentazione Fittizia e Fasulla
+
 USE CASES
 
 0) Carica dal file binario di cache la situazione precedente se esiste.

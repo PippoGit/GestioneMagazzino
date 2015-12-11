@@ -13,20 +13,22 @@ public class ListController extends ListView {
                          new Materiale(3, "Router Netgear 1xaa", "Networking", 1));        
     }
     
-    public void segnalaModifica(int i) {
-        materiali.get(i).setNominativo(materiali.get(i).getNominativo() + " *");
-        
+    public void aggiornaLista() {
         Materiale t = new Materiale();
         materiali.add(t);
-        materiali.remove(t);            
+        materiali.remove(t);    
+    }
+    
+    public void segnalaModifica(int i) {
+        Materiale m = materiali.get(i);     
+        m.setNominativo(m.getNominativo() + " *");
+        aggiornaLista();
     }
     
     public void modificaSalvata(int i) {
-        materiali.get(i).setNominativo(materiali.get(i).getNominativo().substring(0, materiali.get(i).getNominativo().length()-2));
-        
-        Materiale t = new Materiale();
-        materiali.add(t);
-        materiali.remove(t);
+        Materiale m = materiali.get(i);
+        m.setNominativo(m.getNominativo().substring(0, m.getNominativo().length()-2));
+        aggiornaLista();
     }
     
     public ObservableList<Materiale> getMateriali() {

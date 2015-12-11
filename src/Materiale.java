@@ -8,6 +8,7 @@ public class Materiale {
     private Categoria categoria;
     private int disponibilita;
     private ObservableList<Ordine> ordini;
+    
     private boolean cached; //se la lista degli ordini e gia in memoria non la sto a ricaricare perderei le modifiche (trallaltro)
     private boolean modificato;
 

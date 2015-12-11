@@ -1,22 +1,8 @@
+import javafx.geometry.*;
+import javafx.scene.chart.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 
-import javafx.geometry.Insets;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author filipposcotto
- */
 public class ChartController extends VBox {
     private Categoria[] categorie;
     private final BarChart<String, Number> bc;
@@ -33,7 +19,8 @@ public class ChartController extends VBox {
         series = new XYChart.Series();
         series.setName("Disponibilita");
   
-        for (Categoria c : categorie) {
+        for (int i=0; i<categorie.length; i++) {
+            Categoria c = categorie[i];
             series.getData().add(new XYChart.Data<>(c.getDescrizione(), c.getDisponibilita()));
         }
         

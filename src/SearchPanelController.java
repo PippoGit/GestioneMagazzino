@@ -1,7 +1,5 @@
 import java.util.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-
+import javafx.beans.value.*;
 import javafx.geometry.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -23,9 +21,9 @@ public class SearchPanelController extends VBox {
 
         c[0] = new Categoria(0, "Networking");
         c[0].setDisponibilita(1);
-        c[1] = new Categoria(0, "CCTV");
+        c[1] = new Categoria(1, "CCTV");
         c[1].setDisponibilita(0);      
-        c[2] = new Categoria(0, "Telefonia");
+        c[2] = new Categoria(2, "Telefonia");
         c[2].setDisponibilita(2);              
         bind.setListaCategorie(c);
 

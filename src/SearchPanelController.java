@@ -18,10 +18,16 @@ public class SearchPanelController extends VBox {
     
     private void parseCategoriaXML() {
         int num_categorie = 3;
-        String []desc = new String[3];
-        desc[0] = ("Networking");
-        desc[1] = ("CCTV");
-        desc[2] = ("Telefonia");
+        Categoria[] c = new Categoria[num_categorie];        
+
+        c[0] = new Categoria(0, "Networking");
+        c[0].setDisponibilita(12);
+        c[1] = new Categoria(1, "CCTV");
+        c[1].setDisponibilita(9);
+        c[2] = new Categoria(2, "Telefonia");
+        c[2].setDisponibilita(10);
+
+        bind.setListaCategorie(c);
 
         for(int i=0; i<num_categorie; i++) {
             categoria.add(new ToggleButton());
@@ -33,7 +39,7 @@ public class SearchPanelController extends VBox {
             categoria.get(i).setMaxSize(300/num_categorie,53);
             categoria.get(i).setMinSize(300/num_categorie,53);    
             
-            categoria.get(i).setUserData(desc[i]);
+            categoria.get(i).setUserData(c[i].getDescrizione());
         }
         
         containerCategoria.getChildren().addAll(categoria);

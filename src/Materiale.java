@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 public class Materiale {
     private int id;
     private String nominativo;
-    private String categoria;
+    private Categoria categoria;
     private int disponibilita;
     private ObservableList<Ordine> ordini;
     private boolean cached; //se la lista degli ordini e gia in memoria non la sto a ricaricare perderei le modifiche (trallaltro)
@@ -27,8 +27,8 @@ public class Materiale {
         this.nominativo = nominativo;
     }
 
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
+    public void setCategoria(Categoria c) {
+        this.categoria = c;
     }
 
     public int getId() {
@@ -39,7 +39,7 @@ public class Materiale {
         return nominativo;
     }
 
-    public String getCategoria() {
+    public Categoria getCategoria() {
         return categoria;
     }
 
@@ -93,7 +93,7 @@ public class Materiale {
         disponibilita--;
     }
     
-    public Materiale(int i, String n, String c, int d) {
+    public Materiale(int i, String n, Categoria c, int d) {
         id = i;
         nominativo = n;
         categoria = c;
@@ -103,7 +103,6 @@ public class Materiale {
     public Materiale() {
         id = -1;
         nominativo = "";
-        categoria = "";
     }
     
     @Override 

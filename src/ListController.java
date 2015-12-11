@@ -7,10 +7,10 @@ public class ListController extends ListView {
     private final ApplicationController bind;
     
     public void ottieniDatiMySQL() {
-        materiali.addAll(new Materiale(1, "Telecamera CCTV", "Videosorveglianza", 0), 
-                         new Materiale(2, "Centralino Uno", "Telefonia", 1), 
-                         new Materiale(3, "Centralino Uno", "Telefonia", 1), 
-                         new Materiale(4, "Router Netgear 1xaa", "Networking", 1));        
+        materiali.addAll(new Materiale(1, "Telecamera CCTV", bind.getCategoria(1), 0), 
+                         new Materiale(2, "Centralino Uno", bind.getCategoria(2), 1), 
+                         new Materiale(3, "Centralino Uno", bind.getCategoria(2), 1), 
+                         new Materiale(4, "Router Netgear 1xaa", bind.getCategoria(0), 1));        
     }
     
     /*

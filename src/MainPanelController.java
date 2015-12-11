@@ -24,7 +24,7 @@ public class MainPanelController extends VBox {
     public void caricaMateriale(Materiale current) {
         //ObservableList<Node> childrens = informazioni.getChildren();
         informazioniTxt[0].setText(current.getNominativo());
-        informazioniTxt[1].setText(current.getCategoria());
+        informazioniTxt[1].setText(current.getCategoria().getDescrizione());
         informazioniTxt[2].setText(Integer.toString(current.getDisponibilita()));
         
         if(current.getDisponibilita() <= 0) {

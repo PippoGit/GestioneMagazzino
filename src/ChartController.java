@@ -18,39 +18,38 @@ import javafx.scene.layout.VBox;
  * @author filipposcotto
  */
 public class ChartController extends VBox {
-    private final int[] disponibilita;
+    private Categoria[] categorie;
+    private final BarChart<String,Number> bc;
+    XYChart.Series series;
     
-    final static String austria = "Telefonia";
-    final static String brazil = "CCTV";
-    final static String france = "Networking";
-
-    public ChartController(int n) {
+    public void aggiornaDati() {
+        series.getData().clear();
+        for (Categoria c : categorie) {
+            series.getData().add(new XYChart.Data(c.getDescrizione(), c.getDisponibilita()));
+        }
+        bc.getData().setAll(series);
+    }
+   
+    public void setCategorie(Categoria[] c) {
+        categorie = c;
+    }
+    
+    public ChartController() {
         super(8);
-        
-        Label titolo = new Label("Grafico disponibilità");
-        titolo.getStyleClass().add("titolo");
-       
-        disponibilita = new int[n];
-       
-        setPadding(new Insets(16));
-        getStyleClass().add("pannello");
-        
-       final CategoryAxis xAxis = new CategoryAxis();
+        final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
-        final BarChart<String,Number> bc = 
-            new BarChart<>(xAxis,yAxis);
- 
-        XYChart.Series series1 = new XYChart.Series();
-        series1.setName("Disponibilita");       
-        series1.getData().add(new XYChart.Data(austria, 25601.34));
-        series1.getData().add(new XYChart.Data(brazil, 20148.82));
-        series1.getData().add(new XYChart.Data(france, 10000));
+        Label titolo = new Label("Grafico disponibilità");
+        series = new XYChart.Series();
+        bc = new BarChart<>(xAxis,yAxis);
         
-        bc.getStyleClass().add("bar-chart");
-        
+        titolo.getStyleClass().add("titolo");
+
+        series.setName("Disponibilita");
+        getStyleClass().add("pannello");
+        setPadding(new Insets(16));
         super.setMinSize(300, 215);
         super.setMaxSize(300, 215);
-        bc.getData().addAll(series1);
-        getChildren().addAll(titolo, bc);
+
+        super.getChildren().addAll(titolo, bc);
     } 
 }

@@ -16,7 +16,10 @@ public class GestioneMagazzino extends Application {
         Scene scene = new Scene(controller.getRoot(), 900, 640); 
                 
         controller.preparaElementiGrafici(scene);
+        
         controller.ottieniDatiMySQLListaMateriali();
+        controller.setCategorieGraficoDisponibilita();
+        
         controller.setTitoloTxtMenu("Gestione Magazzino");
         controller.cambiaVisibilitaFigliSchedaMateriale(false);
         

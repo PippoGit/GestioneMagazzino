@@ -13,7 +13,8 @@ public class ApplicationController {
     private ChartController graficoDisponibilita;
     
     private Materiale current;
-   
+    private Categoria[] listaCategorie;
+    
     private static final ApplicationController DELEGATIONLINK = new ApplicationController(); //Singleton
     
     private ApplicationController() {        
@@ -33,6 +34,14 @@ public class ApplicationController {
     }
     public void setCurrent(Materiale m) {
         current = m;
+    }
+    
+    public void setListaCategorie (Categoria[] c) {
+        listaCategorie = c;
+    }
+    
+    public Categoria getCategoria(int i){
+        return listaCategorie[i];
     }
       
     public void aumentaDisponibilitaCurrent() {
@@ -79,6 +88,11 @@ public class ApplicationController {
         schedaMateriale.cambiaVisibilitaFigli(b);
     }
 
+    public void setCategorieGraficoDisponibilita() {
+        graficoDisponibilita.setCategorie(this.listaCategorie);
+        graficoDisponibilita.aggiornaDati();
+    }
+    
     public void preparaElementiGrafici(Scene s) {
         VBox pannelloSx = new VBox(16);
         VBox pannelloDx = new VBox(16);        
@@ -88,7 +102,7 @@ public class ApplicationController {
         this.pannelloRicerca = new SearchPanelController();
         this.schedaMateriale = new MainPanelController();
         this.listaMateriali = new ListController();
-        this.graficoDisponibilita = new ChartController(3);
+        this.graficoDisponibilita = new ChartController();
         
         Font.loadFont(GestioneMagazzino.class.getResource("font/Roboto/Roboto-Regular.ttf").toExternalForm(), 15);        
         Font.loadFont(GestioneMagazzino.class.getResource("font/Roboto/Roboto-Medium.ttf").toExternalForm(), 15);        

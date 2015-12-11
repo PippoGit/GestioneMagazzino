@@ -30,7 +30,6 @@ public class ChartController extends VBox {
     public void setCategorie(Categoria[] c) {
         categorie = c;
         inizializzaDati();
-        System.out.println("Porcoddi");
     }
     
     public ChartController() {

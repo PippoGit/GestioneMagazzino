@@ -1,3 +1,4 @@
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
@@ -46,10 +47,14 @@ public class ApplicationController {
       
     public void aumentaDisponibilitaCurrent() {
         current.aumentaDisponibilita();
+        listaCategorie[current.getCategoria().getIdCategoria()].aumentaDisponibilita();
+        graficoDisponibilita.aggiornaDati();        
     }
     
     public void diminuisciDisponibilitaCurrent() {
         current.diminuisciDisponibilita();
+        listaCategorie[current.getCategoria().getIdCategoria()].diminuisciDisponibilita();
+        graficoDisponibilita.aggiornaDati();
     }
     
     public void aggiornaSchedaMateriale() {
@@ -65,20 +70,15 @@ public class ApplicationController {
         return menu.getTitoloTxt();
     }
     
-    /*
+    
     public void mostraModifiche() {
         if(!current.isModificato()) {
             current.setModificato(true);
-            listaMateriali.segnalaModifica(listaMateriali.getSelectionModel().getSelectedIndex());
-            menu.setTitoloTxt(menu.getTitoloTxt() + " *");
+            //listaMateriali.segnalaModifica(listaMateriali.getSelectionModel().getSelectedIndex());
+            //menu.setTitoloTxt(menu.getTitoloTxt() + " *");
         }
         aggiornaSchedaMateriale();        
-    }
-    
-    public void modificaSalvataElementoCorrenteListaMateriali(){
-        listaMateriali.modificaSalvata(listaMateriali.getSelectionModel().getSelectedIndex());
-    }
-    */
+    }    
     
     public void ottieniDatiMySQLListaMateriali() {
         listaMateriali.ottieniDatiMySQL();
@@ -90,7 +90,7 @@ public class ApplicationController {
 
     public void setCategorieGraficoDisponibilita() {
         graficoDisponibilita.setCategorie(this.listaCategorie);
-        graficoDisponibilita.aggiornaDati();
+        //graficoDisponibilita.aggiornaDati();
     }
     
     public void preparaElementiGrafici(Scene s) {

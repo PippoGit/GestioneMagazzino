@@ -30,6 +30,13 @@ public class Categoria {
         this.disponibilita = disponibilita;
     }
     
+    public void aumentaDisponibilita() {
+        this.disponibilita++;
+    }
+
+    public void diminuisciDisponibilita() {
+        this.disponibilita--;
+    } 
     
     public Categoria(int i, String d, int di) {
         idCategoria = i;

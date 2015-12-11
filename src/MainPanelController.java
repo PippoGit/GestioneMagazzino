@@ -62,7 +62,7 @@ public class MainPanelController extends VBox {
                 ((Ordine) event.getTableView().getItems().get(
                         event.getTablePosition().getRow())
                         ).setStato(event.getNewValue());
-                //bind.mostraModifiche();
+                bind.mostraModifiche();
             }
         });
     
@@ -100,7 +100,7 @@ public class MainPanelController extends VBox {
                     bind.diminuisciDisponibilitaCurrent();
                 }
                 
-                //bind.mostraModifiche();
+                bind.mostraModifiche();
             }
         });
         

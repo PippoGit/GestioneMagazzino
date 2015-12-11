@@ -1,3 +1,4 @@
+import javafx.beans.value.ObservableValue;
 import javafx.collections.*;
 import javafx.scene.control.ListView;
 
@@ -45,7 +46,7 @@ public class ListController extends ListView {
         this.setItems(materiali);
         super.setPrefSize(250, 414);
         
-        this.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        this.getSelectionModel().selectedItemProperty().addListener((ObservableValue observable, Object oldValue, Object newValue) -> {
                 bind.setCurrent((Materiale) newValue);
                 bind.setTitoloTxtMenu("Scheda materiale – " + ((Materiale) newValue).getNominativo());
                 bind.aggiornaSchedaMateriale();

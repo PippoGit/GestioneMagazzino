@@ -8,7 +8,7 @@ public class Materiale {
     private String categoria;
     private int disponibilita;
     private ObservableList<Ordine> ordini;
-    private boolean cached;
+    private boolean cached; //se la lista degli ordini e gia in memoria non la sto a ricaricare perderei le modifiche (trallaltro)
     private boolean modificato;
 
     public boolean isModificato() {
@@ -18,7 +18,6 @@ public class Materiale {
     public void setModificato(boolean modificato) {
         this.modificato = modificato;
     }
-        
     
     public void setId(int id) {
         this.id = id;

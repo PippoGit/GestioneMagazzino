@@ -10,6 +10,8 @@ public class ApplicationController {
     private SearchPanelController pannelloRicerca;
     private ListController listaMateriali;
     private MainPanelController schedaMateriale;
+    private ChartController graficoDisponibilita;
+    
     private Materiale current;
    
     private static final ApplicationController DELEGATIONLINK = new ApplicationController(); //Singleton
@@ -54,6 +56,7 @@ public class ApplicationController {
         return menu.getTitoloTxt();
     }
     
+    /*
     public void mostraModifiche() {
         if(!current.isModificato()) {
             current.setModificato(true);
@@ -66,6 +69,7 @@ public class ApplicationController {
     public void modificaSalvataElementoCorrenteListaMateriali(){
         listaMateriali.modificaSalvata(listaMateriali.getSelectionModel().getSelectedIndex());
     }
+    */
     
     public void ottieniDatiMySQLListaMateriali() {
         listaMateriali.ottieniDatiMySQL();
@@ -84,13 +88,14 @@ public class ApplicationController {
         this.pannelloRicerca = new SearchPanelController();
         this.schedaMateriale = new MainPanelController();
         this.listaMateriali = new ListController();
+        this.graficoDisponibilita = new ChartController(3);
         
         Font.loadFont(GestioneMagazzino.class.getResource("font/Roboto/Roboto-Regular.ttf").toExternalForm(), 15);        
         Font.loadFont(GestioneMagazzino.class.getResource("font/Roboto/Roboto-Medium.ttf").toExternalForm(), 15);        
         s.getStylesheets().add("style/StyleGestioneMagazzino.css");
         
         pannelloSx.setPadding(new Insets(16, 0, 0, 16));
-        pannelloSx.getChildren().addAll(pannelloRicerca, listaMateriali);
+        pannelloSx.getChildren().addAll(pannelloRicerca, listaMateriali, graficoDisponibilita);
         pannelloDx.setPadding(new Insets(16, 16, 16, 0));
         pannelloDx.getChildren().add(schedaMateriale);
         center.getChildren().addAll(pannelloSx, pannelloDx);

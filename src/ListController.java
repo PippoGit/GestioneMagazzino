@@ -9,13 +9,14 @@ public class ListController extends ListView {
     public void ottieniDatiMySQL() {
         materiali.addAll(new Materiale(1, "Telecamera CCTV", "Videosorveglianza", 0), 
                          new Materiale(2, "Centralino Uno", "Telefonia", 1), 
-                         new Materiale(3, "Router Netgear 1xaa", "Networking", 1));        
+                         new Materiale(3, "Centralino Uno", "Telefonia", 1), 
+                         new Materiale(4, "Router Netgear 1xaa", "Networking", 1));        
     }
     
+    /*
     public void aggiornaLista() {
-        Materiale t = new Materiale();
-        materiali.add(t);
-        materiali.remove(t);    
+        materiali.remove(bind.getCurrent());    
+        materiali.add(bind.getCurrent());
     }
     
     public void segnalaModifica(int i) {
@@ -29,6 +30,7 @@ public class ListController extends ListView {
         m.setNominativo(m.getNominativo().substring(0, m.getNominativo().length()-2));
         aggiornaLista();
     }
+   */
     
     public ObservableList<Materiale> getMateriali() {
         return materiali;
@@ -44,8 +46,9 @@ public class ListController extends ListView {
         super.getStyleClass().add("pannello");
                 
         this.setItems(materiali);
-        super.setPrefSize(250, 423);
-        
+        super.setMinSize(300, 183);
+        super.setMaxSize(300, 183);
+
         this.getSelectionModel().selectedItemProperty().addListener((ObservableValue observable, Object oldValue, Object newValue) -> {
                 bind.setCurrent((Materiale) newValue);
                 bind.setTitoloTxtMenu("Scheda materiale – " + ((Materiale) newValue).getNominativo());

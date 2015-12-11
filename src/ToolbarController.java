@@ -7,9 +7,8 @@ import javafx.scene.layout.*;
 
 public class ToolbarController extends BorderPane {
     private final Label labelTitolo;
-    private final Button add;
-    private final Button remove;
-    private final Button addOrdine;
+
+    private final Button save;
     private final ApplicationController bind;
     
     public String getTitoloTxt() {
@@ -21,20 +20,16 @@ public class ToolbarController extends BorderPane {
     }
     
     private void configuraStileToolbar() {
-        add.setId("tbb-add");
-        remove.setId("tbb-remove");
-        addOrdine.setId("tbb-addOrdine");
+
+        save.setId("tbb-save");
         this.setId("toolBar");
 
         this.setMinHeight(55);        
         this.setMaxHeight(55);        
         //this.setPrefHeight(55);        
-        add.setMinSize(60, 45);
-        add.getStyleClass().add("toolBar-button");
-        remove.setMinSize(60, 45);
-        remove.getStyleClass().add("toolBar-button");
-        addOrdine.setMinSize(60, 45);
-        addOrdine.getStyleClass().add("toolBar-button");    
+
+        save.setMinSize(60, 45);
+        save.getStyleClass().add("toolBar-button");    
         
         labelTitolo.getStyleClass().add("titolo");
     }
@@ -44,23 +39,22 @@ public class ToolbarController extends BorderPane {
         HBox right = new HBox(8);
         
         this.setCenter(labelTitolo);
-        left.setPadding(new Insets(0, 0, 0, 16));
-        left.getChildren().add(add);
-        left.setAlignment(Pos.CENTER);
-        this.setLeft(left);    
         right.setPadding(new Insets(0, 16, 0, 0));
         right.setAlignment(Pos.CENTER);
-        right.getChildren().addAll(addOrdine);//, remove);
-        this.setRight(right);        
+        right.getChildren().addAll(save);
+        left.setMinWidth(60);
+        left.setMaxWidth(60);
+        this.setRight(right);
+        this.setLeft(left);         
     }
     
     private void configuraPulsanti() {
-        addOrdine.setOnAction((ActionEvent e) -> {
+        save.setOnAction((ActionEvent e) -> {
             //salva
             if(bind.getCurrent().isModificato()) {
                 bind.getCurrent().setModificato(false);
-                bind.modificaSalvataElementoCorrenteListaMateriali();
-                setTitoloTxt(getTitoloTxt().substring(0, getTitoloTxt().length()-2));
+                //bind.modificaSalvataElementoCorrenteListaMateriali();
+                //setTitoloTxt(getTitoloTxt().substring(0, getTitoloTxt().length()-2));
                 bind.aggiornaSchedaMateriale();
             }
         });
@@ -68,9 +62,8 @@ public class ToolbarController extends BorderPane {
     
     public ToolbarController(String titolo){
         super();
-        this.add = new Button();
-        this.remove = new Button();
-        this.addOrdine = new Button();
+
+        this.save = new Button();
         this.labelTitolo = new Label(titolo);
         bind = ApplicationController.getDelegationLink();      
         

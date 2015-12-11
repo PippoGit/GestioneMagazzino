@@ -29,13 +29,7 @@
     -fx-background-color: linear-gradient(rgba(242, 242, 242, 1), rgba(231, 231, 231, 1.0));     
 }
 
-#tbb-add {
-    -fx-background-image: url("../img/addFilled.png");    
-}
-#tbb-remove {
-    -fx-background-image: url("../img/remove.png");    
-}
-#tbb-addOrdine {
+#tbb-save {
     -fx-background-image: url("../img/saveFilled.png");   
     -fx-background-position: center;
 
@@ -200,4 +194,8 @@
 
 #informazioniTxt2 {
     -fx-font-family: "Roboto Medium";    
+}
+
+.default-color0.chart-bar { 
+    -fx-background-color: linear-gradient(#1AD6FD, #1D62F0);
 }

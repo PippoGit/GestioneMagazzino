@@ -22,7 +22,7 @@ public class MainPanelController extends VBox {
     final private ApplicationController bind;
     
     public void caricaMateriale(Materiale current) {
-        ObservableList<Node> childrens = informazioni.getChildren();
+        //ObservableList<Node> childrens = informazioni.getChildren();
         informazioniTxt[0].setText(current.getNominativo());
         informazioniTxt[1].setText(current.getCategoria());
         informazioniTxt[2].setText(Integer.toString(current.getDisponibilita()));
@@ -62,7 +62,7 @@ public class MainPanelController extends VBox {
                 ((Ordine) event.getTableView().getItems().get(
                         event.getTablePosition().getRow())
                         ).setStato(event.getNewValue());
-                bind.mostraModifiche();
+                //bind.mostraModifiche();
             }
         });
     
@@ -100,7 +100,7 @@ public class MainPanelController extends VBox {
                     bind.diminuisciDisponibilitaCurrent();
                 }
                 
-                bind.mostraModifiche();
+                //bind.mostraModifiche();
             }
         });
         

@@ -19,8 +19,7 @@ public class ChartController extends VBox {
         series = new XYChart.Series();
         series.setName("Disponibilita");
   
-        for (int i=0; i<categorie.length; i++) {
-            Categoria c = categorie[i];
+        for (Categoria c : categorie) {
             series.getData().add(new XYChart.Data<>(c.getDescrizione(), c.getDisponibilita()));
         }
         

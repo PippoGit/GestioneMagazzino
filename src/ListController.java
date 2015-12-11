@@ -44,7 +44,7 @@ public class ListController extends ListView {
         super.getStyleClass().add("pannello");
                 
         this.setItems(materiali);
-        super.setPrefSize(250, 414);
+        super.setPrefSize(250, 423);
         
         this.getSelectionModel().selectedItemProperty().addListener((ObservableValue observable, Object oldValue, Object newValue) -> {
                 bind.setCurrent((Materiale) newValue);

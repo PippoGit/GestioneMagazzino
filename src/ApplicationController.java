@@ -1,101 +1,60 @@
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.layout.*;
-import javafx.scene.text.Font;
 
-public class ApplicationController {  
-    private final VBox root = new VBox();
+import javafx.beans.value.*;
+import javafx.collections.*;
+import javafx.scene.control.ListView;
+
+public class ListController extends ListView {
+    private final ObservableList<Materiale> materiali;   
+    private final ApplicationController bind;
     
-    private ToolbarController menu;
-    private SearchPanelController pannelloRicerca;
-    private ListController listaMateriali;
-    private MainPanelController schedaMateriale;
-    private Materiale current;
+    public void ottieniDatiMySQL() {
+        materiali.addAll(new Materiale(1, "Telecamera CCTV", "Videosorveglianza", 0), 
+                         new Materiale(2, "Centralino Uno", "Telefonia", 1), 
+                         new Materiale(3, "Router Netgear 1xaa", "Networking", 1));        
+    }
+    
+    public void aggiornaLista() {
+        Materiale t = new Materiale();
+        materiali.add(t);
+        materiali.remove(t);    
+    }
+    
+    public void segnalaModifica(int i) {
+        Materiale m = materiali.get(i);     
+        m.setNominativo(m.getNominativo() + " *");
+        aggiornaLista();
+    }
+    
+    public void modificaSalvata(int i) {
+        Materiale m = materiali.get(i);
+        m.setNominativo(m.getNominativo().substring(0, m.getNominativo().length()-2));
+        aggiornaLista();
+    }
+    
+    public ObservableList<Materiale> getMateriali() {
+        return materiali;
+    }
+    
+    public ListController() {
+        super();
+        bind = ApplicationController.getDelegationLink();      
+        
+        materiali  = FXCollections.observableArrayList();
+
+        this.setId("listaMateriali");
+        super.getStyleClass().add("pannello");
+                
+        this.setItems(materiali);
+        super.setPrefSize(250, 414);
+        
+        this.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Materiale>() {
+            @Override
+            public void changed(ObservableValue<? extends Materiale> observable, Materiale oldValue, Materiale newValue) {
+                bind.setCurrent(newValue);
+                bind.setTitoloTxtMenu("Scheda materiale – " + newValue.getNominativo());
+                bind.aggiornaSchedaMateriale();
+            }
+    });
+    }
    
-    private static final ApplicationController DELEGATIONLINK = new ApplicationController(); //Singleton
-    
-    private ApplicationController() {        
-        this.current = new Materiale();
-    }    
-    
-    public static ApplicationController getDelegationLink() {
-        return DELEGATIONLINK;
-    }
-    
-    public Pane getRoot() {
-        return root;
-    }
-    
-    public Materiale getCurrent() {
-        return current;
-    }
-    public void setCurrent(Materiale m) {
-        current = m;
-    }
-      
-    public void aumentaDisponibilitaCurrent() {
-        current.aumentaDisponibilita();
-    }
-    
-    public void diminuisciDisponibilitaCurrent() {
-        current.diminuisciDisponibilita();
-    }
-    
-    public void aggiornaSchedaMateriale() {
-        schedaMateriale.caricaMateriale(current);
-        schedaMateriale.cambiaVisibilitaFigli(true);           
-    }
-    
-    public void setTitoloTxtMenu(String txt) {
-        menu.setTitoloTxt(txt);
-    }
-    
-    public String getTitoloTxtMenu(String txt) {
-        return menu.getTitoloTxt();
-    }
-    
-    public void mostraModifiche() {
-        if(!current.isModificato()) {
-            current.setModificato(true);
-            listaMateriali.segnalaModifica(listaMateriali.getSelectionModel().getSelectedIndex());
-            menu.setTitoloTxt(menu.getTitoloTxt() + " *");
-        }
-        aggiornaSchedaMateriale();        
-    }
-    
-    public void modificaSalvataElementoCorrenteListaMateriali(){
-        listaMateriali.modificaSalvata(listaMateriali.getSelectionModel().getSelectedIndex());
-    }
-    
-    public void ottieniDatiMySQLListaMateriali() {
-        listaMateriali.ottieniDatiMySQL();
-    }
-    
-    public void cambiaVisibilitaFigliSchedaMateriale(boolean b) {
-        schedaMateriale.cambiaVisibilitaFigli(b);
-    }
-
-    public void preparaElementiGrafici(Scene s) {
-        VBox pannelloSx = new VBox(16);
-        VBox pannelloDx = new VBox(16);        
-        HBox center = new HBox(16);
-        
-        this.menu = new ToolbarController("");
-        this.pannelloRicerca = new SearchPanelController();
-        this.schedaMateriale = new MainPanelController();
-        this.listaMateriali = new ListController();
-        
-        Font.loadFont(GestioneMagazzino.class.getResource("font/Roboto/Roboto-Regular.ttf").toExternalForm(), 15);        
-        Font.loadFont(GestioneMagazzino.class.getResource("font/Roboto/Roboto-Medium.ttf").toExternalForm(), 15);        
-        s.getStylesheets().add("style/StyleGestioneMagazzino.css");
-        
-        pannelloSx.setPadding(new Insets(16, 0, 0, 16));
-        pannelloSx.getChildren().addAll(pannelloRicerca, listaMateriali);
-        pannelloDx.setPadding(new Insets(16, 16, 16, 0));
-        pannelloDx.getChildren().add(schedaMateriale);
-        center.getChildren().addAll(pannelloSx, pannelloDx);
-        
-        root.getChildren().addAll(menu, center);
-    }
-    
 }

@@ -7,7 +7,7 @@ public class Materiale {
     private String nominativo;
     private Categoria categoria;
     private int disponibilita;
-    private ObservableList<Ordine> ordini;
+    private ObservableList<IstanzaMateriale> ordini;
     
     private boolean cached; //se la lista degli ordini e gia in memoria non la sto a ricaricare perderei le modifiche (trallaltro)
     private boolean modificato;
@@ -44,11 +44,11 @@ public class Materiale {
         return categoria;
     }
 
-    public ObservableList<Ordine> getOrdini() {
+    public ObservableList<IstanzaMateriale> getOrdini() {
         return ordini;
     }
 
-    public void setOrdini(ObservableList<Ordine> ordini) {
+    public void setOrdini(ObservableList<IstanzaMateriale> ordini) {
         this.ordini = ordini;
         //cached = false;
     }
@@ -62,18 +62,18 @@ public class Materiale {
         
         if(this.getId() == 1) {
             ordini = FXCollections.observableArrayList(
-                            new Ordine("TEL-CTL-M0002", "Mela SPA", "Funzionante"),
-                            new Ordine("TEL-CTL-M0012", "Banana SPA", "Funzionante")
+                            new IstanzaMateriale("TEL-CTL-M0002", "Mela SPA", "Funzionante"),
+                            new IstanzaMateriale("TEL-CTL-M0012", "Banana SPA", "Funzionante")
                         );            
         }
         else {
             ordini = FXCollections.observableArrayList(
-                            new Ordine("TEL-CTL-M0020", "Apple SPA", "Funzionante"),
-                            new Ordine("TEL-CTL-M0004", "Apple SPA", "Funzionante"),
-                            new Ordine("TEL-CTL-M0008", "Società delle Banane", "Funzionante"),
-                            new Ordine("TEL-CTL-M0003", "Società delle Banane", "In riparazione"),
-                            new Ordine("TEL-CTL-M0001", "", "Danneggiato"),
-                            new Ordine("TEL-CTL-M0026", "Da Pino", "Funzionante")
+                            new IstanzaMateriale("TEL-CTL-M0020", "Apple SPA", "Funzionante"),
+                            new IstanzaMateriale("TEL-CTL-M0004", "Apple SPA", "Funzionante"),
+                            new IstanzaMateriale("TEL-CTL-M0008", "Società delle Banane", "Funzionante"),
+                            new IstanzaMateriale("TEL-CTL-M0003", "Società delle Banane", "In riparazione"),
+                            new IstanzaMateriale("TEL-CTL-M0001", "", "Danneggiato"),
+                            new IstanzaMateriale("TEL-CTL-M0026", "Da Pino", "Funzionante")
                         );
         }
     }

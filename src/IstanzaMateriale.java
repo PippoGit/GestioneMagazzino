@@ -1,6 +1,6 @@
 import javafx.beans.property.*;
 
-public class Ordine {
+public class IstanzaMateriale {
     private  final SimpleStringProperty codiceMateriale;
     private  SimpleStringProperty cliente;
     private  SimpleStringProperty stato; //-1 nok 1ok 0rip
@@ -17,7 +17,7 @@ public class Ordine {
         return stato.get();
     }
     
-    public Ordine(String m, String l, String s) {
+    public IstanzaMateriale(String m, String l, String s) {
         codiceMateriale = new SimpleStringProperty(m);
         cliente = new SimpleStringProperty(l);
         stato = new SimpleStringProperty(s);

@@ -16,8 +16,8 @@ public class MainPanelController extends VBox {
     private final GridPane informazioni;
     private final TextField[] informazioniTxt = new TextField[3];
     
-    private ObservableList<Ordine> listaOrdini;
-    private final TableView<Ordine> monitor = new TableView<>();
+    private ObservableList<IstanzaMateriale> listaOrdini;
+    private final TableView<IstanzaMateriale> monitor = new TableView<>();
     
     final private ApplicationController bind;
     
@@ -56,10 +56,10 @@ public class MainPanelController extends VBox {
 
         statoColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         
-        statoColumn.setOnEditCommit(new EventHandler<CellEditEvent<Ordine, String>>() {
+        statoColumn.setOnEditCommit(new EventHandler<CellEditEvent<IstanzaMateriale, String>>() {
             @Override
-            public void handle(CellEditEvent<Ordine, String> event) {
-                ((Ordine) event.getTableView().getItems().get(
+            public void handle(CellEditEvent<IstanzaMateriale, String> event) {
+                ((IstanzaMateriale) event.getTableView().getItems().get(
                         event.getTablePosition().getRow())
                         ).setStato(event.getNewValue());
                 bind.mostraModifiche();
@@ -79,11 +79,11 @@ public class MainPanelController extends VBox {
         
         clienteColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         
-        clienteColumn.setOnEditCommit(new EventHandler<CellEditEvent<Ordine, String>>() {
+        clienteColumn.setOnEditCommit(new EventHandler<CellEditEvent<IstanzaMateriale, String>>() {
             @Override
-            public void handle(CellEditEvent<Ordine, String> event) { 
-               Ordine selezionato;
-                selezionato = ((Ordine) event.getTableView().getItems().get(
+            public void handle(CellEditEvent<IstanzaMateriale, String> event) { 
+               IstanzaMateriale selezionato;
+                selezionato = ((IstanzaMateriale) event.getTableView().getItems().get(
                         event.getTablePosition().getRow()));
                 
                 String ov = selezionato.getCliente();

@@ -20,7 +20,6 @@ public class ListController extends ListView {
     public ListController() {
         super();
         appConBind = ApplicationController.getDelegationLink();      
-        
         materiali  = FXCollections.observableArrayList();
 
         this.setId("listaMateriali");

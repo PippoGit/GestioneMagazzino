@@ -20,30 +20,28 @@ public class MainPanelController extends VBox {
     
     final private ApplicationController appConBind;
     
-    public void caricaMateriale(Materiale current) {
-        //ObservableList<Node> childrens = informazioni.getChildren();
-        informazioniTxt[0].setText(current.getNominativo());
-        informazioniTxt[1].setText(current.getCategoria().getDescrizione());
-        informazioniTxt[2].setText(Integer.toString(current.getDisponibilita()));
+    public void caricaMateriale(Materiale m) {
+        informazioniTxt[0].setText(m.getNominativo());
+        informazioniTxt[1].setText(m.getCategoria().getDescrizione());
+        informazioniTxt[2].setText(Integer.toString(m.getDisponibilita()));
         
-        if(current.getDisponibilita() <= 0) {
+        if(m.getDisponibilita() <= 0) {
             informazioniTxt[2].setStyle("-fx-text-fill: #E0082A;");
             informazioniTxt[2].setText("Non disponibile");
         }
-        else if (current.getDisponibilita() <= 5) {
+        else if (m.getDisponibilita() <= 5) {
             informazioniTxt[2].setStyle("-fx-text-fill: #E0B508;");
         }
         else {
             informazioniTxt[2].setStyle("-fx-text-fill: #088C74;");
         }
         
-        current.caricaIstanzeDB();
-        listaOrdini = current.getIstanze();
+        m.caricaIstanzeDB();
+        listaOrdini = m.getIstanze();
         monitor.setItems(listaOrdini);
      }
     
     private void editStatoColumn(IstanzaMateriale selezionato, String newValue) {
-
         if(!newValue.equalsIgnoreCase("funzionante") && //se ora non funziona
            selezionato.getCliente().length() == 0 && //e un non cliente l'aveva
            selezionato.getStato().equalsIgnoreCase("Funzionante")) //e se prima funzionava
@@ -135,16 +133,11 @@ public class MainPanelController extends VBox {
         
         titoloInformazioni = new Label("Informazioni");
         titoloInformazioni.getStyleClass().add("titolo");
-        
-        
-        
         titoloMonitor = new Label("Monitoraggio stato e spostamenti");
         titoloMonitor.getStyleClass().add("titolo");  
-                
     }
     
     public void cambiaVisibilitaFigli(boolean b) {
-        
         if(visibilitaFigli == b) { return; }
         
         ObservableList<Node> children = this.getChildren();

@@ -42,78 +42,71 @@ public class MainPanelController extends VBox {
         monitor.setItems(listaOrdini);
      }
     
-    private void costruisciTabellaMonitor() {
-        TableColumn statoColumn;
-        statoColumn = new TableColumn("STATO");
-        statoColumn.setResizable(false);
-        statoColumn.setMinWidth(120);
-        statoColumn.setSortable(false);
-        statoColumn.setCellValueFactory(
-            new PropertyValueFactory<>("stato")        
+    private void editStatoColumn(IstanzaMateriale selezionato, String newValue) {
+
+        if(!newValue.equalsIgnoreCase("funzionante") && //se ora non funziona
+           selezionato.getCliente().length() == 0 && //e un non cliente l'aveva
+           selezionato.getStato().equalsIgnoreCase("Funzionante")) //e se prima funzionava
+            appConBind.diminuisciDisponibilitaCurrent(); //allora dimunuisci
+        else if (newValue.equalsIgnoreCase("funzionante") &&  //se ora funziona
+           !selezionato.getStato().equalsIgnoreCase("Funzionante") && //e prima non funzionava
+           selezionato.getCliente().length() == 0) //e nessuno ce l'ha
+            appConBind.aumentaDisponibilitaCurrent();
+
+        selezionato.setStato(newValue);                
+        appConBind.mostraModifiche();        
+    }
+    
+    private void editClienteColumn(IstanzaMateriale selezionato, String newValue) {
+         if(newValue.equals("") && //se lo porto in magazzino
+            selezionato.getCliente().length() != 0 &&  //e non c'era già
+            selezionato.getStato().equalsIgnoreCase("funzionante")) { //e funziona
+             appConBind.aumentaDisponibilitaCurrent();
+         }
+         else if (newValue.length() > 0  && //se lo do a un cliente
+                  selezionato.getCliente().length() == 0  && //e prima era in mag
+                  selezionato.getStato().equalsIgnoreCase("funzionante")) { //e funziona
+             appConBind.diminuisciDisponibilitaCurrent();
+         }
+
+         selezionato.setCliente(newValue);
+         appConBind.mostraModifiche();        
+    }
+    
+    private void costruisciColonna(TableColumn c, String n, int w) {
+        c.setResizable(false);
+        c.setMinWidth(w);
+        c.setSortable(false);
+        c.setEditable(!n.equalsIgnoreCase("codiceMateriale"));
+        c.setCellValueFactory(
+            new PropertyValueFactory<>(n)        
         );
         
-
-        statoColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        c.setCellFactory(TextFieldTableCell.forTableColumn());
         
-        statoColumn.setOnEditCommit(new EventHandler<CellEditEvent<IstanzaMateriale, String>>() {
+        c.setOnEditCommit(new EventHandler<CellEditEvent<IstanzaMateriale, String>>() {
             @Override
             public void handle(CellEditEvent<IstanzaMateriale, String> event) {
-                ((IstanzaMateriale) event.getTableView().getItems().get(
-                        event.getTablePosition().getRow())
-                        ).setStato(event.getNewValue());
-                appConBind.mostraModifiche();
-            }
-        });
-    
-        
-        TableColumn clienteColumn;
-        clienteColumn = new TableColumn("CLIENTE");
-        clienteColumn.setResizable(false);
-        clienteColumn.setSortable(false);        
-        clienteColumn.setMinWidth(260);
-        
-        clienteColumn.setCellValueFactory(
-            new PropertyValueFactory<>("cliente")        
-        );
-        
-        clienteColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        
-        clienteColumn.setOnEditCommit(new EventHandler<CellEditEvent<IstanzaMateriale, String>>() {
-            @Override
-            public void handle(CellEditEvent<IstanzaMateriale, String> event) { 
-               IstanzaMateriale selezionato;
+                IstanzaMateriale selezionato;
                 selezionato = ((IstanzaMateriale) event.getTableView().getItems().get(
-                        event.getTablePosition().getRow()));
-                
-                String ov = selezionato.getCliente();
-                selezionato.setCliente(event.getNewValue());
-                
-                System.out.println(event.getNewValue());
-
-                if(event.getNewValue().equals("") &&
-                   ov.length() != 0) {
-                    appConBind.aumentaDisponibilitaCurrent();
-                }
-                else if (event.getNewValue().length() > 0  && 
-                         ov.length() == 0) {
-                    appConBind.diminuisciDisponibilitaCurrent();
-                }
-                
-                appConBind.mostraModifiche();
+                        event.getTablePosition().getRow()));                
+                if(n.equalsIgnoreCase("stato"))
+                    editStatoColumn(selezionato, event.getNewValue());
+                else if(n.equalsIgnoreCase("cliente"))
+                    editClienteColumn(selezionato, event.getNewValue());
             }
-        });
+        });        
+    }
+    
+    private void costruisciTabellaMonitor() {     
+        TableColumn clienteColumn = new TableColumn("CLIENTE");
+        TableColumn statoColumn = new TableColumn("STATO");
+        TableColumn codiceMaterialeColumn = new TableColumn("CODICE MATERIALE");
         
-        TableColumn codiceMaterialeColumn;
-        codiceMaterialeColumn = new TableColumn("CODICE MATERIALE");
-        codiceMaterialeColumn.setResizable(false);
-        codiceMaterialeColumn.setEditable(false);
-        codiceMaterialeColumn.setMinWidth(138);
-        codiceMaterialeColumn.setSortable(false);
+        costruisciColonna(statoColumn, "stato", 120);
+        costruisciColonna(clienteColumn, "cliente", 260);
+        costruisciColonna(codiceMaterialeColumn, "codiceMateriale", 138);
         
-        codiceMaterialeColumn.setCellValueFactory(
-            new PropertyValueFactory<>("codiceMateriale")        
-        );
-                
         monitor.setEditable(true);       
         monitor.getColumns().addAll(statoColumn, codiceMaterialeColumn, clienteColumn);             
     }

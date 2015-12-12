@@ -8,9 +8,9 @@ public class ListController extends ListView {
     
     public void caricaMateriali() {
         materiali.addAll(new Materiale(1, "Telecamera CCTV", appConBind.getCategoria(1), 0), 
-                         new Materiale(2, "Centralino Uno", appConBind.getCategoria(2), 1), 
-                         new Materiale(3, "Centralino Uno", appConBind.getCategoria(2), 1), 
-                         new Materiale(4, "Router Netgear 1xaa", appConBind.getCategoria(0), 1));        
+                         new Materiale(2, "Centralino Uno", appConBind.getCategoria(2), 0), 
+                         new Materiale(3, "Centralino Uno", appConBind.getCategoria(2), 0), 
+                         new Materiale(4, "Router Netgear 1xaa", appConBind.getCategoria(0), 0));        
     }
     
     public ObservableList<Materiale> getMateriali() {

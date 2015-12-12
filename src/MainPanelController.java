@@ -5,7 +5,6 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.*;
-//import javafx.scene.input.*;
 import javafx.scene.layout.*;
 
 public class MainPanelController extends VBox {
@@ -19,7 +18,7 @@ public class MainPanelController extends VBox {
     private ObservableList<IstanzaMateriale> listaOrdini;
     private final TableView<IstanzaMateriale> monitor = new TableView<>();
     
-    final private ApplicationController bind;
+    final private ApplicationController appConBind;
     
     public void caricaMateriale(Materiale current) {
         //ObservableList<Node> childrens = informazioni.getChildren();
@@ -38,8 +37,8 @@ public class MainPanelController extends VBox {
             informazioniTxt[2].setStyle("-fx-text-fill: #088C74;");
         }
         
-        current.caricaOrdiniDB();
-        listaOrdini = current.getOrdini();
+        current.caricaIstanzeDB();
+        listaOrdini = current.getIstanze();
         monitor.setItems(listaOrdini);
      }
     
@@ -62,7 +61,7 @@ public class MainPanelController extends VBox {
                 ((IstanzaMateriale) event.getTableView().getItems().get(
                         event.getTablePosition().getRow())
                         ).setStato(event.getNewValue());
-                bind.mostraModifiche();
+                appConBind.mostraModifiche();
             }
         });
     
@@ -93,14 +92,14 @@ public class MainPanelController extends VBox {
 
                 if(event.getNewValue().equals("") &&
                    ov.length() != 0) {
-                    bind.aumentaDisponibilitaCurrent();
+                    appConBind.aumentaDisponibilitaCurrent();
                 }
                 else if (event.getNewValue().length() > 0  && 
                          ov.length() == 0) {
-                    bind.diminuisciDisponibilitaCurrent();
+                    appConBind.diminuisciDisponibilitaCurrent();
                 }
                 
-                bind.mostraModifiche();
+                appConBind.mostraModifiche();
             }
         });
         
@@ -166,7 +165,7 @@ public class MainPanelController extends VBox {
     
     public MainPanelController() {
         super(8);
-        bind = ApplicationController.getDelegationLink();
+        appConBind = ApplicationController.getDelegationLink();
         
         visibilitaFigli = true;
         informazioni = new GridPane();

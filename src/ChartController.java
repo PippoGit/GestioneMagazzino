@@ -5,25 +5,25 @@ import javafx.scene.layout.*;
 
 public class ChartController extends VBox {
     private Categoria[] categorie;
-    private final BarChart<String, Number> bc;
-    XYChart.Series series;
+    private final BarChart<String, Number> istogramma;
+    XYChart.Series dati;
     
     public void aggiornaDati() {
         for (int i=0; i<categorie.length; i++) {
             Categoria c = categorie[i];
-            series.getData().set(i, new XYChart.Data<>(c.getDescrizione(), c.getDisponibilita()));
+            dati.getData().set(i, new XYChart.Data<>(c.getDescrizione(), c.getDisponibilita()));
         }
     }
    
     private void inizializzaDati() {
-        series = new XYChart.Series();
-        series.setName("Disponibilita");
+        dati = new XYChart.Series();
+        dati.setName("Disponibilita");
   
         for (Categoria c : categorie) {
-            series.getData().add(new XYChart.Data<>(c.getDescrizione(), c.getDisponibilita()));
+            dati.getData().add(new XYChart.Data<>(c.getDescrizione(), c.getDisponibilita()));
         }
         
-        bc.getData().addAll(series);        
+        istogramma.getData().addAll(dati);        
     }
     
     public void setCategorie(Categoria[] c) {
@@ -37,8 +37,8 @@ public class ChartController extends VBox {
         final NumberAxis yAxis = new NumberAxis();
         
         Label titolo = new Label("Grafico disponibilità");
-        bc = new BarChart<>(xAxis,yAxis);
-        bc.setAnimated(false);
+        istogramma = new BarChart<>(xAxis,yAxis);
+        istogramma.setAnimated(false);
         
         titolo.getStyleClass().add("titolo");
 
@@ -47,6 +47,6 @@ public class ChartController extends VBox {
         super.setMinSize(300, 215);
         super.setMaxSize(300, 215);
 
-        super.getChildren().addAll(titolo, bc);
+        super.getChildren().addAll(titolo, istogramma);
     } 
 }

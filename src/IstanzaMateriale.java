@@ -3,7 +3,7 @@ import javafx.beans.property.*;
 public class IstanzaMateriale {
     private  final SimpleStringProperty codiceMateriale;
     private  SimpleStringProperty cliente;
-    private  SimpleStringProperty stato; //-1 nok 1ok 0rip
+    private  SimpleStringProperty stato;
 
     public String getCodiceMateriale() {
         return codiceMateriale.get();

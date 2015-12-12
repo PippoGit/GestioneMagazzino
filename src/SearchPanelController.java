@@ -5,17 +5,17 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 public class SearchPanelController extends VBox {
-    private final ArrayList<ToggleButton> categoria;
+    private final ArrayList<ToggleButton> toggleCategorie;
     private final ToggleGroup gruppo;
     private final HBox containerCategoria;
     private final TextField barraRicerca;
-    private final ApplicationController bind;
+    private final ApplicationController appConBind;
     
     public TextField getBarraRicerca(){
         return barraRicerca;
     }    
     
-    private void parseCategoriaXML() {
+    private void parseCategorieXML() {
         int num_categorie = 3;
         Categoria[] c = new Categoria[num_categorie];        
 
@@ -25,22 +25,22 @@ public class SearchPanelController extends VBox {
         c[1].setDisponibilita(0);      
         c[2] = new Categoria(2, "Telefonia");
         c[2].setDisponibilita(2);              
-        bind.setListaCategorie(c);
+        appConBind.setListaCategorie(c);
 
         for(int i=0; i<num_categorie; i++) {
-            categoria.add(new ToggleButton());
+            toggleCategorie.add(new ToggleButton());
 
-            categoria.get(i).setToggleGroup(gruppo);
+            toggleCategorie.get(i).setToggleGroup(gruppo);
             
-            categoria.get(i).getStyleClass().add("categoria");
-            categoria.get(i).setId("categoria"+i);            
-            categoria.get(i).setMaxSize(300/num_categorie,53);
-            categoria.get(i).setMinSize(300/num_categorie,53);    
+            toggleCategorie.get(i).getStyleClass().add("categoria");
+            toggleCategorie.get(i).setId("categoria"+i);            
+            toggleCategorie.get(i).setMaxSize(300/num_categorie,53);
+            toggleCategorie.get(i).setMinSize(300/num_categorie,53);    
             
-            categoria.get(i).setUserData(c[i].getDescrizione());
+            toggleCategorie.get(i).setUserData(c[i].getDescrizione());
         }
         
-        containerCategoria.getChildren().addAll(categoria);
+        containerCategoria.getChildren().addAll(toggleCategorie);
     }
     
     public SearchPanelController() {
@@ -48,15 +48,15 @@ public class SearchPanelController extends VBox {
         this.barraRicerca = new TextField();
         this.gruppo = new ToggleGroup();
         this.containerCategoria = new HBox();
-        this.bind = ApplicationController.getDelegationLink();      
-        this.categoria = new ArrayList();
+        this.appConBind = ApplicationController.getDelegationLink();      
+        this.toggleCategorie = new ArrayList();
         
         super.setMinSize(300, 123);
         super.setMaxSize(300, 123);
         this.setAlignment(Pos.TOP_CENTER);
         this.getStyleClass().add("pannello");
         
-        this.parseCategoriaXML();
+        this.parseCategorieXML();
         gruppo.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
             @Override
             public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {

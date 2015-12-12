@@ -7,9 +7,9 @@ public class Materiale {
     private String nominativo;
     private Categoria categoria;
     private int disponibilita;
-    private ObservableList<IstanzaMateriale> ordini;
+    private ObservableList<IstanzaMateriale> istanze;
     
-    private boolean cached; //se la lista degli ordini e gia in memoria non la sto a ricaricare perderei le modifiche (trallaltro)
+    private boolean cached;
     private boolean modificato;
 
     public boolean isModificato() {
@@ -44,30 +44,30 @@ public class Materiale {
         return categoria;
     }
 
-    public ObservableList<IstanzaMateriale> getOrdini() {
-        return ordini;
+    public ObservableList<IstanzaMateriale> getIstanze() {
+        return istanze;
     }
 
-    public void setOrdini(ObservableList<IstanzaMateriale> ordini) {
-        this.ordini = ordini;
+    public void setIstanze(ObservableList<IstanzaMateriale> istanze) {
+        this.istanze = istanze;
         //cached = false;
     }
-    public void caricaOrdiniDB() {
-        caricaOrdiniDB(false);
+    public void caricaIstanzeDB() {
+        caricaIstanzeDB(false);
     }
     
-    public void caricaOrdiniDB(boolean clearCache) {
+    public void caricaIstanzeDB(boolean clearCache) {
         if(clearCache || cached) return;
         cached = true;
         
         if(this.getId() == 1) {
-            ordini = FXCollections.observableArrayList(
+            istanze = FXCollections.observableArrayList(
                             new IstanzaMateriale("TEL-CTL-M0002", "Mela SPA", "Funzionante"),
                             new IstanzaMateriale("TEL-CTL-M0012", "Banana SPA", "Funzionante")
                         );            
         }
         else {
-            ordini = FXCollections.observableArrayList(
+            istanze = FXCollections.observableArrayList(
                             new IstanzaMateriale("TEL-CTL-M0020", "Apple SPA", "Funzionante"),
                             new IstanzaMateriale("TEL-CTL-M0004", "Apple SPA", "Funzionante"),
                             new IstanzaMateriale("TEL-CTL-M0008", "Società delle Banane", "Funzionante"),

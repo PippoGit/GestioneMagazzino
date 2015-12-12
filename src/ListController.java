@@ -4,33 +4,14 @@ import javafx.scene.control.ListView;
 
 public class ListController extends ListView {
     private final ObservableList<Materiale> materiali;   
-    private final ApplicationController bind;
+    private final ApplicationController appConBind;
     
-    public void ottieniDatiMySQL() {
-        materiali.addAll(new Materiale(1, "Telecamera CCTV", bind.getCategoria(1), 0), 
-                         new Materiale(2, "Centralino Uno", bind.getCategoria(2), 1), 
-                         new Materiale(3, "Centralino Uno", bind.getCategoria(2), 1), 
-                         new Materiale(4, "Router Netgear 1xaa", bind.getCategoria(0), 1));        
+    public void caricaMateriali() {
+        materiali.addAll(new Materiale(1, "Telecamera CCTV", appConBind.getCategoria(1), 0), 
+                         new Materiale(2, "Centralino Uno", appConBind.getCategoria(2), 1), 
+                         new Materiale(3, "Centralino Uno", appConBind.getCategoria(2), 1), 
+                         new Materiale(4, "Router Netgear 1xaa", appConBind.getCategoria(0), 1));        
     }
-    
-    /*
-    public void aggiornaLista() {
-        materiali.remove(bind.getCurrent());    
-        materiali.add(bind.getCurrent());
-    }
-    
-    public void segnalaModifica(int i) {
-        Materiale m = materiali.get(i);     
-        m.setNominativo(m.getNominativo() + " *");
-        aggiornaLista();
-    }
-    
-    public void modificaSalvata(int i) {
-        Materiale m = materiali.get(i);
-        m.setNominativo(m.getNominativo().substring(0, m.getNominativo().length()-2));
-        aggiornaLista();
-    }
-   */
     
     public ObservableList<Materiale> getMateriali() {
         return materiali;
@@ -38,7 +19,7 @@ public class ListController extends ListView {
     
     public ListController() {
         super();
-        bind = ApplicationController.getDelegationLink();      
+        appConBind = ApplicationController.getDelegationLink();      
         
         materiali  = FXCollections.observableArrayList();
 
@@ -50,9 +31,9 @@ public class ListController extends ListView {
         super.setMaxSize(300, 183);
 
         this.getSelectionModel().selectedItemProperty().addListener((ObservableValue observable, Object oldValue, Object newValue) -> {
-                bind.setCurrent((Materiale) newValue);
-                bind.setTitoloTxtMenu("Scheda materiale – " + ((Materiale) newValue).getNominativo());
-                bind.aggiornaSchedaMateriale();
+                appConBind.setCurrent((Materiale) newValue);
+                appConBind.setTitoloTxtMenu("Scheda materiale – " + ((Materiale) newValue).getNominativo());
+                appConBind.aggiornaSchedaMateriale();
             }
         );
     }

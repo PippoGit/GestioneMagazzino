@@ -8,7 +8,7 @@ public class ToolbarController extends BorderPane {
     private final Label labelTitolo;
 
     private final Button save;
-    private final ApplicationController bind;
+    private final ApplicationController appConBind;
     
     public String getTitoloTxt() {
         return labelTitolo.getText();
@@ -25,7 +25,6 @@ public class ToolbarController extends BorderPane {
 
         this.setMinHeight(55);        
         this.setMaxHeight(55);        
-        //this.setPrefHeight(55);        
 
         save.setMinSize(60, 45);
         save.getStyleClass().add("toolBar-button");    
@@ -50,11 +49,11 @@ public class ToolbarController extends BorderPane {
     private void configuraPulsanti() {
         save.setOnAction((ActionEvent e) -> {
             //salva
-            if(bind.getCurrent().isModificato()) {
-                bind.getCurrent().setModificato(false);
+            if(appConBind.getCurrent().isModificato()) {
+                appConBind.getCurrent().setModificato(false);
                 //bind.modificaSalvataElementoCorrenteListaMateriali();
                 //setTitoloTxt(getTitoloTxt().substring(0, getTitoloTxt().length()-2));
-                bind.aggiornaSchedaMateriale();
+                appConBind.aggiornaSchedaMateriale();
             }
         });
     }
@@ -64,7 +63,7 @@ public class ToolbarController extends BorderPane {
 
         this.save = new Button();
         this.labelTitolo = new Label(titolo);
-        bind = ApplicationController.getDelegationLink();      
+        appConBind = ApplicationController.getDelegationLink();      
         
         configuraStileToolbar();
         posizionaComponenti();

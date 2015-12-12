@@ -1,4 +1,3 @@
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
@@ -47,13 +46,13 @@ public class ApplicationController {
       
     public void aumentaDisponibilitaCurrent() {
         current.aumentaDisponibilita();
-        listaCategorie[current.getCategoria().getIdCategoria()].aumentaDisponibilita();
+        listaCategorie[current.getCategoria().getId()].aumentaDisponibilita();
         graficoDisponibilita.aggiornaDati();        
     }
     
     public void diminuisciDisponibilitaCurrent() {
         current.diminuisciDisponibilita();
-        listaCategorie[current.getCategoria().getIdCategoria()].diminuisciDisponibilita();
+        listaCategorie[current.getCategoria().getId()].diminuisciDisponibilita();
         graficoDisponibilita.aggiornaDati();
     }
     
@@ -81,7 +80,7 @@ public class ApplicationController {
     }    
     
     public void ottieniDatiMySQLListaMateriali() {
-        listaMateriali.ottieniDatiMySQL();
+        listaMateriali.caricaMateriali();
     }
     
     public void cambiaVisibilitaFigliSchedaMateriale(boolean b) {

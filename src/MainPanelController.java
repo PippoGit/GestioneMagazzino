@@ -20,7 +20,7 @@ public class MainPanelController extends VBox {
     
     final private ApplicationController appConBind;
     
-    public void caricaMateriale(Materiale m) {
+    public void caricaMateriale(Materiale m) { //(1)
         informazioniTxt[0].setText(m.getNominativo());
         informazioniTxt[1].setText(m.getCategoria().getDescrizione());
         informazioniTxt[2].setText(Integer.toString(m.getDisponibilita()));
@@ -42,28 +42,28 @@ public class MainPanelController extends VBox {
      }
     
     private void editStatoColumn(IstanzaMateriale selezionato, String newValue) {
-        if(!newValue.equalsIgnoreCase("funzionante") && //se ora non funziona
-           selezionato.getCliente().length() == 0 && //e un non cliente l'aveva
-           selezionato.getStato().equalsIgnoreCase("Funzionante")) //e se prima funzionava
-            appConBind.diminuisciDisponibilitaCurrent(); //allora dimunuisci
-        else if (newValue.equalsIgnoreCase("funzionante") &&  //se ora funziona
-           !selezionato.getStato().equalsIgnoreCase("Funzionante") && //e prima non funzionava
-           selezionato.getCliente().length() == 0) //e nessuno ce l'ha
+        if(!newValue.equalsIgnoreCase("funzionante") && // a
+           selezionato.getCliente().length() == 0 &&  // b
+           selezionato.getStato().equalsIgnoreCase("Funzionante")) //c
+            appConBind.diminuisciDisponibilitaCurrent(); 
+        else if (newValue.equalsIgnoreCase("funzionante") &&  //d
+           !selezionato.getStato().equalsIgnoreCase("Funzionante") && //e
+           selezionato.getCliente().length() == 0) //f
             appConBind.aumentaDisponibilitaCurrent();
 
         selezionato.setStato(newValue);                
         appConBind.mostraModifiche();        
     }
     
-    private void editClienteColumn(IstanzaMateriale selezionato, String newValue) {
-         if(newValue.equals("") && //se lo porto in magazzino
-            selezionato.getCliente().length() != 0 &&  //e non c'era già
-            selezionato.getStato().equalsIgnoreCase("funzionante")) { //e funziona
+    private void editClienteColumn(IstanzaMateriale selezionato, String newValue) { //(3)
+         if(newValue.equals("") && // a
+            selezionato.getCliente().length() != 0 &&  // b
+            selezionato.getStato().equalsIgnoreCase("funzionante")) { // c
              appConBind.aumentaDisponibilitaCurrent();
          }
-         else if (newValue.length() > 0  && //se lo do a un cliente
-                  selezionato.getCliente().length() == 0  && //e prima era in mag
-                  selezionato.getStato().equalsIgnoreCase("funzionante")) { //e funziona
+         else if (newValue.length() > 0  && // d
+                  selezionato.getCliente().length() == 0  && // e
+                  selezionato.getStato().equalsIgnoreCase("funzionante")) { // f
              appConBind.diminuisciDisponibilitaCurrent();
          }
 
@@ -82,7 +82,7 @@ public class MainPanelController extends VBox {
         
         c.setCellFactory(TextFieldTableCell.forTableColumn());
         
-        c.setOnEditCommit(new EventHandler<CellEditEvent<IstanzaMateriale, String>>() {
+        c.setOnEditCommit(new EventHandler<CellEditEvent<IstanzaMateriale, String>>() { //(4)
             @Override
             public void handle(CellEditEvent<IstanzaMateriale, String> event) {
                 IstanzaMateriale selezionato;
@@ -96,7 +96,7 @@ public class MainPanelController extends VBox {
         });        
     }
     
-    private void costruisciTabellaMonitor() {     
+    private void costruisciTabellaMonitor() { //(5)
         TableColumn clienteColumn = new TableColumn("CLIENTE");
         TableColumn statoColumn = new TableColumn("STATO");
         TableColumn codiceMaterialeColumn = new TableColumn("CODICE MATERIALE");
@@ -137,7 +137,7 @@ public class MainPanelController extends VBox {
         titoloMonitor.getStyleClass().add("titolo");  
     }
     
-    public void cambiaVisibilitaFigli(boolean b) {
+    public void cambiaVisibilitaFigli(boolean b) { //(6)
         if(visibilitaFigli == b) { return; }
         
         ObservableList<Node> children = this.getChildren();
@@ -162,3 +162,46 @@ public class MainPanelController extends VBox {
         super.getChildren().addAll(titoloInformazioni, informazioni, titoloMonitor, monitor);
     }
 }
+
+/*
+Commenti
+Classe che si occupa di realizzare il pannello principale dell'interfaccia grafica.
+
+1) Carico un materiale nell'interfaccia grafica. Carico anche tutte le IstanzeMateriale per quel
+materiale senza pulire la cache (se sono già state caricate in passato non le riscarico).
+
+2) Metodo che permette allo StatoColumn di venire modificato con successo.
+In particolare deve DIMINUIRE la disponibilità di quel materiale se:
+a. Il nuovo stato è tale da renderlo inutilizzabile (non è "Funzionante")
+b. Se nessun cliente prima aveva installato 
+c. Se prima funzionava
+
+Deve invece AUMENTARE la disponibilita del materiale se:
+d. Il nuovo stato lo rende utilizzabile (se è Funzionante)
+e. Il vecchio stato era diverso da Funzionante
+f. Nessun cliente l'aveva installato
+
+3) Metodo che permette alla cella di ClienteColumn di venire modificato con successo.
+In particolare deve AUMENTARE la disponibilità di quel materiale se:
+a. Il nuovo cliente è vuoto, ovvero lo porto in magazzino
+b. Prima non era già in magazzino
+c. Se prima funzionava
+
+Deve invece DIMINUIRE la disponibilita del materiale se:
+d. Installo il materiale ad un cliente (metto un valore diverso da vuoto)
+e. Il vecchio cliente era vuoto (era in magazzino)
+f. E prima funzionava
+
+4) Costruisco le colonne della tabella, facendo attenzione a registrare gli eventi giusti
+in bsae al nome della "CellValueFactory" per distinguere tra le giuste azioni da fare in fase
+di modifica.
+
+5) Costruisco la tabella Monitor
+
+6) Metodo utilizzato per cambiare la visibilità degli elementi grafici contenuti dentro il
+pannello principale. Per motivi "stilistici" si è scelto di non visualizzare alcun componente
+in fase di PRIMA apertura, ovvero quando ancora non è presente una cache e non sono presenti 
+materiali da mostrare. Al posto di mostrare una brutta form vuota si è scelto di non mostrare 
+niente, è quindi necessario questo metodo che velocemente cambia la visibilità dei figli quando
+necessario.
+*/

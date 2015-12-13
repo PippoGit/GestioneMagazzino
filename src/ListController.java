@@ -29,7 +29,7 @@ public class ListController extends ListView {
         super.setMinSize(300, 183);
         super.setMaxSize(300, 183);
 
-        this.getSelectionModel().selectedItemProperty().addListener((ObservableValue observable, Object oldValue, Object newValue) -> {
+        this.getSelectionModel().selectedItemProperty().addListener((ObservableValue observable, Object oldValue, Object newValue) -> { //(1)
                 appConBind.setCurrent((Materiale) newValue);
                 appConBind.setTitoloTxtMenu("Scheda materiale – " + ((Materiale) newValue).getNominativo());
                 appConBind.aggiornaPannelloPrincipale();
@@ -38,3 +38,14 @@ public class ListController extends ListView {
     }
    
 }
+
+/*
+Commenti
+Classe che si occupa di realizzare la lista dei risultati di ricerca.
+Viene popolata dal pannello di ricerca che invoca tramite l'ApplicationController
+il metodo caricaMateriali() dopo aver eseguito la query al database.
+
+1) Viene selezionato un elemento della lista, per tanto comunico all'application controller
+di cambiare l'oggetto current e di avvisare il PannelloPrincipale di aggiornarsi per 
+caricare il nuovo Materiale. Nel frattempo invia al Toolbar il nuovo titolo da impostare.
+*/

@@ -46,9 +46,9 @@ public class ToolbarController extends BorderPane {
         this.setLeft(left);         
     }
     
-    private void configuraPulsanti() {
-        save.setOnAction((ActionEvent e) -> {
-            //salva
+    private void configuraPulsanti() { 
+        save.setOnAction((ActionEvent e) -> { // (1)
+            
             if(appConBind.getCurrent().isModificato()) {
                 appConBind.getCurrent().setModificato(false);
                 //bind.modificaSalvataElementoCorrenteListaMateriali();
@@ -70,3 +70,12 @@ public class ToolbarController extends BorderPane {
         configuraPulsanti();
     }
 }
+
+/*
+Commenti
+Classe che si occupa di realizzare la Toolbar, quindi mostrare il titolo di navigazione e 
+implementare un tasto per salvare le modifiche fatte all'oggetto current.
+
+1) Metodo che implementa il salvataggio su database delle modifiche fatte a current
+utilizzando l'oggetto ArchivioMagazzino.
+*/

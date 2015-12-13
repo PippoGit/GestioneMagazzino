@@ -8,14 +8,14 @@ public class ChartController extends VBox {
     private final BarChart<String, Number> istogramma;
     XYChart.Series dati;
     
-    public void aggiornaDati() {
+    public void aggiornaDati() { //(1)
         for (int i=0; i<categorie.length; i++) {
             Categoria c = categorie[i];
             dati.getData().set(i, new XYChart.Data<>(c.getDescrizione(), c.getDisponibilita()));
         }
     }
    
-    private void inizializzaDati() {
+    private void inizializzaDati() { //(2)
         dati = new XYChart.Series();
         dati.setName("Disponibilita");
   
@@ -50,3 +50,14 @@ public class ChartController extends VBox {
         super.getChildren().addAll(titolo, istogramma);
     } 
 }
+
+/*
+Commenti
+Classe che si occupa di realizzare il pannello contenente l'istogramma della disponibilità in
+magazzino delle varie categorie.
+
+1) Aggiorna i dati a seguito di una modifica alla disponibilità di una categoria.
+
+2) Inizializza i dati del grafico. Viene chiamato dopo che vengono settate le categorie di 
+materiale (all'apertura del programma) prima che l'utente possa fare modifiche ai dati. 
+*/

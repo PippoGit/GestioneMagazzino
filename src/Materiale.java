@@ -1,8 +1,9 @@
 
+import java.io.Serializable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class Materiale {
+public class Materiale implements Serializable {
     private int id;
     private String nominativo;
     private Categoria categoria;
@@ -52,11 +53,11 @@ public class Materiale {
         this.istanze = istanze;
         //cached = false;
     }
-    public void caricaIstanzeDB() {
+    public void caricaIstanzeDB() { //(1)
         caricaIstanzeDB(false);
     }
     
-    public void caricaIstanzeDB(boolean clearCache) {
+    public void caricaIstanzeDB(boolean clearCache) { //(2)
         if(clearCache || cached) return;
         cached = true;
         
@@ -111,3 +112,16 @@ public class Materiale {
         return nominativo;
     }
 }
+
+/*
+Commenti
+Classe che si occupa di realizzare il concetto di Materiale previsto nelle specifiche. 
+Per ogni materiale è previsto una lista di IstanzeMateriale come previsto nelle specifiche.
+Implementa l'interfaccia serializable perchè verrà serializzata nel file binario di cache.
+
+1) Carico le istanze da un DB senza pulire la cache, ovvero se ho già caricato da db queste 
+informazioni evito di ricaricarle perchè tanto non sono state modificate (quando modifico le
+informazioni relative ad un materiale setto a true il valore di cached).
+
+2) Carico le istanze di materiale dal Database utilizzando l'oggetto ArchivioMateriale.
+*/

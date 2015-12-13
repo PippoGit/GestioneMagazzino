@@ -1,32 +1,24 @@
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.layout.*;
-import javafx.scene.text.Font;
 
-public class ApplicationController {  
-    private final VBox root = new VBox();
-    
+public class ApplicationController {      
     private ToolbarController menu;
     private SearchPanelController pannelloRicerca;
     private ListController listaMateriali;
-    private MainPanelController schedaMateriale;
+    private MainPanelController pannelloPrincipale;
     private ChartController graficoDisponibilita;
     
-    private Materiale current;
-    private Categoria[] listaCategorie;
+    private Materiale current; //(1)
+    private Categoria[] listaCategorie; //(2)
     
-    private static final ApplicationController DELEGATIONLINK = new ApplicationController(); //Singleton
+    private static final ApplicationController DELEGATIONLINK = new ApplicationController(); //(3)
     
     private ApplicationController() {        
-        this.current = new Materiale();
+        this.current = new Materiale(); 
     }    
     
-    public static ApplicationController getDelegationLink() {
+    public static ApplicationController getDelegationLink() { //(4)
         return DELEGATIONLINK;
-    }
-    
-    public Pane getRoot() {
-        return root;
     }
     
     public Materiale getCurrent() {
@@ -40,80 +32,122 @@ public class ApplicationController {
         listaCategorie = c;
     }
     
-    public Categoria getCategoria(int i){
+    public Categoria getCategoria(int i){ //(3)
         return listaCategorie[i];
     }
       
-    public void aumentaDisponibilitaCurrent() {
+    public void aumentaDisponibilitaCurrent() { //(4)
         current.aumentaDisponibilita();
         listaCategorie[current.getCategoria().getId()].aumentaDisponibilita();
         graficoDisponibilita.aggiornaDati();        
     }
     
-    public void diminuisciDisponibilitaCurrent() {
+    public void diminuisciDisponibilitaCurrent() { //(5)
         current.diminuisciDisponibilita();
         listaCategorie[current.getCategoria().getId()].diminuisciDisponibilita();
         graficoDisponibilita.aggiornaDati();
     }
     
-    public void aggiornaSchedaMateriale() {
-        schedaMateriale.caricaMateriale(current);
-        schedaMateriale.cambiaVisibilitaFigli(true);           
+    public void aggiornaPannelloPrincipale() { //(6)
+        pannelloPrincipale.caricaMateriale(current);
+        pannelloPrincipale.cambiaVisibilitaFigli(true);           
     }
     
-    public void setTitoloTxtMenu(String txt) {
+    public void setTitoloTxtMenu(String txt) { //(7)
         menu.setTitoloTxt(txt);
     }
     
-    public String getTitoloTxtMenu(String txt) {
+    public String getTitoloTxtMenu(String txt) { //(8)
         return menu.getTitoloTxt();
     }
     
     
-    public void mostraModifiche() {
+    public void mostraModifiche() { //(9)
         if(!current.isModificato()) {
-            current.setModificato(true);
+            current.setModificato(true); //(10)
             //listaMateriali.segnalaModifica(listaMateriali.getSelectionModel().getSelectedIndex());
             //menu.setTitoloTxt(menu.getTitoloTxt() + " *");
         }
-        aggiornaSchedaMateriale();        
+        aggiornaPannelloPrincipale();        
     }    
     
-    public void ottieniDatiMySQLListaMateriali() {
+    public void ottieniDatiMySQLListaMateriali() {  //(11)
         listaMateriali.caricaMateriali();
     }
     
-    public void cambiaVisibilitaFigliSchedaMateriale(boolean b) {
-        schedaMateriale.cambiaVisibilitaFigli(b);
+    public void cambiaVisibilitaFigliPannelloPrincipale(boolean b) { //(12)
+        pannelloPrincipale.cambiaVisibilitaFigli(b);
     }
 
-    public void setCategorieGraficoDisponibilita() {
+    public void setCategorieGraficoDisponibilita() { //(13)
         graficoDisponibilita.setCategorie(this.listaCategorie);
         //graficoDisponibilita.aggiornaDati();
     }
     
-    public void preparaElementiGrafici(Scene s) {
+    public void preparaElementiGrafici(Pane root) { //(14)
         VBox pannelloSx = new VBox(16);
         VBox pannelloDx = new VBox(16);        
         HBox center = new HBox(16);
         
         this.menu = new ToolbarController("");
         this.pannelloRicerca = new SearchPanelController();
-        this.schedaMateriale = new MainPanelController();
+        this.pannelloPrincipale = new MainPanelController();
         this.listaMateriali = new ListController();
         this.graficoDisponibilita = new ChartController();
-        
-        Font.loadFont(GestioneMagazzino.class.getResource("font/Roboto/Roboto-Regular.ttf").toExternalForm(), 15);        
-        Font.loadFont(GestioneMagazzino.class.getResource("font/Roboto/Roboto-Medium.ttf").toExternalForm(), 15);        
-        s.getStylesheets().add("style/StyleGestioneMagazzino.css");
         
         pannelloSx.setPadding(new Insets(16, 0, 0, 16));
         pannelloSx.getChildren().addAll(pannelloRicerca, listaMateriali, graficoDisponibilita);
         pannelloDx.setPadding(new Insets(16, 16, 16, 0));
-        pannelloDx.getChildren().add(schedaMateriale);
+        pannelloDx.getChildren().add(pannelloPrincipale);
         center.getChildren().addAll(pannelloSx, pannelloDx);
         
         root.getChildren().addAll(menu, center);
     }
     
 }
+
+/*
+Commenti
+La classe Application Controller si occupa di realizzare un canale di comunicazione che gli altri
+componenti dell'interfaccia grafica possono utilizzare per invocare uno i metodi dell'altro, 
+permettendo così all'interfaccia grafica di tenersi aggiornata in linea con il modello (dati).
+
+1) Oggetto di tipo Materiale che verrà utilizzato per riferirsi al materiale visualizzato "in 
+questo momento" nel Pannello Principale.
+
+2) Array di oggetti di tipo Categoria, viene utilizzato come "unica istanza" di ogni possibile 
+Categoria, viene utilizzato da tutti gli oggetti che utilizzano le categorie.
+Il metodo (3) viene utilizzato per richiedere una particolare categoria specificandone l'id. 
+Si usa la convenzione che l'indice nell'array delle categorie sia uguale all'id definito nel DB.
+
+3) Costruisco un'istanza static per l'oggetto ApplicationController secondo il Design Pattern 
+Singleton. 
+
+4) Metodo più importante delle classe, realizza il legame di delega tra i componenti grafici
+e l'istanza di ApplicationController.
+
+4) 5) I metodi utilizzati per aumentare o diminuire la disponiblità in magazzino dell'oggetto
+current. L'operazione non viene mai eseguita "autonomamente" dall'ApplicationController, ma solo
+se invocata da un altro elemento dell'interfaccia grafica (come ad esempio il Monitor delle 
+istanze di materiale in fase di edit).
+
+6) Comunica al Pannello Principale di caricare un materiale ed in particolare l'oggetto current.
+Potrebbe essere necessario cambiare la visibilità degli elementi del pannello principale che 
+sono inizialmente nascosti.
+
+7) 8) Metodi per dire alla Toolbar di cambiare il titolo.
+
+9) L'oggetto current ha subito delle modifiche in un altro componente grafico. Chiamando questo 
+metodo l'oggetto ApplicationController avvertirà il Pannello Principale di aggiornare la view.
+Inoltre viene lasciato un flag che dice che quel Materiale è stato modificato (10).
+
+11) Comunica alla lista dei materiali di aggiornarsi.
+
+12) Comunica al pannelloPrincipale di cambiare visibilità ai propri figli (gli elementi grafici
+che contiente).
+
+13) Comunica al grafico l'elenco delle categorie.
+
+14) Il metodo si occupa di costruire tutti i vari componenti dell'interfaccia grafica, ad 
+inizializzare il layout e ha mostrare tutto all'utente.
+*/

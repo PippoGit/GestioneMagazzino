@@ -1,4 +1,6 @@
-public class Categoria {
+import java.io.Serializable;
+
+public class Categoria implements Serializable{
     final private int id;
     final private String descrizione;
     private int disponibilita;
@@ -40,3 +42,11 @@ public class Categoria {
         descrizione = d;
     }
 }
+
+/*
+Commenti
+La classe Categoria realizza il concetto di Categoria di materiale.
+I metodi che esegue sono piuttosto semplici e si occupano semplicemente di mantenere
+aggiornata la struttura.
+Implementa l'interfaccia serializable perchè verrà serializzata nel file binario di cache.
+*/

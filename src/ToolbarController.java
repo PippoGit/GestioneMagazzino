@@ -53,7 +53,7 @@ public class ToolbarController extends BorderPane {
                 appConBind.getCurrent().setModificato(false);
                 //bind.modificaSalvataElementoCorrenteListaMateriali();
                 //setTitoloTxt(getTitoloTxt().substring(0, getTitoloTxt().length()-2));
-                appConBind.aggiornaSchedaMateriale();
+                appConBind.aggiornaPannelloPrincipale();
             }
         });
     }

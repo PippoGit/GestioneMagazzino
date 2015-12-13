@@ -32,7 +32,7 @@ public class ListController extends ListView {
         this.getSelectionModel().selectedItemProperty().addListener((ObservableValue observable, Object oldValue, Object newValue) -> {
                 appConBind.setCurrent((Materiale) newValue);
                 appConBind.setTitoloTxtMenu("Scheda materiale – " + ((Materiale) newValue).getNominativo());
-                appConBind.aggiornaSchedaMateriale();
+                appConBind.aggiornaPannelloPrincipale();
             }
         );
     }

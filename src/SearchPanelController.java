@@ -15,7 +15,7 @@ public class SearchPanelController extends VBox {
         return barraRicerca;
     }    
     
-    private void parseCategorieXML() {
+    private void caricaCategorieXML() {
         int num_categorie = 3;
         Categoria[] c = new Categoria[num_categorie];        
 
@@ -56,7 +56,7 @@ public class SearchPanelController extends VBox {
         this.setAlignment(Pos.TOP_CENTER);
         this.getStyleClass().add("pannello");
         
-        this.parseCategorieXML();
+        this.caricaCategorieXML();
         gruppo.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
             @Override
             public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {

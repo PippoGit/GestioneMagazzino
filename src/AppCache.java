@@ -18,7 +18,7 @@ public class AppCache implements Serializable {
 
         public SerializableMateriale(Materiale m) {
             this.categoria = m.getCategoria();
-            this.disponibilita = m.getDisponibilita();
+            this.disponibilita = m.getDisponibilitaConsistente();
             this.id = m.getId();
             this.nominativo = m.getNominativo();
         }

@@ -21,13 +21,13 @@ public class GestioneMagazzino extends Application {
     private void caricaBin() {
         AppCache cache = new AppCache();
         try {
-            controller.setCurrent(cache.carica());
+            controller.setCurrent(cache.carica());            
             controller.aggiornaPannelloPrincipale();            
-            controller.cambiaVisibilitaFigliPannelloPrincipale(true);
             controller.setTitoloTxtMenu("Scheda materiale – " + controller.getCurrent().getNominativo());
         }
         catch (IOException ex) {
             controller.mostraErroreMenu("Si è verificato un errore nell'apertura del file di cache");
+            controller.cambiaVisibilitaFigliPannelloPrincipale(false);
         }
     }
     
@@ -57,14 +57,13 @@ public class GestioneMagazzino extends Application {
 
         controller.preparaElementiGrafici(root);
         
-        controller.ottieniDatiMySQLListaMateriali();
         controller.setCategorieGraficoDisponibilita();
         
         controller.setTitoloTxtMenu("Gestione Magazzino");
-        controller.cambiaVisibilitaFigliPannelloPrincipale(false);
 
         caricaBin();
-        
+        controller.ottieniDatiListaMaterialiDB();
+
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();

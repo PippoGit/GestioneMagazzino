@@ -57,6 +57,7 @@ public class ToolbarController extends BorderPane {
             
             if(appConBind.getCurrent().isModificato()) {
                 appConBind.getCurrent().setModificato(false);
+                appConBind.getCurrent().salvaModificheDB();
                 //bind.modificaSalvataElementoCorrenteListaMateriali();
                 //setTitoloTxt(getTitoloTxt().substring(0, getTitoloTxt().length()-2));
                 appConBind.aggiornaPannelloPrincipale();

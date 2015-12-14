@@ -10,7 +10,18 @@ public class ListController extends ListView {
         materiali.addAll(new Materiale(1, "Telecamera CCTV", appConBind.getCategoria(1), 0), 
                          new Materiale(2, "Centralino Uno", appConBind.getCategoria(2), 0), 
                          new Materiale(3, "Centralino Uno", appConBind.getCategoria(2), 0), 
-                         new Materiale(4, "Router Netgear 1xaa", appConBind.getCategoria(0), 0));        
+                         new Materiale(4, "Router Netgear 1xaa", appConBind.getCategoria(0), 0));       
+        
+        int i=0;
+        
+        for(Materiale m: materiali) {
+            if(m.getId() == appConBind.getCurrent().getId()) {
+                materiali.set(i, appConBind.getCurrent());
+                this.getSelectionModel().select(i);
+                return;
+            }
+            i++;
+        }
     }
     
     public ObservableList<Materiale> getMateriali() {

@@ -72,7 +72,7 @@ public class ApplicationController {
         aggiornaPannelloPrincipale();        
     }    
     
-    public void ottieniDatiMySQLListaMateriali() {  //(11)
+    public void ottieniDatiListaMaterialiDB() {  //(11)
         listaMateriali.caricaMateriali();
     }
     

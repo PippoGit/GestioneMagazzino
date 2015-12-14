@@ -11,7 +11,18 @@ public class Materiale implements Serializable {
     
     private boolean cached;
     private boolean modificato;
-
+    private int disponibilitaConsistente;
+    
+    public int getDisponibilitaConsistente() {
+        return disponibilitaConsistente;
+    }
+    
+    public void salvaModificheDB() {
+        if(isModificato()) {
+            disponibilitaConsistente = disponibilita;
+        }
+    }
+    
     public boolean isModificato() {
         return modificato;
     }
@@ -99,6 +110,7 @@ public class Materiale implements Serializable {
         nominativo = n;
         categoria = c;
         disponibilita = d;
+        disponibilitaConsistente = d;
     }
     
     public Materiale() {

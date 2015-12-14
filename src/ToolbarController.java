@@ -15,6 +15,12 @@ public class ToolbarController extends BorderPane {
     }
     
     public void setTitoloTxt(String t) {
+        labelTitolo.getStyleClass().remove("errore");        
+        labelTitolo.setText(t);
+    }
+    
+    public void titoloConErrore(String t) {
+        labelTitolo.getStyleClass().add("errore");
         labelTitolo.setText(t);
     }
     

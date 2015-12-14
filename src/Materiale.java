@@ -1,13 +1,12 @@
-
 import java.io.Serializable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Materiale implements Serializable {
-    private int id;
-    private String nominativo;
-    private Categoria categoria;
-    private int disponibilita;
+    protected int id;
+    protected String nominativo;
+    protected Categoria categoria;
+    protected int disponibilita;
     private ObservableList<IstanzaMateriale> istanze;
     
     private boolean cached;
@@ -45,19 +44,19 @@ public class Materiale implements Serializable {
         return categoria;
     }
 
-    public ObservableList<IstanzaMateriale> getIstanze() {
+    public final ObservableList<IstanzaMateriale> getIstanze() {
         return istanze;
     }
 
-    public void setIstanze(ObservableList<IstanzaMateriale> istanze) {
+    public final void setIstanze(ObservableList<IstanzaMateriale> istanze) {
         this.istanze = istanze;
         //cached = false;
     }
-    public void caricaIstanzeDB() { //(1)
+    public final void caricaIstanzeDB() { //(1)
         caricaIstanzeDB(false);
     }
     
-    public void caricaIstanzeDB(boolean clearCache) { //(2)
+    public final void caricaIstanzeDB(boolean clearCache) { //(2)
         if(clearCache || cached) return;
         cached = true;
         

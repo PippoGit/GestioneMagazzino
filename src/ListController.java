@@ -30,6 +30,8 @@ public class ListController extends ListView {
         super.setMaxSize(300, 183);
 
         this.getSelectionModel().selectedItemProperty().addListener((ObservableValue observable, Object oldValue, Object newValue) -> { //(1)
+                if(((Materiale) newValue).getId() == appConBind.getCurrent().getId())
+                    return;
                 appConBind.setCurrent((Materiale) newValue);
                 appConBind.setTitoloTxtMenu("Scheda materiale – " + ((Materiale) newValue).getNominativo());
                 appConBind.aggiornaPannelloPrincipale();

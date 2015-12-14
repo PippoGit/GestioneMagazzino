@@ -54,6 +54,7 @@ public class ApplicationController {
     }
     
     public void setTitoloTxtMenu(String txt) { //(7)
+        this.menu.getStyleClass().remove("errore");        
         menu.setTitoloTxt(txt);
     }
     
@@ -84,6 +85,10 @@ public class ApplicationController {
         //graficoDisponibilita.aggiornaDati();
     }
     
+    public void mostraErroreMenu(String txt) {
+        this.menu.titoloConErrore(txt);
+    }
+    
     public void preparaElementiGrafici(Pane root) { //(14)
         VBox pannelloSx = new VBox(16);
         VBox pannelloDx = new VBox(16);        
@@ -111,6 +116,8 @@ Commenti
 La classe Application Controller si occupa di realizzare un canale di comunicazione che gli altri
 componenti dell'interfaccia grafica possono utilizzare per invocare uno i metodi dell'altro, 
 permettendo così all'interfaccia grafica di tenersi aggiornata in linea con il modello (dati).
+L'Application Controller è una specie di "Observer" che gestisce i vari "Subject" rappresentati 
+dai moduli separati della GUI.
 
 1) Oggetto di tipo Materiale che verrà utilizzato per riferirsi al materiale visualizzato "in 
 questo momento" nel Pannello Principale.

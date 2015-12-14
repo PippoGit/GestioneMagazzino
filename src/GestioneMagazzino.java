@@ -1,12 +1,13 @@
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class GestioneMagazzino extends Application {    
     private final ApplicationController controller;
-    //private Object preferenze;
 
     public GestioneMagazzino() {
         controller = ApplicationController.getDelegationLink();
@@ -17,10 +18,39 @@ public class GestioneMagazzino extends Application {
         Font.loadFont(GestioneMagazzino.class.getResource("font/Roboto/Roboto-Medium.ttf").toExternalForm(), 15);        
     }
     
+    private void caricaBin() {
+        AppCache cache = new AppCache();
+        try {
+            controller.setCurrent(cache.carica());
+            controller.aggiornaPannelloPrincipale();            
+            controller.cambiaVisibilitaFigliPannelloPrincipale(true);
+            controller.setTitoloTxtMenu("Scheda materiale – " + controller.getCurrent().getNominativo());
+        }
+        catch (IOException ex) {
+            controller.mostraErroreMenu("Si è verificato un errore nell'apertura del file di cache");
+        }
+    }
+    
+    private void conservaBin() {
+        AppCache cache = new AppCache();
+        
+         try {
+            if (controller.getCurrent().getId() != -1) 
+                cache.salva(controller.getCurrent());          
+        }
+        catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
     @Override
     public void start(Stage primaryStage) {
         final VBox root = new VBox();
         final Scene scene = new Scene(root, 900, 640); 
+        
+        primaryStage.setOnCloseRequest((WindowEvent ev) -> {
+            conservaBin();
+        });
         
         /*preferenze.*/caricaPreferenzeXML();
         scene.getStylesheets().add("style/StyleGestioneMagazzino.css");        
@@ -32,8 +62,9 @@ public class GestioneMagazzino extends Application {
         
         controller.setTitoloTxtMenu("Gestione Magazzino");
         controller.cambiaVisibilitaFigliPannelloPrincipale(false);
+
+        caricaBin();
         
-        primaryStage.setTitle("Magazzino");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();

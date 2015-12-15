@@ -1,7 +1,10 @@
 import java.util.*;
 import javafx.beans.value.*;
+import javafx.event.EventHandler;
 import javafx.geometry.*;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 
 public class SearchPanelController extends VBox {
@@ -37,7 +40,7 @@ public class SearchPanelController extends VBox {
             toggleCategorie.get(i).setMaxSize(300/num_categorie,53);
             toggleCategorie.get(i).setMinSize(300/num_categorie,53);    
             
-            toggleCategorie.get(i).setUserData(c[i].getDescrizione());
+            toggleCategorie.get(i).setUserData(c[i].getId());
         }
         
         containerCategoria.getChildren().addAll(toggleCategorie);
@@ -61,12 +64,31 @@ public class SearchPanelController extends VBox {
             @Override
             public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
                 //Selezionato
-                if(newValue == null) 
+                if(newValue == null) {
                     barraRicerca.setPromptText("Ricerca nel database...");
+                }
                 else
-                    barraRicerca.setPromptText("Ricerca " + newValue.getUserData() + " nel database...");
+                    barraRicerca.setPromptText("Ricerca " + appConBind.getCategoria((int)newValue.getUserData()).getDescrizione() + " nel database...");
             }
 
+        });
+        
+        barraRicerca.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.ENTER)  {
+                    String text = barraRicerca.getText();
+                    if(text.length() == 0) {
+                        return;
+                    }
+                    int categoria =-1;
+                    
+                    if(gruppo.getSelectedToggle() != null)
+                        categoria = (int) gruppo.getSelectedToggle().getUserData();
+                    
+                    appConBind.ottieniDatiListaMaterialiDB(text, categoria);
+                }
+            }
         });
         
         barraRicerca.setMinSize(260, 30);
@@ -76,3 +98,28 @@ public class SearchPanelController extends VBox {
         super.getChildren().addAll(containerCategoria, barraRicerca);
     }
 }
+
+/*
+    NOTE SULLE QUERY:
+
+Ottenere disponibilita di un materiale
+SELECT COUNT(*) AS disponibilita, materiale
+FROM IstanzeMateriale
+WHERE cliente = "" AND materiale = 1 AND stato = "funzionante"
+GROUP BY materiale;
+
+Ottenere monitor di un materiale
+SELECT *
+FROM IstanzeMateriale
+WHERE materiale = 1;
+
+Ottieni disponibilita per categoria
+SELECT COUNT(*) AS disponibilita, categoria
+FROM IstanzeMateriale INNER JOIN materiale ON idMateriale = materiale
+WHERE cliente = "" AND stato = "funzionante"
+GROUP BY categoria;
+
+
+
+
+*/

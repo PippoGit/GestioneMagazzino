@@ -47,7 +47,7 @@ public class ApplicationController {
         listaCategorie[current.getCategoria().getId()].diminuisciDisponibilita();
         graficoDisponibilita.aggiornaDati();
     }
-    
+
     public void aggiornaPannelloPrincipale() { //(6)
         pannelloPrincipale.caricaMateriale(current);
         pannelloPrincipale.cambiaVisibilitaFigli(true);           
@@ -73,7 +73,14 @@ public class ApplicationController {
     }    
     
     public void ottieniDatiListaMaterialiDB() {  //(11)
-        listaMateriali.caricaMateriali();
+        listaMateriali.caricaMateriali(0);
+    }
+    
+    public void ottieniDatiListaMaterialiDB(String txt, int c) {  //(11)
+        if(c == -1) 
+            listaMateriali.caricaMateriali(txt);
+        else
+            listaMateriali.caricaMateriali(txt, c);
     }
     
     public void cambiaVisibilitaFigliPannelloPrincipale(boolean b) { //(12)

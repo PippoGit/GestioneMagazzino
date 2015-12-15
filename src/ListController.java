@@ -3,17 +3,11 @@ import javafx.collections.*;
 import javafx.scene.control.ListView;
 
 public class ListController extends ListView {
-    private final ObservableList<Materiale> materiali;   
+    private ObservableList<Materiale> materiali;   
     private final ApplicationController appConBind;
-    
-    public void caricaMateriali() {
-        materiali.addAll(new Materiale(1, "Telecamera CCTV", appConBind.getCategoria(1), 0), 
-                         new Materiale(2, "Centralino Uno", appConBind.getCategoria(2), 0), 
-                         new Materiale(3, "Centralino Uno", appConBind.getCategoria(2), 0), 
-                         new Materiale(4, "Router Netgear 1xaa", appConBind.getCategoria(0), 0));       
-        
+
+    private void scambiaCurrentInLista() {
         int i=0;
-        
         for(Materiale m: materiali) {
             if(m.getId() == appConBind.getCurrent().getId()) {
                 materiali.set(i, appConBind.getCurrent());
@@ -21,7 +15,27 @@ public class ListController extends ListView {
                 return;
             }
             i++;
-        }
+        }           
+    }
+    public void caricaMateriali(int c) {
+        ArchivioMagazzino am = new ArchivioMagazzino();
+        materiali.clear();
+        materiali.addAll(am.cercaMateriale(c));
+        scambiaCurrentInLista();   
+    }
+    
+    public void caricaMateriali(String txt) {
+        ArchivioMagazzino am = new ArchivioMagazzino();
+        materiali.clear();
+        materiali.addAll(am.cercaMateriale(txt));
+        scambiaCurrentInLista();   
+    }
+    
+    public void caricaMateriali(String txt, int c) {
+        ArchivioMagazzino am = new ArchivioMagazzino();
+        materiali.clear();
+        materiali.addAll(am.cercaMateriale(txt, c));
+        scambiaCurrentInLista();      
     }
     
     public ObservableList<Materiale> getMateriali() {
@@ -41,7 +55,7 @@ public class ListController extends ListView {
         super.setMaxSize(300, 183);
 
         this.getSelectionModel().selectedItemProperty().addListener((ObservableValue observable, Object oldValue, Object newValue) -> { //(1)
-                if(((Materiale) newValue).getId() == appConBind.getCurrent().getId())
+                if(newValue == null || ((Materiale) newValue).getId() == appConBind.getCurrent().getId())
                     return;
                 appConBind.setCurrent((Materiale) newValue);
                 appConBind.setTitoloTxtMenu("Scheda materiale – " + ((Materiale) newValue).getNominativo());

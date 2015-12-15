@@ -18,9 +18,9 @@ public class Materiale implements Serializable {
     }
     
     public void salvaModificheDB() {
-        if(isModificato()) {
-            disponibilitaConsistente = disponibilita;
-        }
+        //if(isModificato()) {
+        disponibilitaConsistente = disponibilita;
+        //}
     }
     
     public boolean isModificato() {
@@ -109,6 +109,13 @@ public class Materiale implements Serializable {
         id = i;
         nominativo = n;
         categoria = c;
+        disponibilita = d;
+        disponibilitaConsistente = d;
+    }
+    
+    public Materiale(int i, String n, int d) {
+        id = i;
+        nominativo = n;
         disponibilita = d;
         disponibilitaConsistente = d;
     }

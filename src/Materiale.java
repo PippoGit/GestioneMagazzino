@@ -1,5 +1,4 @@
 import java.io.Serializable;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Materiale implements Serializable {
@@ -18,9 +17,9 @@ public class Materiale implements Serializable {
     }
     
     public void salvaModificheDB() {
-        //if(isModificato()) {
+        ArchivioMagazzino am = new ArchivioMagazzino(1);
+        am.salvaMateriale(this);
         disponibilitaConsistente = disponibilita;
-        //}
     }
     
     public boolean isModificato() {

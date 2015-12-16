@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 public class Materiale implements Serializable {
     protected int id;
     protected String nominativo;
-    protected Categoria categoria;
+    protected int categoria;
     protected int disponibilita;
     private ObservableList<IstanzaMateriale> istanze;
     
@@ -39,7 +39,7 @@ public class Materiale implements Serializable {
         this.nominativo = nominativo;
     }
 
-    public void setCategoria(Categoria c) {
+    public void setCategoria(int c) {
         this.categoria = c;
     }
 
@@ -51,7 +51,7 @@ public class Materiale implements Serializable {
         return nominativo;
     }
 
-    public Categoria getCategoria() {
+    public int getCategoria() {
         return categoria;
     }
 
@@ -71,22 +71,8 @@ public class Materiale implements Serializable {
         if(clearCache || cached) return;
         cached = true;
         
-        if(this.getId() == 1) {
-            istanze = FXCollections.observableArrayList(
-                            new IstanzaMateriale("TEL-CTL-M0002", "Mela SPA", "Funzionante"),
-                            new IstanzaMateriale("TEL-CTL-M0012", "Banana SPA", "Funzionante")
-                        );            
-        }
-        else {
-            istanze = FXCollections.observableArrayList(
-                            new IstanzaMateriale("TEL-CTL-M0020", "Apple SPA", "Funzionante"),
-                            new IstanzaMateriale("TEL-CTL-M0004", "Apple SPA", "Funzionante"),
-                            new IstanzaMateriale("TEL-CTL-M0008", "Società delle Banane", "Funzionante"),
-                            new IstanzaMateriale("TEL-CTL-M0003", "Società delle Banane", "In riparazione"),
-                            new IstanzaMateriale("TEL-CTL-M0001", "", "Danneggiato"),
-                            new IstanzaMateriale("TEL-CTL-M0026", "Da Pino", "Funzionante")
-                        );
-        }
+        ArchivioMagazzino am = new ArchivioMagazzino(1);
+        this.istanze = am.caricaIstanzeMateriali(id);
     }
 
     public int getDisponibilita() {
@@ -105,7 +91,7 @@ public class Materiale implements Serializable {
         disponibilita--;
     }
     
-    public Materiale(int i, String n, Categoria c, int d) {
+    public Materiale(int i, String n, int c, int d) {
         id = i;
         nominativo = n;
         categoria = c;

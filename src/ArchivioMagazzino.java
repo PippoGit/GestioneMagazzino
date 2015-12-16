@@ -14,8 +14,12 @@ public class ArchivioMagazzino {
     private final static String DB_NAME = "ArchivioMagazzino";
     private final static String USR = "root";
     private final static String PWD = "";
-    private final static int MAX_RES = 6;
+    private static int MAX_RES;
     
+    public ArchivioMagazzino(int max) {
+        MAX_RES = max;
+    }
+
     public ObservableList<Materiale> cercaMateriale(String txt, int c) {
        
         ObservableList<Materiale> ol;
@@ -31,7 +35,7 @@ public class ArchivioMagazzino {
             while (rs.next()){ //12 {
                 ol.add(new Materiale(rs.getInt("idMateriale"),
                                     rs.getString("nominativo"), 
-                                    new Categoria(rs.getInt("idCategoria"), rs.getString("descrizione")),
+                                    rs.getInt("idCategoria"),
                                     0));
             }
         } catch (SQLException e) {System.err.println(e.getMessage());}    
@@ -55,7 +59,7 @@ public class ArchivioMagazzino {
             while (rs.next()){ //12 {
                 ol.add(new Materiale(rs.getInt("idMateriale"),
                                                     rs.getString("nominativo"), 
-                                                    new Categoria(rs.getInt("idCategoria"), rs.getString("descrizione")),
+                                                    rs.getInt("idCategoria"),
                                                     0));
             }
         } catch (SQLException e) {System.err.println(e.getMessage());}    
@@ -75,11 +79,31 @@ public class ArchivioMagazzino {
             while (rs.next()){ //12 {
                 ol.add(new Materiale(rs.getInt("idMateriale"),
                                     rs.getString("nominativo"), 
-                                    new Categoria(rs.getInt("idCategoria"), rs.getString("descrizione")),
+                                    rs.getInt("idCategoria"),
                                     0));
             }
         } catch (SQLException e) {System.err.println(e.getMessage());}    
         
         return ol;
     }
+    
+    public ObservableList<IstanzaMateriale> caricaIstanzeMateriali(int id) {
+        ObservableList<IstanzaMateriale> ol;
+        ol = FXCollections.observableArrayList();        
+        
+        try ( Connection co = DriverManager.getConnection("jdbc:mysql://"+LOCATION +"/"+ DB_NAME, USR, PWD);   //9
+            PreparedStatement  ps = co.prepareStatement("SELECT * FROM IstanzeMateriale WHERE materiale = ? LIMIT "+ MAX_RES);
+            ) { 
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery(); //11   
+            while (rs.next()){ //12 {
+                ol.add(new IstanzaMateriale(rs.getString("codice_materiale"),
+                                            rs.getString("cliente"), 
+                                            rs.getString("stato")));
+            }
+        } catch (SQLException e) {System.err.println(e.getMessage());}    
+        
+        return ol;
+    }
+    
 }

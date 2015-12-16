@@ -38,13 +38,13 @@ public class ApplicationController {
       
     public void aumentaDisponibilitaCurrent() { //(4)
         current.aumentaDisponibilita();
-        listaCategorie[current.getCategoria().getId()].aumentaDisponibilita();
+        listaCategorie[current.getCategoria()].aumentaDisponibilita();
         graficoDisponibilita.aggiornaDati();        
     }
     
     public void diminuisciDisponibilitaCurrent() { //(5)
         current.diminuisciDisponibilita();
-        listaCategorie[current.getCategoria().getId()].diminuisciDisponibilita();
+        listaCategorie[current.getCategoria()].diminuisciDisponibilita();
         graficoDisponibilita.aggiornaDati();
     }
 

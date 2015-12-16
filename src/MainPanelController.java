@@ -22,9 +22,9 @@ public class MainPanelController extends VBox {
     
     public void caricaMateriale(Materiale m) { //(1)
         
-        m.setCategoria(appConBind.getCategoria(m.getCategoria().getId()));
+        //m.setCategoria(m.getCategoria());
         informazioniTxt[0].setText(m.getNominativo());
-        informazioniTxt[1].setText(m.getCategoria().getDescrizione());
+        informazioniTxt[1].setText(appConBind.getCategoria(m.getCategoria()).getDescrizione());
         informazioniTxt[2].setText(Integer.toString(m.getDisponibilita()));
         
         if(m.getDisponibilita() <= 0) {

@@ -34,7 +34,7 @@ public class GestioneMagazzino extends Application {
     private void conservaBin() {
         AppCache cache = new AppCache();
         
-         try {
+        try {
             if (controller.getCurrent().getId() != -1) 
                 cache.salva(controller.getCurrent());          
         }

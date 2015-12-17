@@ -203,3 +203,7 @@
 .errore {
     -fx-text-fill: #CF232B !important;
 }
+
+.messaggioOk {
+    -fx-text-fill: #088C74 !important;
+}

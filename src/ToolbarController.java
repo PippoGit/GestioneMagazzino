@@ -15,12 +15,15 @@ public class ToolbarController extends BorderPane {
     }
     
     public void setTitoloTxt(String t) {
-        labelTitolo.getStyleClass().remove("errore");        
+        labelTitolo.getStyleClass().remove("errore");  
+        labelTitolo.getStyleClass().remove("messaggioOk");        
+
         labelTitolo.setText(t);
     }
     
     public void titoloConErrore(String t) {
         labelTitolo.getStyleClass().add("errore");
+        labelTitolo.getStyleClass().remove("messaggioOk");                
         labelTitolo.setText(t);
     }
     
@@ -54,15 +57,19 @@ public class ToolbarController extends BorderPane {
     
     private void configuraPulsanti() { 
         save.setOnAction((ActionEvent e) -> { // (1)
-            
             if(appConBind.getCurrent().isModificato()) {
                 appConBind.getCurrent().setModificato(false);
                 appConBind.getCurrent().salvaModificheDB();
-                //bind.modificaSalvataElementoCorrenteListaMateriali();
-                //setTitoloTxt(getTitoloTxt().substring(0, getTitoloTxt().length()-2));
                 appConBind.aggiornaPannelloPrincipale();
+                titoloConEsitoOk("Materiale salvato con successo.");
             }
         });
+    }
+    
+    public void titoloConEsitoOk(String txt) {
+        labelTitolo.getStyleClass().add("messaggioOk");
+        labelTitolo.getStyleClass().remove("errore");                
+        labelTitolo.setText(txt);
     }
     
     public ToolbarController(String titolo){

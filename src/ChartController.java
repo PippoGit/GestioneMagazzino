@@ -9,7 +9,7 @@ public class ChartController extends VBox {
     XYChart.Series dati;
     
     public void aggiornaDati() { //(1)
-        for (int i=0; i<categorie.length; i++) {
+        for (int i=0; i < categorie.length; i++) {
             Categoria c = categorie[i];
             dati.getData().set(i, new XYChart.Data<>(c.getDescrizione(), c.getDisponibilita()));
         }

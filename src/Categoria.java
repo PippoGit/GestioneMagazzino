@@ -1,6 +1,4 @@
-import java.io.Serializable;
-
-public class Categoria implements Serializable{
+public class Categoria {
     final private int id;
     final private String descrizione;
     private int disponibilita;

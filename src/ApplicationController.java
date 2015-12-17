@@ -96,6 +96,10 @@ public class ApplicationController {
         this.menu.titoloConErrore(txt);
     }
     
+    public void mostraOkMenu(String txt) {
+        this.menu.titoloConEsitoOk(txt);
+    }
+    
     public void preparaElementiGrafici(Pane root) { //(14)
         VBox pannelloSx = new VBox(16);
         VBox pannelloDx = new VBox(16);        

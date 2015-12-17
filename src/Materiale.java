@@ -71,7 +71,7 @@ public class Materiale implements Serializable {
         cached = true;
         
         ArchivioMagazzino am = new ArchivioMagazzino(1);
-        this.istanze = am.caricaIstanzeMateriali(id);
+        this.istanze = am.caricaMateriale(id);
     }
 
     public int getDisponibilita() {

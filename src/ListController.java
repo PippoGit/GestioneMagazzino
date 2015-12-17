@@ -20,21 +20,21 @@ public class ListController extends ListView {
     public void caricaMateriali(int c) {
         ArchivioMagazzino am = new ArchivioMagazzino(6);
         materiali.clear();
-        materiali.addAll(am.cercaMateriale(c));
+        materiali.addAll(am.caricaListaMateriali("", c));
         scambiaCurrentInLista();   
     }
     
     public void caricaMateriali(String txt) {
         ArchivioMagazzino am = new ArchivioMagazzino(6);
         materiali.clear();
-        materiali.addAll(am.cercaMateriale(txt));
+        materiali.addAll(am.caricaListaMateriali(txt, -1));
         scambiaCurrentInLista();   
     }
     
     public void caricaMateriali(String txt, int c) {
         ArchivioMagazzino am = new ArchivioMagazzino(6);
         materiali.clear();
-        materiali.addAll(am.cercaMateriale(txt, c));
+        materiali.addAll(am.caricaListaMateriali(txt, c));
         scambiaCurrentInLista();      
     }
     

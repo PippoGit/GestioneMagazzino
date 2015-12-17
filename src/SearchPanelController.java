@@ -20,14 +20,16 @@ public class SearchPanelController extends VBox {
     
     private void caricaCategorieXML() {
         int num_categorie = 3;
-        Categoria[] c = new Categoria[num_categorie];        
+        Categoria[] c = new Categoria[num_categorie];  
+        ArchivioMagazzino am = new ArchivioMagazzino();
 
         c[0] = new Categoria(0, "Networking");
-        c[0].setDisponibilita(1);
+        c[0].setDisponibilita(am.caricaDisponibilitaCategorie(0));
         c[1] = new Categoria(1, "CCTV");
-        c[1].setDisponibilita(0);      
+        c[1].setDisponibilita(am.caricaDisponibilitaCategorie(1));      
         c[2] = new Categoria(2, "Telefonia");
-        c[2].setDisponibilita(2);              
+        c[2].setDisponibilita(am.caricaDisponibilitaCategorie(2));
+        
         appConBind.setListaCategorie(c);
 
         for(int i=0; i<num_categorie; i++) {

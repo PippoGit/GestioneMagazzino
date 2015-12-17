@@ -89,7 +89,6 @@ public class ApplicationController {
 
     public void setCategorieGraficoDisponibilita() { //(13)
         graficoDisponibilita.setCategorie(this.listaCategorie);
-        //graficoDisponibilita.aggiornaDati();
     }
     
     public void mostraErroreMenu(String txt) {

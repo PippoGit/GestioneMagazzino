@@ -56,9 +56,7 @@ public class GestioneMagazzino extends Application {
         scene.getStylesheets().add("style/StyleGestioneMagazzino.css");        
 
         controller.preparaElementiGrafici(root);
-        
-        controller.setCategorieGraficoDisponibilita();
-        
+        controller.setCategorieGraficoDisponibilita();  
         controller.setTitoloTxtMenu("Gestione Magazzino");
 
         caricaBin();

@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import javafx.collections.*;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -38,9 +39,14 @@ public class MainPanelController extends VBox {
             informazioniTxt[2].setStyle("-fx-text-fill: #088C74;");
         }
         
-        m.caricaIstanzeDB();
-        listaOrdini = m.getIstanze();
-        monitor.setItems(listaOrdini);
+        try {
+            m.caricaIstanzeDB();
+            listaOrdini = m.getIstanze();
+            monitor.setItems(listaOrdini);
+        } catch (SQLException ex) {
+            appConBind.mostraErroreMenu("Errore nel collegamento al DB");
+        }
+
      }
     
     private void editStatoColumn(IstanzaMateriale selezionato, String newValue) {

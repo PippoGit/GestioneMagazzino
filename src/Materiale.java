@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.sql.SQLException;
 import javafx.collections.ObservableList;
 
 public class Materiale implements Serializable {
@@ -16,8 +17,9 @@ public class Materiale implements Serializable {
         return disponibilitaConsistente;
     }
     
-    public void salvaModificheDB() {
+    public void salvaModificheDB() throws SQLException {
         ArchivioMagazzino am = new ArchivioMagazzino(1);
+
         am.salvaMateriale(this);
         disponibilitaConsistente = disponibilita;
     }
@@ -62,11 +64,11 @@ public class Materiale implements Serializable {
         this.istanze = istanze;
         //cached = false;
     }
-    public final void caricaIstanzeDB() { //(1)
+    public final void caricaIstanzeDB() throws SQLException { //(1)
         caricaIstanzeDB(false);
     }
     
-    public final void caricaIstanzeDB(boolean clearCache) { //(2)
+    public final void caricaIstanzeDB(boolean clearCache) throws SQLException { //(2)
         if(clearCache || cached) return;
         cached = true;
         

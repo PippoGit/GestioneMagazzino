@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.*;
 import javafx.scene.control.ListView;
@@ -20,22 +21,34 @@ public class ListController extends ListView {
     public void caricaMateriali(int c) {
         ArchivioMagazzino am = new ArchivioMagazzino(6);
         materiali.clear();
-        materiali.addAll(am.caricaListaMateriali("", c));
-        scambiaCurrentInLista();   
+        try {
+            materiali.addAll(am.caricaListaMateriali("", c));
+            scambiaCurrentInLista();       
+        } catch (SQLException ex) {
+            appConBind.mostraErroreMenu("Errore nel collegamento al DB");
+        }
     }
     
     public void caricaMateriali(String txt) {
         ArchivioMagazzino am = new ArchivioMagazzino(6);
         materiali.clear();
-        materiali.addAll(am.caricaListaMateriali(txt, -1));
-        scambiaCurrentInLista();   
+        try {
+            materiali.addAll(am.caricaListaMateriali(txt, -1));
+            scambiaCurrentInLista();       
+        } catch (SQLException ex) {
+            appConBind.mostraErroreMenu("Errore nel collegamento al DB");
+        }
     }
     
     public void caricaMateriali(String txt, int c) {
         ArchivioMagazzino am = new ArchivioMagazzino(6);
         materiali.clear();
-        materiali.addAll(am.caricaListaMateriali(txt, c));
-        scambiaCurrentInLista();      
+        try {
+            materiali.addAll(am.caricaListaMateriali(txt, c));      
+            scambiaCurrentInLista();
+        } catch (SQLException ex) {
+            appConBind.mostraErroreMenu("Errore nel collegamento al DB");
+        }
     }
     
     public ObservableList<Materiale> getMateriali() {

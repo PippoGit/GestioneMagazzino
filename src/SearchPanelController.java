@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import java.util.*;
 import javafx.beans.value.*;
 import javafx.event.EventHandler;
@@ -24,11 +25,16 @@ public class SearchPanelController extends VBox {
         ArchivioMagazzino am = new ArchivioMagazzino();
 
         c[0] = new Categoria(0, "Networking");
-        c[0].setDisponibilita(am.caricaDisponibilitaCategorie(0));
         c[1] = new Categoria(1, "CCTV");
-        c[1].setDisponibilita(am.caricaDisponibilitaCategorie(1));      
         c[2] = new Categoria(2, "Telefonia");
-        c[2].setDisponibilita(am.caricaDisponibilitaCategorie(2));
+
+        try {
+            c[0].setDisponibilita(am.caricaDisponibilitaCategorie(0));
+            c[1].setDisponibilita(am.caricaDisponibilitaCategorie(1));      
+            c[2].setDisponibilita(am.caricaDisponibilitaCategorie(2));
+        } catch (SQLException ex) {
+            appConBind.mostraErroreMenu("Errore nel collegamento al DB");
+        }
         
         appConBind.setListaCategorie(c);
 
@@ -100,28 +106,3 @@ public class SearchPanelController extends VBox {
         super.getChildren().addAll(containerCategoria, barraRicerca);
     }
 }
-
-/*
-    NOTE SULLE QUERY:
-
-Ottenere disponibilita di un materiale
-SELECT COUNT(*) AS disponibilita, materiale
-FROM IstanzeMateriale
-WHERE cliente = "" AND materiale = 1 AND stato = "funzionante"
-GROUP BY materiale;
-
-Ottenere monitor di un materiale
-SELECT *
-FROM IstanzeMateriale
-WHERE materiale = 1;
-
-Ottieni disponibilita per categoria
-SELECT COUNT(*) AS disponibilita, categoria
-FROM IstanzeMateriale INNER JOIN materiale ON idMateriale = materiale
-WHERE cliente = "" AND stato = "funzionante"
-GROUP BY categoria;
-
-
-
-
-*/

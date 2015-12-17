@@ -1,4 +1,7 @@
 //import java.util.Optional;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.geometry.*;
 import javafx.scene.control.*;
@@ -58,10 +61,15 @@ public class ToolbarController extends BorderPane {
     private void configuraPulsanti() { 
         save.setOnAction((ActionEvent e) -> { // (1)
             if(appConBind.getCurrent().isModificato()) {
-                appConBind.getCurrent().setModificato(false);
-                appConBind.getCurrent().salvaModificheDB();
-                appConBind.aggiornaPannelloPrincipale();
-                titoloConEsitoOk("Materiale salvato con successo.");
+                
+                try {
+                    appConBind.getCurrent().setModificato(false);
+                    appConBind.getCurrent().salvaModificheDB();
+                    appConBind.aggiornaPannelloPrincipale();
+                    titoloConEsitoOk("Materiale salvato con successo.");
+                } catch (SQLException ex) {
+                    appConBind.mostraErroreMenu("Errore nel collegamento al DB");
+                }
             }
         });
     }

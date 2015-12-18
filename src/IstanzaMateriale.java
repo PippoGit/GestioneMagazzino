@@ -1,7 +1,6 @@
-import java.io.Serializable;
 import javafx.beans.property.*;
 
-public class IstanzaMateriale implements Serializable {
+public class IstanzaMateriale {
     private  final SimpleStringProperty codiceMateriale;
     private  SimpleStringProperty cliente;
     private  SimpleStringProperty stato;
@@ -40,5 +39,4 @@ Classe che si occupa di realizzare il concetto di IstanzaMateriale previsto nell
 Si tratta di una semplice classe il cui unico scopo è mantenere aggiornate le varie istanze.
 Sono state utilizzate SimpleStringProperty per permettere alla tabella Monitor che dovrà usarle
 di mantenersi aggiornata con le modifiche fatte agli oggetti.
-Implementa l'interfaccia serializable perchè verrà serializzata nel file binario di cache.
 */

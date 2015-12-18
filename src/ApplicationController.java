@@ -32,6 +32,10 @@ public class ApplicationController {
         listaCategorie = c;
     }
     
+    public Categoria[] getListaCategorie () {
+        return listaCategorie;
+    }
+    
     public Categoria getCategoria(int i){ //(3)
         return listaCategorie[i];
     }
@@ -66,8 +70,6 @@ public class ApplicationController {
     public void mostraModifiche() { //(9)
         if(!current.isModificato()) {
             current.setModificato(true); //(10)
-            //listaMateriali.segnalaModifica(listaMateriali.getSelectionModel().getSelectedIndex());
-            //menu.setTitoloTxt(menu.getTitoloTxt() + " *");
         }
         aggiornaPannelloPrincipale();        
     }    

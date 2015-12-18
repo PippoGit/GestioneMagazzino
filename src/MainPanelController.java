@@ -12,33 +12,24 @@ public class MainPanelController extends VBox {
     private Label titoloInformazioni;
     private Label titoloMonitor;
     private boolean visibilitaFigli;
-    
     private final GridPane informazioni;
     private final TextField[] informazioniTxt = new TextField[3];
-    
     private ObservableList<IstanzaMateriale> listaOrdini;
     private final TableView<IstanzaMateriale> monitor = new TableView<>();
-    
     final private ApplicationController appConBind;
     
     public void caricaMateriale(Materiale m) { //(1)
-        
-        //m.setCategoria(m.getCategoria());
         informazioniTxt[0].setText(m.getNominativo());
         informazioniTxt[1].setText(appConBind.getCategoria(m.getCategoria()).getDescrizione());
         informazioniTxt[2].setText(Integer.toString(m.getDisponibilita()));
-        
         if(m.getDisponibilita() <= 0) {
             informazioniTxt[2].setStyle("-fx-text-fill: #E0082A;");
             informazioniTxt[2].setText("Non disponibile");
-        }
-        else if (m.getDisponibilita() <= 5) {
+        } else if (m.getDisponibilita() <= 5) {
             informazioniTxt[2].setStyle("-fx-text-fill: #E0B508;");
-        }
-        else {
+        } else {
             informazioniTxt[2].setStyle("-fx-text-fill: #088C74;");
         }
-        
         try {
             m.caricaIstanzeDB();
             listaOrdini = m.getIstanze();
@@ -46,7 +37,6 @@ public class MainPanelController extends VBox {
         } catch (SQLException ex) {
             appConBind.mostraErroreMenu("Errore nel collegamento al DB");
         }
-
      }
     
     private void editStatoColumn(IstanzaMateriale selezionato, String newValue) {
@@ -58,7 +48,6 @@ public class MainPanelController extends VBox {
            !selezionato.getStato().equalsIgnoreCase("Funzionante") && //e
            selezionato.getCliente().length() == 0) //f
             appConBind.aumentaDisponibilitaCurrent();
-
         selezionato.setStato(newValue);                
         appConBind.mostraModifiche();        
     }
@@ -74,7 +63,6 @@ public class MainPanelController extends VBox {
                   selezionato.getStato().equalsIgnoreCase("funzionante")) { // f
              appConBind.diminuisciDisponibilitaCurrent();
          }
-
          selezionato.setCliente(newValue);
          appConBind.mostraModifiche();        
     }
@@ -84,12 +72,8 @@ public class MainPanelController extends VBox {
         c.setMinWidth(w);
         c.setSortable(false);
         c.setEditable(!n.equalsIgnoreCase("codiceMateriale"));
-        c.setCellValueFactory(
-            new PropertyValueFactory<>(n)        
-        );
-        
+        c.setCellValueFactory(new PropertyValueFactory<>(n) );
         c.setCellFactory(TextFieldTableCell.forTableColumn());
-        
         c.setOnEditCommit(new EventHandler<CellEditEvent<IstanzaMateriale, String>>() { //(4)
             @Override
             public void handle(CellEditEvent<IstanzaMateriale, String> event) {
@@ -108,11 +92,9 @@ public class MainPanelController extends VBox {
         TableColumn clienteColumn = new TableColumn("CLIENTE");
         TableColumn statoColumn = new TableColumn("STATO");
         TableColumn codiceMaterialeColumn = new TableColumn("CODICE MATERIALE");
-        
         costruisciColonna(statoColumn, "stato", 120);
         costruisciColonna(clienteColumn, "cliente", 260);
         costruisciColonna(codiceMaterialeColumn, "codiceMateriale", 138);
-        
         monitor.setEditable(true);       
         monitor.getColumns().addAll(statoColumn, codiceMaterialeColumn, clienteColumn);             
     }
@@ -121,7 +103,6 @@ public class MainPanelController extends VBox {
         Label descrizioneLbl = new Label("DESCRIZIONE");
         Label categoriaLbl = new Label("CATEGORIA");
         Label disponibilitaLbl = new Label("DISPONIBILITA");
-        
         for(int i=0; i<informazioniTxt.length; i++) {
             informazioniTxt[i] = new TextField("");
             informazioniTxt[i].setEditable(false);
@@ -129,16 +110,13 @@ public class MainPanelController extends VBox {
             informazioniTxt[i].setId("informazioniTxt"+i);
             informazioniTxt[i].setMinWidth(370);
         }
-
         informazioni.addColumn(1, descrizioneLbl, categoriaLbl, disponibilitaLbl);
         informazioni.setHgap(24);
         informazioni.setVgap(3);
         informazioni.addColumn(2, informazioniTxt);
-        
         this.getStyleClass().add("pannello");        
         super.setPrefSize(560, 600);
         this.setPadding(new Insets(16));
-        
         titoloInformazioni = new Label("Informazioni");
         titoloInformazioni.getStyleClass().add("titolo");
         titoloMonitor = new Label("Monitoraggio stato e spostamenti");
@@ -147,24 +125,17 @@ public class MainPanelController extends VBox {
     
     public void cambiaVisibilitaFigli(boolean b) { //(6)
         if(visibilitaFigli == b) { return; }
-        
         ObservableList<Node> children = this.getChildren();
-        
-        children.stream().forEach((n) -> {
-            n.setVisible(b);
-        });
-        
+        children.stream().forEach((n) -> { n.setVisible(b); });
         visibilitaFigli = b;
     }
     
     public MainPanelController() {
         super(8);
         appConBind = ApplicationController.getDelegationLink();
-        
         visibilitaFigli = true;
         informazioni = new GridPane();
         informazioni.setId("informazioni");
-
         preparaLayout();
         costruisciTabellaMonitor();
         super.getChildren().addAll(titoloInformazioni, informazioni, titoloMonitor, monitor);

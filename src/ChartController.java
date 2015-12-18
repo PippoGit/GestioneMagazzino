@@ -19,9 +19,8 @@ public class ChartController extends VBox {
         dati = new XYChart.Series();
         dati.setName("Disponibilita");
   
-        for (Categoria c : categorie) {
+        for (Categoria c : categorie)
             dati.getData().add(new XYChart.Data<>(c.getDescrizione(), c.getDisponibilita()));
-        }
         
         istogramma.getData().addAll(dati);        
     }
@@ -38,10 +37,9 @@ public class ChartController extends VBox {
         
         Label titolo = new Label("Grafico disponibilità");
         istogramma = new BarChart<>(xAxis,yAxis);
-        istogramma.setAnimated(false);
         
+        istogramma.setAnimated(false);
         titolo.getStyleClass().add("titolo");
-
         getStyleClass().add("pannello");
         setPadding(new Insets(16));
         super.setMinSize(300, 215);

@@ -8,6 +8,7 @@ import javafx.stage.WindowEvent;
 
 public class GestioneMagazzino extends Application {    
     private final ApplicationController controller;
+    private Scene scene;
 
     public GestioneMagazzino() {
         controller = ApplicationController.getDelegationLink();
@@ -15,7 +16,8 @@ public class GestioneMagazzino extends Application {
     
     public void caricaPreferenzeXML() {
         Font.loadFont(GestioneMagazzino.class.getResource("font/Roboto/Roboto-Regular.ttf").toExternalForm(), 15);        
-        Font.loadFont(GestioneMagazzino.class.getResource("font/Roboto/Roboto-Medium.ttf").toExternalForm(), 15);        
+        Font.loadFont(GestioneMagazzino.class.getResource("font/Roboto/Roboto-Medium.ttf").toExternalForm(), 15);
+        scene.getStylesheets().add("style/StyleGestioneMagazzino.css");                
     }
     
     private void caricaBin() {
@@ -33,7 +35,6 @@ public class GestioneMagazzino extends Application {
     
     private void conservaBin() {
         AppCache cache = new AppCache();
-        
         try {
             if (controller.getCurrent().getId() != -1) 
                 cache.salva(controller.getCurrent());          
@@ -46,22 +47,15 @@ public class GestioneMagazzino extends Application {
     @Override
     public void start(Stage primaryStage) {
         final VBox root = new VBox();
-        final Scene scene = new Scene(root, 900, 640); 
+        scene = new Scene(root, 900, 640); 
         
-        primaryStage.setOnCloseRequest((WindowEvent ev) -> {
-            conservaBin();
-        });
-        
-        /*preferenze.*/caricaPreferenzeXML();
-        scene.getStylesheets().add("style/StyleGestioneMagazzino.css");        
-
+        caricaPreferenzeXML();
         controller.preparaElementiGrafici(root);
         controller.setCategorieGraficoDisponibilita();  
-        controller.setTitoloTxtMenu("Gestione Magazzino");
-
         caricaBin();
         controller.ottieniDatiListaMaterialiDB();
-
+        
+        primaryStage.setOnCloseRequest((WindowEvent ev) -> { conservaBin(); });
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();

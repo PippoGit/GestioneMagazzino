@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 public class Materiale implements Serializable {
     protected int id;
     protected String nominativo;
-    protected int categoria;
+    protected int categoria; //(3)
     protected int disponibilita;
     private ObservableList<IstanzaMateriale> istanze;
     
@@ -17,9 +17,8 @@ public class Materiale implements Serializable {
         return disponibilitaConsistente;
     }
     
-    public void salvaModificheDB() throws SQLException {
+    public void salvaModificheDB() throws SQLException { //(4)
         ArchivioMagazzino am = new ArchivioMagazzino(1);
-
         am.salvaMateriale(this);
         disponibilitaConsistente = disponibilita;
     }
@@ -129,4 +128,10 @@ informazioni evito di ricaricarle perchè tanto non sono state modificate (quand
 informazioni relative ad un materiale setto a true il valore di cached).
 
 2) Carico le istanze di materiale dal Database utilizzando l'oggetto ArchivioMateriale.
+
+3) La classe materiale non ha necessità di salvarsi tutte le informazioni sulla Categoria
+basta il solo id.
+
+4) Metodo con il quale un materiale può chiedere all'ArchivioMagazzino, gestore del database,
+di rendere permanenti le modifiche che lo hanno coinvolto.
 */

@@ -10,7 +10,6 @@ public class Categoria {
     public String getDescrizione() {
         return descrizione;
     }
-
     
     public int getDisponibilita() {
         return disponibilita;
@@ -34,7 +33,6 @@ public class Categoria {
         disponibilita = di;
     }
     
-    
     public Categoria(int i, String d) {
         id = i;
         descrizione = d;
@@ -46,5 +44,4 @@ Commenti
 La classe Categoria realizza il concetto di Categoria di materiale.
 I metodi che esegue sono piuttosto semplici e si occupano semplicemente di mantenere
 aggiornata la struttura.
-Implementa l'interfaccia serializable perchè verrà serializzata nel file binario di cache.
 */

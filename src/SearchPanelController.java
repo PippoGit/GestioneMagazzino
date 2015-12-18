@@ -4,30 +4,28 @@ import javafx.beans.value.*;
 import javafx.event.EventHandler;
 import javafx.geometry.*;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.*;
 
 public class SearchPanelController extends VBox {
-    private final ArrayList<ToggleButton> toggleCategorie;
-    private final ToggleGroup gruppo;
-    private final HBox containerCategoria;
-    private final TextField barraRicerca;
-    private final ApplicationController appConBind;
+    private ArrayList<ToggleButton> toggleCategorie;
+    private ToggleGroup gruppo;
+    private HBox containerCategoria;
+    private TextField barraRicerca;
+    private ApplicationController appConBind;
+    private int num_categorie;
     
     public TextField getBarraRicerca(){
         return barraRicerca;
-    }    
+    }
     
-    private void caricaCategorieXML() {
-        int num_categorie = 3;
+    private void caricaCategorieXML() { //(1)
+        num_categorie = 3;
         Categoria[] c = new Categoria[num_categorie];  
         ArchivioMagazzino am = new ArchivioMagazzino();
-
         c[0] = new Categoria(0, "Networking");
         c[1] = new Categoria(1, "CCTV");
         c[2] = new Categoria(2, "Telefonia");
-
         try {
             c[0].setDisponibilita(am.caricaDisponibilitaCategorie(0));
             c[1].setDisponibilita(am.caricaDisponibilitaCategorie(1));      
@@ -35,27 +33,33 @@ public class SearchPanelController extends VBox {
         } catch (SQLException ex) {
             appConBind.mostraErroreMenu("Errore nel collegamento al DB");
         }
-        
         appConBind.setListaCategorie(c);
+    }
+    
+    private void effettuaRicerca() { //(2)
+        int categoria =-1;
+        String text = barraRicerca.getText();
 
+        if(gruppo.getSelectedToggle() != null) 
+            categoria = (int) gruppo.getSelectedToggle().getUserData();
+        appConBind.ottieniDatiListaMaterialiDB(text, categoria);
+    }
+    
+    private void configuraToggleCategorie() { //(3)
+        Categoria [] c = appConBind.getListaCategorie();
         for(int i=0; i<num_categorie; i++) {
-            toggleCategorie.add(new ToggleButton());
-
+            toggleCategorie.add(new ToggleButton()); //(2)
             toggleCategorie.get(i).setToggleGroup(gruppo);
-            
             toggleCategorie.get(i).getStyleClass().add("categoria");
             toggleCategorie.get(i).setId("categoria"+i);            
             toggleCategorie.get(i).setMaxSize(300/num_categorie,53);
             toggleCategorie.get(i).setMinSize(300/num_categorie,53);    
-            
             toggleCategorie.get(i).setUserData(c[i].getId());
         }
-        
         containerCategoria.getChildren().addAll(toggleCategorie);
     }
     
-    public SearchPanelController() {
-        super(20);
+    private void inizializzaComponenti() { //(4)
         this.barraRicerca = new TextField();
         this.gruppo = new ToggleGroup();
         this.containerCategoria = new HBox();
@@ -67,42 +71,57 @@ public class SearchPanelController extends VBox {
         this.setAlignment(Pos.TOP_CENTER);
         this.getStyleClass().add("pannello");
         
-        this.caricaCategorieXML();
-        gruppo.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
-            @Override
-            public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
-                //Selezionato
-                if(newValue == null) {
-                    barraRicerca.setPromptText("Ricerca nel database...");
-                }
-                else
-                    barraRicerca.setPromptText("Ricerca " + appConBind.getCategoria((int)newValue.getUserData()).getDescrizione() + " nel database...");
-            }
-
-        });
-        
-        barraRicerca.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode() == KeyCode.ENTER)  {
-                    String text = barraRicerca.getText();
-                    if(text.length() == 0) {
-                        return;
-                    }
-                    int categoria =-1;
-                    
-                    if(gruppo.getSelectedToggle() != null)
-                        categoria = (int) gruppo.getSelectedToggle().getUserData();
-                    
-                    appConBind.ottieniDatiListaMaterialiDB(text, categoria);
-                }
-            }
-        });
-        
         barraRicerca.setMinSize(260, 30);
         barraRicerca.setMaxSize(260, 30);
         barraRicerca.setPromptText("Ricerca nel database...");
+    }
+    
+    public SearchPanelController() {
+        super(20);
+        inizializzaComponenti();
+        caricaCategorieXML();
+        configuraToggleCategorie();
         
+        gruppo.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){ //(5)
+            @Override
+            public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
+                if(newValue == null) barraRicerca.setPromptText("Ricerca nel database...");
+                else barraRicerca.setPromptText("Ricerca " + appConBind.getCategoria((int)newValue.getUserData()).getDescrizione() + " nel database...");
+            }
+        });
+        barraRicerca.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.ENTER) effettuaRicerca();
+            }
+        });
+
         super.getChildren().addAll(containerCategoria, barraRicerca);
     }
 }
+
+/*
+Commenti
+Classe utilizzata per realizzare il pannello di ricerca. Estende la classe VBox. 
+Si occupa di implementare i meccanismi che permetteranno all'utente di effettuare una ricerca,
+inoltre carica dall'oggetto di preferenze (costruito dalla classe GestioneMagazzino effettuando un parse
+dal file XML di configurazione) le categorie di materiale.
+
+1) Carica le categorie dall'oggetto delle preferenze locali. Dopo aver caricato le categorie si occupa
+di effettuare una query al database per ottenere per ciascuna categoria la disponibilità globale in
+magazzino (informazioni che saranno utilizzate per permettere la realizzazione del grafico).
+
+2) Metodo che richiede alla lista dei materiali di aggiornarsi richiedendo al database i materiali 
+e le categorie richieste dall'utente.
+
+3) Metodo che si occupa di configurare il toggleCategorie che permette all'utente di scegliere tra una 
+categoria e l'altra.
+
+4) Metodo che inizializza i componenti grafici
+
+5) Registro operazioni da fare in caso in cui l'utente cambi la categoria. In particolare vado ad
+aggiornare il placeholder sulla barra di ricerca.
+
+6) In caso in cui l'utente prema "invio" mentre sta scrivendo nella barraRicerca -> il sistema deve 
+effettuare una ricerca (chiamando il metodo apposito (2))
+*/

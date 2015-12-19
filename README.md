@@ -52,4 +52,3 @@ Lo stato di tutte le istanze modificate per quella particolare Classe di materia
 * Selezione di un elemento della ListView
 * Modifica di una cella del Monitor stato e spostamento
 * Termine dell’applicazione
-

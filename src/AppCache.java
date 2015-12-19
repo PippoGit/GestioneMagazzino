@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 public class AppCache implements Serializable {
     private static final String FILE_PATH = "cache.bin";
-    //porcoddio
+
     class SerializableMateriale extends Materiale implements Serializable{ //(1)
         
         public SerializableMateriale() {

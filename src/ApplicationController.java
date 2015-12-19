@@ -2,7 +2,7 @@ import javafx.geometry.Insets;
 import javafx.scene.layout.*;
 
 public class ApplicationController {      
-    private ToolbarController menu;
+    private ToolbarController toolbar;
     private SearchPanelController pannelloRicerca;
     private ListController listaMateriali;
     private MainPanelController pannelloPrincipale;
@@ -57,13 +57,13 @@ public class ApplicationController {
         pannelloPrincipale.cambiaVisibilitaFigli(true);           
     }
     
-    public void setTitoloTxtMenu(String txt) { //(7)
-        this.menu.getStyleClass().remove("errore");        
-        menu.setTitoloTxt(txt);
+    public void setTitoloTxtToolbar(String txt) { //(7)
+        this.toolbar.getStyleClass().remove("errore");        
+        toolbar.setTitoloTxt(txt);
     }
     
-    public String getTitoloTxtMenu(String txt) { //(8)
-        return menu.getTitoloTxt();
+    public String getTitoloTxtToolbar(String txt) { //(8)
+        return toolbar.getTitoloTxt();
     }
     
     
@@ -93,12 +93,12 @@ public class ApplicationController {
         graficoDisponibilita.setCategorie(this.listaCategorie);
     }
     
-    public void mostraErroreMenu(String txt) {
-        this.menu.titoloConErrore(txt);
+    public void mostraErroreToolbar(String txt) {
+        this.toolbar.titoloConErrore(txt);
     }
     
-    public void mostraOkMenu(String txt) {
-        this.menu.titoloConEsitoOk(txt);
+    public void mostraOkToolbar(String txt) {
+        this.toolbar.titoloConEsitoOk(txt);
     }
     
     public void preparaElementiGrafici(Pane root) { //(14)
@@ -106,7 +106,7 @@ public class ApplicationController {
         VBox pannelloDx = new VBox(16);        
         HBox center = new HBox(16);
         
-        this.menu = new ToolbarController("");
+        this.toolbar = new ToolbarController("");
         this.pannelloRicerca = new SearchPanelController();
         this.pannelloPrincipale = new MainPanelController();
         this.listaMateriali = new ListController();
@@ -118,7 +118,7 @@ public class ApplicationController {
         pannelloDx.getChildren().add(pannelloPrincipale);
         center.getChildren().addAll(pannelloSx, pannelloDx);
         
-        root.getChildren().addAll(menu, center);
+        root.getChildren().addAll(toolbar, center);
     }
     
 }

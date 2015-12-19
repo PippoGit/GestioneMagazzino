@@ -25,7 +25,7 @@ public class ListController extends ListView {
             materiali.addAll(am.caricaListaMateriali("", c));
             scambiaCurrentInLista();       
         } catch (SQLException ex) {
-            appConBind.mostraErroreMenu("Errore nel collegamento al DB");
+            appConBind.mostraErroreToolbar("Errore nel collegamento al DB");
         }
     }
     
@@ -36,7 +36,7 @@ public class ListController extends ListView {
             materiali.addAll(am.caricaListaMateriali(txt, -1));
             scambiaCurrentInLista();       
         } catch (SQLException ex) {
-            appConBind.mostraErroreMenu("Errore nel collegamento al DB");
+            appConBind.mostraErroreToolbar("Errore nel collegamento al DB");
         }
     }
     
@@ -47,7 +47,7 @@ public class ListController extends ListView {
             materiali.addAll(am.caricaListaMateriali(txt, c));      
             scambiaCurrentInLista();
         } catch (SQLException ex) {
-            appConBind.mostraErroreMenu("Errore nel collegamento al DB");
+            appConBind.mostraErroreToolbar("Errore nel collegamento al DB");
         }
     }
     
@@ -67,7 +67,7 @@ public class ListController extends ListView {
         this.getSelectionModel().selectedItemProperty().addListener((ObservableValue observable, Object oldValue, Object newValue) -> { //(3)
                 if(newValue == null || ((Materiale) newValue).getId() == appConBind.getCurrent().getId()) return;
                 appConBind.setCurrent((Materiale) newValue);
-                appConBind.setTitoloTxtMenu("Scheda materiale – " + ((Materiale) newValue).getNominativo());
+                appConBind.setTitoloTxtToolbar("Scheda materiale – " + ((Materiale) newValue).getNominativo());
                 appConBind.aggiornaPannelloPrincipale();
             }
         );

@@ -31,7 +31,7 @@ public class SearchPanelController extends VBox {
             c[1].setDisponibilita(am.caricaDisponibilitaCategorie(1));      
             c[2].setDisponibilita(am.caricaDisponibilitaCategorie(2));
         } catch (SQLException ex) {
-            appConBind.mostraErroreMenu("Errore nel collegamento al DB");
+            appConBind.mostraErroreToolbar("Errore nel collegamento al DB");
         }
         appConBind.setListaCategorie(c);
     }

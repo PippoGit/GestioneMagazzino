@@ -63,7 +63,7 @@ public class ToolbarController extends BorderPane {
                     appConBind.aggiornaPannelloPrincipale();
                     titoloConEsitoOk("Materiale salvato con successo.");
                 } catch (SQLException ex) {
-                    appConBind.mostraErroreMenu("Errore nel collegamento al DB");
+                    appConBind.mostraErroreToolbar("Errore nel collegamento al DB");
                 }
             }
         });

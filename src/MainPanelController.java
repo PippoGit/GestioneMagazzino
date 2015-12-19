@@ -35,7 +35,7 @@ public class MainPanelController extends VBox {
             listaOrdini = m.getIstanze();
             monitor.setItems(listaOrdini);
         } catch (SQLException ex) {
-            appConBind.mostraErroreMenu("Errore nel collegamento al DB");
+            appConBind.mostraErroreToolbar("Errore nel collegamento al DB");
         }
      }
     

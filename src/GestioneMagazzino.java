@@ -25,10 +25,10 @@ public class GestioneMagazzino extends Application {
         try {
             controller.setCurrent(cache.carica());            
             controller.aggiornaPannelloPrincipale();            
-            controller.setTitoloTxtMenu("Scheda materiale – " + controller.getCurrent().getNominativo());
+            controller.setTitoloTxtToolbar("Scheda materiale – " + controller.getCurrent().getNominativo());
         }
         catch (IOException ex) {
-            controller.mostraErroreMenu("Si è verificato un errore nell'apertura del file di cache");
+            controller.mostraErroreToolbar("Si è verificato un errore nell'apertura del file di cache");
             controller.cambiaVisibilitaFigliPannelloPrincipale(false);
         }
     }

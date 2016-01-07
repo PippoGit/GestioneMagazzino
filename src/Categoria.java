@@ -1,4 +1,4 @@
-public class Categoria {
+public class Categoria implements Serializable {
     final private int id;
     final private String descrizione;
     private int disponibilita;

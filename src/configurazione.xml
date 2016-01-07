@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurazione>
+	<MAX_QUERY_RESULT>5</MAX_QUERY_RESULT>
+	<regularFont>Pino</regularFont>
+	<mediumFont>Pino</mediumFont>
+	<css>style/StyleGestioneMagazzino.css</css>
+	<ipClient>Pino</ipClient>
+	<ipServer>Pino</ipServer>
+	<port>123</port>
+</configurazione>

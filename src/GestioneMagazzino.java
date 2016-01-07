@@ -15,9 +15,11 @@ public class GestioneMagazzino extends Application {
     }
     
     public void caricaPreferenzeXML() {
+        final ConfigurazioneXML config = ConfigurazioneXML.getDelegationLink();
+
         Font.loadFont(GestioneMagazzino.class.getResource("font/Roboto/Roboto-Regular.ttf").toExternalForm(), 15);        
         Font.loadFont(GestioneMagazzino.class.getResource("font/Roboto/Roboto-Medium.ttf").toExternalForm(), 15);
-        scene.getStylesheets().add("style/StyleGestioneMagazzino.css");                
+        //scene.getStylesheets().add(config.getCss());                
     }
     
     private void caricaBin() {

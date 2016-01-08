@@ -1,7 +1,6 @@
 import com.thoughtworks.xstream.XStream;
 import java.io.FileInputStream;
 
-
 public class ConfigurazioneXML {
     private static final String FILE_PATH = "configurazione.xml";
     private ConfigurazioneXMLParametri params;
@@ -11,7 +10,7 @@ public class ConfigurazioneXML {
     public static ConfigurazioneXML getDelegationLink() { //(4)
         return DELEGATIONLINK;
     }    
-    
+       
     private void deserializzaXML() {
         XStream xs = new XStream(); // (03)
         ConfigurazioneXMLParametri.setAlias(xs);
@@ -20,7 +19,6 @@ public class ConfigurazioneXML {
             params = (ConfigurazioneXMLParametri) xs.fromXML(fin);
         }
         catch (Exception e) {
-            //dosomething..
             System.out.print(e.getMessage());
         }    
     }
@@ -30,6 +28,7 @@ public class ConfigurazioneXML {
     }
     
     private ConfigurazioneXML () {
+        ValidazioneXML.valida(FILE_PATH.split(".", 1)[0]);
         deserializzaXML();
     }
 }

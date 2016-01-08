@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+ <xs:element name="configurazione">
+  <xs:complexType>
+  <xs:sequence>
+    <xs:element name="funzionali"></xs:element>
+    <xs:element name="stilistici"></xs:element>
+    <xs:element name="tecnologici"></xs:element>
+  </xs:sequence> 
+  </xs:complexType>
+ </xs:element>
+
+ <xs:element name="funzionali">
+  <xs:complexType>
+  <xs:sequence>
+    <xs:element name="MAX_QUERY_RESULT" type="xs:integer" />
+    <xs:element name="vini">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element ref="categoria" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    </xs:element>
+  </xs:sequence> 
+  </xs:complexType>
+ </xs:element>
+  
+ <xs:element name="stilistici">
+  <xs:complexType>
+  <xs:sequence>
+    <xs:element name="regularFont" type="xs:string" />
+    <xs:element name="mediumFont" type="xs:string" />
+    <xs:element name="css" type="xs:string" />
+  </xs:sequence> 
+  </xs:complexType>
+ </xs:element>
+
+  <xs:element name="tecnologici">
+  <xs:complexType>
+  <xs:sequence>
+    <xs:element name="ipClient" type="xs:string" />
+    <xs:element name="ipServer" type="xs:string" />
+    <xs:element name="port" type="xs:integer" />
+  </xs:sequence> 
+  </xs:complexType>
+ </xs:element> 
+
+  <xs:element name="categoria">
+  <xs:complexType>
+  <xs:sequence>
+    <xs:element name="id" type="xs:integer" />
+    <xs:element name="descrizione" type="xs:string" />
+  </xs:sequence> 
+  </xs:complexType>
+ </xs:element> 
+    
+</xs:schema>

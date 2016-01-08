@@ -5,10 +5,11 @@ public class ConfigurazioneXMLParametri implements Serializable {
     
     private class ParametriFunzionali {
         final private int MAX_QUERY_RESULT;
-        //final private Categoria[] categorie;
+        final private Categoria[] categorie;
 
-        public ParametriFunzionali(int MAX_QUERY_RESULT) {
+        public ParametriFunzionali(int MAX_QUERY_RESULT, Categoria[] c) {
             this.MAX_QUERY_RESULT = MAX_QUERY_RESULT;
+            this.categorie = c;
         }
     };
         
@@ -40,9 +41,9 @@ public class ConfigurazioneXMLParametri implements Serializable {
     final private ParametriStilistici stilistici;
     final private ParametriTecnologici tecnologici;
 
-    public ConfigurazioneXMLParametri(int MAX_QUERY_RESULT, String regularFont, String mediumFont, String style,/* Categoria[] c,*/ String ipClient, String ipServer, int port) {
+    public ConfigurazioneXMLParametri(int MAX_QUERY_RESULT, String regularFont, String mediumFont, String style, Categoria[] c, String ipClient, String ipServer, int port) {
         stilistici = new ParametriStilistici(regularFont, mediumFont, style);
-        funzionali = new ParametriFunzionali(MAX_QUERY_RESULT);
+        funzionali = new ParametriFunzionali(MAX_QUERY_RESULT, c);
         tecnologici = new ParametriTecnologici(ipClient, ipServer, port);
     }
     
@@ -51,6 +52,7 @@ public class ConfigurazioneXMLParametri implements Serializable {
         x.alias("funzionali", ConfigurazioneXMLParametri.ParametriFunzionali.class);
         x.alias("stilistici", ConfigurazioneXMLParametri.ParametriStilistici.class);
         x.alias("tecnologici", ConfigurazioneXMLParametri.ParametriTecnologici.class);
+        x.alias("categoria", Categoria.class);
     }
     
     public int getMAX_QUERY_RESULT() {
@@ -68,11 +70,11 @@ public class ConfigurazioneXMLParametri implements Serializable {
     public String getCss() {
         return stilistici.css;
     }
-/*
+
     public Categoria[] getCategorie() {
-        return pf.c;
+        return funzionali.categorie;
     }
-*/
+    
     public String getIpClient() {
         return tecnologici.ipClient;
     }

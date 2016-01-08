@@ -2,6 +2,20 @@
 <configurazione>
     <funzionali>
         <MAX_QUERY_RESULT>6</MAX_QUERY_RESULT>
+        <categorie>
+            <categoria>
+                <id>0</id>
+                <descrizione>Networking</descrizione>
+            </categoria>
+            <categoria>
+                <id>1</id>
+                <descrizione>CCTV</descrizione>
+            </categoria>
+            <categoria>
+                <id>2</id>
+                <descrizione>Telefonia</descrizione>
+            </categoria>
+        </categorie>
     </funzionali>
     <stilistici>
 	<regularFont>font/Roboto/Roboto-Regular.ttf</regularFont>

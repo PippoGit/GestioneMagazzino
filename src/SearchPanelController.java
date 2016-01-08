@@ -13,27 +13,26 @@ public class SearchPanelController extends VBox {
     private HBox containerCategoria;
     private TextField barraRicerca;
     private ApplicationController appConBind;
-    private int num_categorie;
     
     public TextField getBarraRicerca(){
         return barraRicerca;
     }
     
     private void caricaCategorieXML() { //(1)
-        num_categorie = 3;
-        Categoria[] c = new Categoria[num_categorie];  
-        ArchivioMagazzino am = new ArchivioMagazzino();
-        c[0] = new Categoria(0, "Networking");
-        c[1] = new Categoria(1, "CCTV");
-        c[2] = new Categoria(2, "Telefonia");
+        Categoria[] c; 
+        ConfigurazioneXML config = ConfigurazioneXML.getDelegationLink();
+        ArchivioMagazzino am = new ArchivioMagazzino();    
+
         try {
-            c[0].setDisponibilita(am.caricaDisponibilitaCategorie(0));
-            c[1].setDisponibilita(am.caricaDisponibilitaCategorie(1));      
-            c[2].setDisponibilita(am.caricaDisponibilitaCategorie(2));
+            c = config.getParams().getCategorie();
+            for(int i=0; i<c.length; i++) {
+                c[i].setDisponibilita(am.caricaDisponibilitaCategorie(i));
+            }
+            
+            appConBind.setListaCategorie(c);
         } catch (SQLException ex) {
             appConBind.mostraErroreToolbar("Errore nel collegamento al DB");
         }
-        appConBind.setListaCategorie(c);
     }
     
     private void effettuaRicerca() { //(2)
@@ -47,13 +46,13 @@ public class SearchPanelController extends VBox {
     
     private void configuraToggleCategorie() { //(3)
         Categoria [] c = appConBind.getListaCategorie();
-        for(int i=0; i<num_categorie; i++) {
+        for(int i=0; i<c.length; i++) {
             toggleCategorie.add(new ToggleButton()); //(2)
             toggleCategorie.get(i).setToggleGroup(gruppo);
             toggleCategorie.get(i).getStyleClass().add("categoria");
             toggleCategorie.get(i).setId("categoria"+i);            
-            toggleCategorie.get(i).setMaxSize(300/num_categorie,53);
-            toggleCategorie.get(i).setMinSize(300/num_categorie,53);    
+            toggleCategorie.get(i).setMaxSize(300/c.length,53);
+            toggleCategorie.get(i).setMinSize(300/c.length,53);    
             toggleCategorie.get(i).setUserData(c[i].getId());
         }
         containerCategoria.getChildren().addAll(toggleCategorie);

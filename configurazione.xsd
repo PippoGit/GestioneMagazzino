@@ -13,8 +13,8 @@
  <xs:element name="funzionali">
   <xs:complexType>
   <xs:sequence>
-    <xs:element name="MAX_QUERY_RESULT" type="xs:integer" />
-    <xs:element name="vini">
+    <xs:element name="MAX_QUERY_RESULT" type="xs:positiveInteger" />
+    <xs:element name="categorie">
     <xs:complexType>
         <xs:sequence>
             <xs:element ref="categoria" minOccurs="1" maxOccurs="unbounded"/>
@@ -40,7 +40,7 @@
   <xs:sequence>
     <xs:element name="ipClient" type="xs:string" />
     <xs:element name="ipServer" type="xs:string" />
-    <xs:element name="port" type="xs:integer" />
+    <xs:element name="port" type="xs:positiveInteger" />
   </xs:sequence> 
   </xs:complexType>
  </xs:element> 
@@ -48,7 +48,7 @@
   <xs:element name="categoria">
   <xs:complexType>
   <xs:sequence>
-    <xs:element name="id" type="xs:integer" />
+    <xs:element name="id" type="xs:nonNegativeInteger" />
     <xs:element name="descrizione" type="xs:string" />
   </xs:sequence> 
   </xs:complexType>

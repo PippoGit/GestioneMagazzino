@@ -28,8 +28,8 @@ public class ConfigurazioneXML implements Serializable {
         }    
     }
     
-    public String getCss() {
-        return params.getCss();
+    public ConfigurazioneXMLParametri getParams() {
+        return params;
     }
     
     private ConfigurazioneXML () {

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurazione>
+    <funzionali>
+        <MAX_QUERY_RESULT>6</MAX_QUERY_RESULT>
+    </funzionali>
+    <stilistici>
+	<regularFont>font/Roboto/Roboto-Regular.ttf</regularFont>
+	<mediumFont>font/Roboto/Roboto-Medium.ttf</mediumFont>
+	<css>style/StyleGestioneMagazzino.css</css>
+    </stilistici>    
+    <tecnologici>
+	<ipClient>localhost</ipClient>
+	<ipServer>localhost</ipServer>
+	<port>29794</port>
+    </tecnologici>
+</configurazione>

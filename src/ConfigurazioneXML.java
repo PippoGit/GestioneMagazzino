@@ -2,10 +2,9 @@ import com.thoughtworks.xstream.XStream;
 import java.io.FileInputStream;
 
 
-public class ConfigurazioneXML implements Serializable {
+public class ConfigurazioneXML {
     private static final String FILE_PATH = "configurazione.xml";
     private ConfigurazioneXMLParametri params;
-    
     
     private static final ConfigurazioneXML DELEGATIONLINK = new ConfigurazioneXML();
 
@@ -15,11 +14,9 @@ public class ConfigurazioneXML implements Serializable {
     
     private void deserializzaXML() {
         XStream xs = new XStream(); // (03)
-        xs.alias("configurazione", ConfigurazioneXMLParametri.class);
-
+        ConfigurazioneXMLParametri.setAlias(xs);
+        
         try (FileInputStream fin = new FileInputStream(FILE_PATH)){
-
-            System.out.print(fin);
             params = (ConfigurazioneXMLParametri) xs.fromXML(fin);
         }
         catch (Exception e) {
@@ -36,17 +33,3 @@ public class ConfigurazioneXML implements Serializable {
         deserializzaXML();
     }
 }
-/*
-<?xml version="1.0" encoding="UTF-8"?> 
-<Parametri>
-<economici>
-<tasse unita="%">21</tasse> <massimaQuantitaPerTipologia>3</massimaQuantitaPerTipologia> <massimoNumeroTipologieProdotti>5</massimoNumeroTipologieProdotti>
-</economici> <stilistici>
-<font>Times New Roman</font>
-<dimensioneFont unita="pt">12</dimensioneFont> <coloreSfondo>green </coloreSfondo>
-</stilistici> <tecnologici>
-<indirizzoIPClient>131.114.80.255</indirizzoIPClient> <indirizzoIPServerLog>131.114.90.255</indirizzoIPServerLog> <portaServerLog>80</portaServerLog>
-</tecnologici> 
-</Parametri>
-
-*/

@@ -6,6 +6,7 @@ import javafx.scene.control.ListView;
 public class ListController extends ListView {
     private ObservableList<Materiale> materiali;   
     private final ApplicationController appConBind;
+    private final int MAX_ROWS;
 
     private void scambiaCurrentInLista() { //(1)
         int i=0;
@@ -19,7 +20,7 @@ public class ListController extends ListView {
         }           
     }
     public void caricaMateriali(int c) { //(2.1)
-        ArchivioMagazzino am = new ArchivioMagazzino(6);
+        ArchivioMagazzino am = new ArchivioMagazzino(MAX_ROWS);
         materiali.clear();
         try {
             materiali.addAll(am.caricaListaMateriali("", c));
@@ -30,7 +31,7 @@ public class ListController extends ListView {
     }
     
     public void caricaMateriali(String txt) { //(2.2)
-        ArchivioMagazzino am = new ArchivioMagazzino(6);
+        ArchivioMagazzino am = new ArchivioMagazzino(MAX_ROWS);
         materiali.clear();
         try {
             materiali.addAll(am.caricaListaMateriali(txt, -1));
@@ -41,7 +42,7 @@ public class ListController extends ListView {
     }
     
     public void caricaMateriali(String txt, int c) { //(2.2)
-        ArchivioMagazzino am = new ArchivioMagazzino(6);
+        ArchivioMagazzino am = new ArchivioMagazzino(MAX_ROWS);
         materiali.clear();
         try {
             materiali.addAll(am.caricaListaMateriali(txt, c));      
@@ -59,6 +60,11 @@ public class ListController extends ListView {
         super();
         appConBind = ApplicationController.getDelegationLink();      
         materiali  = FXCollections.observableArrayList();
+        
+        ConfigurazioneXML config = ConfigurazioneXML.getDelegationLink();
+        this.MAX_ROWS = config.getParams().getMAX_QUERY_RESULT();
+        
+        
         this.setId("listaMateriali");
         super.getStyleClass().add("pannello");
         this.setItems(materiali);

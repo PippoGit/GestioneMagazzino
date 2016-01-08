@@ -1,54 +1,88 @@
+import com.thoughtworks.xstream.XStream;
+import java.io.Serializable;
+
 public class ConfigurazioneXMLParametri implements Serializable {
-    final private int MAX_QUERY_RESULT;
-    final private String regularFont;
-    final private String mediumFont;
-    final private String css;
-    //final private Categoria[] categorie;
-    final private String ipClient;
-    final private String ipServer;
-    final private int port;
+    
+    private class ParametriFunzionali {
+        final private int MAX_QUERY_RESULT;
+        //final private Categoria[] categorie;
+
+        public ParametriFunzionali(int MAX_QUERY_RESULT) {
+            this.MAX_QUERY_RESULT = MAX_QUERY_RESULT;
+        }
+    };
+        
+    private class ParametriStilistici {
+        final private String regularFont;
+        final private String mediumFont;
+        final private String css; 
+
+        public ParametriStilistici(String regularFont, String mediumFont, String css) {
+            this.regularFont = regularFont;
+            this.mediumFont = mediumFont;
+            this.css = css;
+        }
+    };
+    
+    private class ParametriTecnologici {
+        final private String ipClient;
+        final private String ipServer;
+        final private int port;
+
+        public ParametriTecnologici(String ipClient, String ipServer, int port) {
+            this.ipClient = ipClient;
+            this.ipServer = ipServer;
+            this.port = port;
+        }
+    };
+
+    final private ParametriFunzionali funzionali;
+    final private ParametriStilistici stilistici;
+    final private ParametriTecnologici tecnologici;
 
     public ConfigurazioneXMLParametri(int MAX_QUERY_RESULT, String regularFont, String mediumFont, String style,/* Categoria[] c,*/ String ipClient, String ipServer, int port) {
-        this.MAX_QUERY_RESULT = MAX_QUERY_RESULT;
-        this.regularFont = regularFont;
-        this.mediumFont = mediumFont;
-        this.css = style;
-        //this.c = c;
-        this.ipClient = ipClient;
-        this.ipServer = ipServer;
-        this.port = port;
+        stilistici = new ParametriStilistici(regularFont, mediumFont, style);
+        funzionali = new ParametriFunzionali(MAX_QUERY_RESULT);
+        tecnologici = new ParametriTecnologici(ipClient, ipServer, port);
     }
-
+    
+    static public void setAlias(XStream x) {
+        x.alias("configurazione", ConfigurazioneXMLParametri.class);
+        x.alias("funzionali", ConfigurazioneXMLParametri.ParametriFunzionali.class);
+        x.alias("stilistici", ConfigurazioneXMLParametri.ParametriStilistici.class);
+        x.alias("tecnologici", ConfigurazioneXMLParametri.ParametriTecnologici.class);
+    }
+    
     public int getMAX_QUERY_RESULT() {
-        return MAX_QUERY_RESULT;
+        return funzionali.MAX_QUERY_RESULT;
     }
 
     public String getRegularFont() {
-        return regularFont;
+        return stilistici.regularFont;
     }
 
     public String getMediumFont() {
-        return mediumFont;
+        return stilistici.mediumFont;
     }
 
     public String getCss() {
-        return css;
+        return stilistici.css;
     }
 /*
     public Categoria[] getCategorie() {
-        return c;
+        return pf.c;
     }
 */
     public String getIpClient() {
-        return ipClient;
+        return tecnologici.ipClient;
     }
 
     public String getIpServer() {
-        return ipServer;
+        return tecnologici.ipServer;
     }
 
     public int getPort() {
-        return port;
+        return tecnologici.port;
     }
     
 }

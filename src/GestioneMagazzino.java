@@ -17,13 +17,13 @@ public class GestioneMagazzino extends Application {
     public void caricaPreferenzeXML() {
         final ConfigurazioneXML config = ConfigurazioneXML.getDelegationLink();
 
-        Font.loadFont(GestioneMagazzino.class.getResource("font/Roboto/Roboto-Regular.ttf").toExternalForm(), 15);        
-        Font.loadFont(GestioneMagazzino.class.getResource("font/Roboto/Roboto-Medium.ttf").toExternalForm(), 15);
-        //scene.getStylesheets().add(config.getCss());                
+        Font.loadFont(GestioneMagazzino.class.getResource(config.getParams().getRegularFont()).toExternalForm(), 15);        
+        Font.loadFont(GestioneMagazzino.class.getResource(config.getParams().getMediumFont()).toExternalForm(), 15);
+        scene.getStylesheets().add(config.getParams().getCss());                
     }
     
     private void caricaBin() {
-        AppCache cache = new AppCache();
+        final AppCache cache = new AppCache();
         try {
             controller.setCurrent(cache.carica());            
             controller.aggiornaPannelloPrincipale();            
@@ -36,7 +36,7 @@ public class GestioneMagazzino extends Application {
     }
     
     private void conservaBin() {
-        AppCache cache = new AppCache();
+        final AppCache cache = new AppCache();
         try {
             if (controller.getCurrent().getId() != -1) 
                 cache.salva(controller.getCurrent());          

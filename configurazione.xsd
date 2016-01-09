@@ -60,6 +60,7 @@
 <xs:element name="configurazione">
     <xs:complexType>
       <xs:sequence>
+          
         <xs:element name="funzionali">
           <xs:complexType>
             <xs:sequence>
@@ -81,6 +82,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        
         <xs:element name="stilistici">
           <xs:complexType>
             <xs:sequence>
@@ -90,6 +92,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        
         <xs:element name="tecnologici">
           <xs:complexType>
             <xs:sequence>
@@ -99,6 +102,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        
       </xs:sequence>
     </xs:complexType>
   </xs:element>

@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 public class Categoria implements Serializable {
     final private int id;
     final private String descrizione;

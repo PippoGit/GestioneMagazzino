@@ -19,16 +19,21 @@ public class ConfigurazioneXML {
             params = (ConfigurazioneXMLParametri) xs.fromXML(fin);
         }
         catch (Exception e) {
+            params = null;
             System.out.print(e.getMessage());
         }    
     }
     
-    public ConfigurazioneXMLParametri getParams() {
+    public ConfigurazioneXMLParametri getParams() throws Exception {
+        if (params == null) {
+            params = new ConfigurazioneXMLParametri(0, "", "", "", new Categoria[]{new Categoria(-1, "")}, "", "", -1);
+            throw new Exception("Errore nell'apertuda del file di configurazione");
+        }
         return params;
     }
     
     private ConfigurazioneXML () {
-        ValidazioneXML.valida(FILE_NAME);
-        deserializzaXML();
+        if(ValidazioneXML.valida(FILE_NAME))
+            deserializzaXML();
     }
 }

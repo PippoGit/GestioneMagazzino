@@ -25,13 +25,17 @@ public class SearchPanelController extends VBox {
 
         try {
             c = config.getParams().getCategorie();
+            appConBind.setListaCategorie(c);
+
             for(int i=0; i<c.length; i++) {
                 c[i].setDisponibilita(am.caricaDisponibilitaCategorie(i));
             }
-            
-            appConBind.setListaCategorie(c);
-        } catch (SQLException ex) {
-            appConBind.mostraErroreToolbar("Errore nel collegamento al DB");
+        } catch (Exception ex) {
+            if (ex instanceof SQLException)
+                appConBind.mostraErroreToolbar("Errore nel collegamento al DB");
+            else {
+                appConBind.mostraErroreToolbar(ex.getMessage());
+            }
         }
     }
     
@@ -46,6 +50,7 @@ public class SearchPanelController extends VBox {
     
     private void configuraToggleCategorie() { //(3)
         Categoria [] c = appConBind.getListaCategorie();
+        
         for(int i=0; i<c.length; i++) {
             toggleCategorie.add(new ToggleButton()); //(2)
             toggleCategorie.get(i).setToggleGroup(gruppo);
@@ -75,11 +80,14 @@ public class SearchPanelController extends VBox {
         barraRicerca.setPromptText("Ricerca nel database...");
     }
     
+    public void caricaCategorie() {
+        caricaCategorieXML();
+        configuraToggleCategorie();
+    }
+    
     public SearchPanelController() {
         super(20);
         inizializzaComponenti();
-        caricaCategorieXML();
-        configuraToggleCategorie();
         
         gruppo.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){ //(5)
             @Override

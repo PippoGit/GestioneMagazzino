@@ -6,7 +6,7 @@ import javafx.scene.control.ListView;
 public class ListController extends ListView {
     private ObservableList<Materiale> materiali;   
     private final ApplicationController appConBind;
-    private final int MAX_ROWS;
+    private int MAX_ROWS;
 
     private void scambiaCurrentInLista() { //(1)
         int i=0;
@@ -62,8 +62,12 @@ public class ListController extends ListView {
         materiali  = FXCollections.observableArrayList();
         
         ConfigurazioneXML config = ConfigurazioneXML.getDelegationLink();
-        this.MAX_ROWS = config.getParams().getMAX_QUERY_RESULT();
-        
+        try {
+            MAX_ROWS = config.getParams().getMAX_QUERY_RESULT();
+        }
+        catch (Exception e) {
+            appConBind.mostraErroreToolbar(e.getMessage());
+        }
         
         this.setId("listaMateriali");
         super.getStyleClass().add("pannello");
@@ -71,7 +75,7 @@ public class ListController extends ListView {
         super.setMinSize(300, 183);
         super.setMaxSize(300, 183);
         this.getSelectionModel().selectedItemProperty().addListener((ObservableValue observable, Object oldValue, Object newValue) -> { //(3)
-                if(newValue == null || ((Materiale) newValue).getId() == appConBind.getCurrent().getId()) return;
+            if(newValue == null || ((Materiale) newValue).getId() == appConBind.getCurrent().getId()) return;
                 appConBind.setCurrent((Materiale) newValue);
                 appConBind.setTitoloTxtToolbar("Scheda materiale – " + ((Materiale) newValue).getNominativo());
                 appConBind.aggiornaPannelloPrincipale();

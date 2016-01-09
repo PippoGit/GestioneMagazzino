@@ -62,7 +62,7 @@ public class ApplicationController {
         toolbar.setTitoloTxt(txt);
     }
     
-    public String getTitoloTxtToolbar(String txt) { //(8)
+    public String getTitoloTxtToolbar() { //(8)
         return toolbar.getTitoloTxt();
     }
     
@@ -99,6 +99,11 @@ public class ApplicationController {
     
     public void mostraOkToolbar(String txt) {
         this.toolbar.titoloConEsitoOk(txt);
+    }
+    
+    public void caricaCategorie() {
+        pannelloRicerca.caricaCategorie();
+        setCategorieGraficoDisponibilita();  
     }
     
     public void preparaElementiGrafici(Pane root) { //(14)

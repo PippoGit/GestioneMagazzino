@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.sql.SQLException;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
@@ -14,25 +15,18 @@ public class GestioneMagazzino extends Application {
         controller = ApplicationController.getDelegationLink();
     }
     
-    public void caricaPreferenzeXML() {
+    public void caricaPreferenzeXML() throws Exception {
         final ConfigurazioneXML config = ConfigurazioneXML.getDelegationLink();
-
         Font.loadFont(GestioneMagazzino.class.getResource(config.getParams().getRegularFont()).toExternalForm(), 15);        
         Font.loadFont(GestioneMagazzino.class.getResource(config.getParams().getMediumFont()).toExternalForm(), 15);
-        scene.getStylesheets().add(config.getParams().getCss());                
+        scene.getStylesheets().add(config.getParams().getCss());   
     }
     
-    private void caricaBin() {
+    private void caricaBin() throws IOException {
         final AppCache cache = new AppCache();
-        try {
-            controller.setCurrent(cache.carica());            
-            controller.aggiornaPannelloPrincipale();            
-            controller.setTitoloTxtToolbar("Scheda materiale – " + controller.getCurrent().getNominativo());
-        }
-        catch (IOException ex) {
-            controller.mostraErroreToolbar("Si è verificato un errore nell'apertura del file di cache");
-            controller.cambiaVisibilitaFigliPannelloPrincipale(false);
-        }
+        controller.setCurrent(cache.carica());            
+        controller.aggiornaPannelloPrincipale();            
+        controller.setTitoloTxtToolbar("Scheda materiale – " + controller.getCurrent().getNominativo());
     }
     
     private void conservaBin() {
@@ -50,13 +44,23 @@ public class GestioneMagazzino extends Application {
     public void start(Stage primaryStage) {
         final VBox root = new VBox();
         scene = new Scene(root, 900, 640); 
+        controller.preparaElementiGrafici(root);        
         
-        caricaPreferenzeXML();
-        controller.preparaElementiGrafici(root);
-        controller.setCategorieGraficoDisponibilita();  
-        caricaBin();
-        controller.ottieniDatiListaMaterialiDB();
-        
+        try {
+            caricaPreferenzeXML();
+            controller.caricaCategorie();
+            caricaBin();
+            controller.ottieniDatiListaMaterialiDB();
+        }
+        catch (IOException e) {
+            controller.mostraErroreToolbar("Si è verificato un errore nell'apertura del file di cache");
+            controller.cambiaVisibilitaFigliPannelloPrincipale(false);
+        }
+        catch (Exception e) {
+            if(!(e instanceof SQLException))
+                controller.mostraErroreToolbar(e.getMessage());
+            controller.cambiaVisibilitaFigliPannelloPrincipale(false);
+        }
         primaryStage.setOnCloseRequest((WindowEvent ev) -> { conservaBin(); });
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);

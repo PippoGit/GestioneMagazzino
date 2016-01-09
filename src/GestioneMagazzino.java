@@ -58,8 +58,7 @@ public class GestioneMagazzino extends Application {
         }
         catch (Exception e) {
             if(!(e instanceof SQLException))
-                controller.mostraErroreToolbar(e.getMessage());
-            controller.cambiaVisibilitaFigliPannelloPrincipale(false);
+                controller.mostraErroreToolbar("Si è verificato un errore nell'apertura del file di configurazione");
         }
         primaryStage.setOnCloseRequest((WindowEvent ev) -> { conservaBin(); });
         primaryStage.setScene(scene);

@@ -8,7 +8,7 @@ import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.*;
 import javafx.scene.layout.*;
 
-public class MainPanelController extends VBox {
+public class PannelloPrincipaleVisuale extends VBox {
     private Label titoloInformazioni;
     private Label titoloMonitor;
     private boolean visibilitaFigli;
@@ -130,7 +130,7 @@ public class MainPanelController extends VBox {
         visibilitaFigli = b;
     }
     
-    public MainPanelController() {
+    public PannelloPrincipaleVisuale() {
         super(8);
         appConBind = ApplicationController.getDelegationLink();
         visibilitaFigli = true;

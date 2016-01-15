@@ -2,11 +2,11 @@ import javafx.geometry.Insets;
 import javafx.scene.layout.*;
 
 public class ApplicationController {      
-    private ToolbarController toolbar;
-    private SearchPanelController pannelloRicerca;
-    private ListController listaMateriali;
-    private MainPanelController pannelloPrincipale;
-    private ChartController graficoDisponibilita;
+    private ToolbarVisuale toolbar;
+    private PannelloRicercaVisuale pannelloRicerca;
+    private ListaMaterialiVisuale listaMateriali;
+    private PannelloPrincipaleVisuale pannelloPrincipale;
+    private GraficoDisponibilitaVisuale graficoDisponibilita;
     
     private Materiale current; //(1)
     private Categoria[] listaCategorie; //(2)
@@ -111,11 +111,11 @@ public class ApplicationController {
         VBox pannelloDx = new VBox(16);        
         HBox center = new HBox(16);
         
-        this.toolbar = new ToolbarController("");
-        this.pannelloRicerca = new SearchPanelController();
-        this.pannelloPrincipale = new MainPanelController();
-        this.listaMateriali = new ListController();
-        this.graficoDisponibilita = new ChartController();
+        this.toolbar = new ToolbarVisuale("");
+        this.pannelloRicerca = new PannelloRicercaVisuale();
+        this.pannelloPrincipale = new PannelloPrincipaleVisuale();
+        this.listaMateriali = new ListaMaterialiVisuale();
+        this.graficoDisponibilita = new GraficoDisponibilitaVisuale();
         
         pannelloSx.setPadding(new Insets(16, 0, 0, 16));
         pannelloSx.getChildren().addAll(pannelloRicerca, listaMateriali, graficoDisponibilita);

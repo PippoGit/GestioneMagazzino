@@ -4,7 +4,7 @@ import javafx.geometry.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
-public class ToolbarController extends BorderPane {
+public class ToolbarVisuale extends BorderPane {
     private final Label labelTitolo;
     private final Button save;
     private final ApplicationController appConBind;
@@ -69,7 +69,7 @@ public class ToolbarController extends BorderPane {
         });
     }
     
-    public ToolbarController(String titolo){
+    public ToolbarVisuale(String titolo){
         super();
 
         this.save = new Button();

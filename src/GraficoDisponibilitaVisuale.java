@@ -3,7 +3,7 @@ import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
-public class ChartController extends VBox {
+public class GraficoDisponibilitaVisuale extends VBox {
     private Categoria[] categorie;
     private final BarChart<String, Number> istogramma;
     XYChart.Series dati;
@@ -30,7 +30,7 @@ public class ChartController extends VBox {
         inizializzaDati();
     }
     
-    public ChartController() {
+    public GraficoDisponibilitaVisuale() {
         super(8);
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();

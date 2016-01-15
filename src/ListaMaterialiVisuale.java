@@ -3,7 +3,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.*;
 import javafx.scene.control.ListView;
 
-public class ListController extends ListView {
+public class ListaMaterialiVisuale extends ListView {
     private ObservableList<Materiale> materiali;   
     private final ApplicationController appConBind;
     private int MAX_ROWS;
@@ -56,7 +56,7 @@ public class ListController extends ListView {
         return materiali;
     }
     
-    public ListController() {
+    public ListaMaterialiVisuale() {
         super();
         appConBind = ApplicationController.getDelegationLink();      
         materiali  = FXCollections.observableArrayList();

@@ -7,7 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 
-public class SearchPanelController extends VBox {
+public class PannelloRicercaVisuale extends VBox {
     private ArrayList<ToggleButton> toggleCategorie;
     private ToggleGroup gruppo;
     private HBox containerCategoria;
@@ -85,7 +85,7 @@ public class SearchPanelController extends VBox {
         configuraToggleCategorie();
     }
     
-    public SearchPanelController() {
+    public PannelloRicercaVisuale() {
         super(20);
         inizializzaComponenti();
         

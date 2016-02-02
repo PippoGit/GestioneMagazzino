@@ -41,6 +41,15 @@ public class ToolbarVisuale extends BorderPane {
         labelTitolo.getStyleClass().add("titolo");
     }
     
+    private void inviaLog() {
+        try {
+            ConfigurazioneXMLParametri params = ConfigurazioneXML.getDelegationLink().getParams();
+            LoggerXML.logPressionePulsante(params.getPort(), params.getIpClient(), params.getIpServer(), "Salva");
+        } catch (Exception ex) {
+            appConBind.mostraErroreToolbar("Errore nell'invio log");
+        }
+    }
+    
     private void posizionaComponenti() { //(3)
         HBox left = new HBox();
         HBox right = new HBox(8);
@@ -66,6 +75,7 @@ public class ToolbarVisuale extends BorderPane {
                     appConBind.mostraErroreToolbar("Errore nel collegamento al DB");
                 }
             }
+            inviaLog();
         });
     }
     

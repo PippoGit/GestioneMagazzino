@@ -40,12 +40,7 @@ public class GestioneMagazzino extends Application {
         }
     }
     
-    @Override
-    public void start(Stage primaryStage) {
-        final VBox root = new VBox();
-        scene = new Scene(root, 900, 640); 
-        controller.preparaElementiGrafici(root);        
-        
+    private void caricaApp() {
         try {
             caricaPreferenzeXML();
             controller.caricaCategorie();
@@ -60,10 +55,43 @@ public class GestioneMagazzino extends Application {
             if(!(e instanceof SQLException))
                 controller.mostraErroreToolbar("Si è verificato un errore nell'apertura del file di configurazione");
         }
-        primaryStage.setOnCloseRequest((WindowEvent ev) -> { conservaBin(); });
+    }
+    
+    private void inviaLog(boolean avvio) {
+        try {
+            ConfigurazioneXMLParametri params = ConfigurazioneXML.getDelegationLink().getParams();
+            if(avvio)
+                LoggerXML.logAvvio(params.getPort(), params.getIpClient(), params.getIpServer());
+            else 
+                LoggerXML.logTermine(params.getPort(), params.getIpClient(), params.getIpServer());
+        } catch (Exception ex) {
+            controller.mostraErroreToolbar("Errore nell'invio log");
+        }
+    }
+    
+    private void inviaLogTermine() {
+        try {
+            ConfigurazioneXMLParametri params = ConfigurazioneXML.getDelegationLink().getParams();
+            LoggerXML.logTermine(params.getPort(), params.getIpClient(), params.getIpServer());
+        } catch (Exception ex) {
+            controller.mostraErroreToolbar("Errore nell'invio log");
+        }
+    }
+    
+    @Override
+    public void start(Stage primaryStage) {
+        final VBox root = new VBox();
+        scene = new Scene(root, 900, 640); 
+        controller.preparaElementiGrafici(root);        
+        
+        caricaApp();
+        inviaLog(true);
+        
+        primaryStage.setOnCloseRequest((WindowEvent ev) -> { conservaBin(); inviaLog(false); });
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
+        
     }
 
     public static void main(String[] args) {

@@ -39,6 +39,15 @@ public class PannelloPrincipaleVisuale extends VBox {
         }
      }
     
+    private void inviaLog() {
+        try {
+            ConfigurazioneXMLParametri params = ConfigurazioneXML.getDelegationLink().getParams();
+            LoggerXML.logModificaMonitor(params.getPort(), params.getIpClient(), params.getIpServer());
+        } catch (Exception ex) {
+            appConBind.mostraErroreToolbar("Errore nell'invio log");
+        }
+    }
+    
     private void editStatoColumn(IstanzaMateriale selezionato, String newValue) {
         if(!newValue.equalsIgnoreCase("funzionante") && // a
            selezionato.getCliente().length() == 0 &&  // b
@@ -49,22 +58,24 @@ public class PannelloPrincipaleVisuale extends VBox {
            selezionato.getCliente().length() == 0) //f
             appConBind.aumentaDisponibilitaCurrent();
         selezionato.setStato(newValue);                
-        appConBind.mostraModifiche();        
+        appConBind.mostraModifiche();     
+        inviaLog();
     }
     
     private void editClienteColumn(IstanzaMateriale selezionato, String newValue) { //(3)
-         if(newValue.equals("") && // a
+        if(newValue.equals("") && // a
             selezionato.getCliente().length() != 0 &&  // b
             selezionato.getStato().equalsIgnoreCase("funzionante")) { // c
-             appConBind.aumentaDisponibilitaCurrent();
-         }
-         else if (newValue.length() > 0  && // d
-                  selezionato.getCliente().length() == 0  && // e
-                  selezionato.getStato().equalsIgnoreCase("funzionante")) { // f
-             appConBind.diminuisciDisponibilitaCurrent();
-         }
-         selezionato.setCliente(newValue);
-         appConBind.mostraModifiche();        
+            appConBind.aumentaDisponibilitaCurrent();
+        }
+        else if (newValue.length() > 0  && // d
+                selezionato.getCliente().length() == 0  && // e
+                selezionato.getStato().equalsIgnoreCase("funzionante")) { // f
+            appConBind.diminuisciDisponibilitaCurrent();
+        }
+        selezionato.setCliente(newValue);
+        appConBind.mostraModifiche();
+        inviaLog();
     }
     
     private void costruisciColonna(TableColumn c, String n, int w) {

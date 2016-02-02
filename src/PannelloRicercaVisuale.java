@@ -18,6 +18,18 @@ public class PannelloRicercaVisuale extends VBox {
         return barraRicerca;
     }
     
+    private void inviaLog(boolean ricerca) {
+        try {
+            ConfigurazioneXMLParametri params = ConfigurazioneXML.getDelegationLink().getParams();
+            if(ricerca)
+                LoggerXML.logRicerca(params.getPort(), params.getIpClient(), params.getIpServer());
+            else 
+                LoggerXML.logPressionePulsante(params.getPort(), params.getIpClient(), params.getIpServer(), "SelettoreCategoria");
+        } catch (Exception ex) {
+            appConBind.mostraErroreToolbar("Errore nell'invio log");
+        }
+    }
+    
     private void caricaCategorieXML() { //(1)
         Categoria[] c; 
         ConfigurazioneXML config = ConfigurazioneXML.getDelegationLink();
@@ -46,6 +58,8 @@ public class PannelloRicercaVisuale extends VBox {
         if(gruppo.getSelectedToggle() != null) 
             categoria = (int) gruppo.getSelectedToggle().getUserData();
         appConBind.ottieniDatiListaMaterialiDB(text, categoria);
+        
+        inviaLog(true);
     }
     
     private void configuraToggleCategorie() { //(3)
@@ -94,6 +108,7 @@ public class PannelloRicercaVisuale extends VBox {
             public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
                 if(newValue == null) barraRicerca.setPromptText("Ricerca nel database...");
                 else barraRicerca.setPromptText("Ricerca " + appConBind.getCategoria((int)newValue.getUserData()).getDescrizione() + " nel database...");
+                inviaLog(false);
             }
         });
         barraRicerca.setOnKeyPressed(new EventHandler<KeyEvent>() {

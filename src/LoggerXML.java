@@ -5,7 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class LoggerXML {    
-    private static String riceviComeStringa(int p) throws IOException {
+    public static String riceviComeStringa(int p) throws IOException {
         String xml;
         try ( 
             ServerSocket servsock = new ServerSocket(p); 
@@ -17,7 +17,7 @@ public class LoggerXML {
         return xml;
     }
     
-    private static void inviaComeStringa(int p, LogGestioneMagazzino l) throws IOException {
+    public static void inviaComeStringa(int p, LogGestioneMagazzino l) throws IOException {
         try (Socket sock = new Socket(l.getIpServer(), p);
             DataOutputStream dos = new DataOutputStream(sock.getOutputStream());
         ) {

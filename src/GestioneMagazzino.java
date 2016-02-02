@@ -65,6 +65,7 @@ public class GestioneMagazzino extends Application {
             else 
                 LoggerXML.logTermine(params.getPort(), params.getIpClient(), params.getIpServer());
         } catch (Exception ex) {
+            System.out.println(ex.getMessage());
             controller.mostraErroreToolbar("Errore nell'invio log");
         }
     }

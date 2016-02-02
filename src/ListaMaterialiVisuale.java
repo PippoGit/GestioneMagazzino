@@ -56,6 +56,15 @@ public class ListaMaterialiVisuale extends ListView {
         return materiali;
     }
     
+    private void inviaLog() {
+        try {
+            ConfigurazioneXMLParametri params = ConfigurazioneXML.getDelegationLink().getParams();
+            LoggerXML.logListaMaterialiVisuale(params.getPort(), params.getIpClient(), params.getIpServer());
+        } catch (Exception ex) {
+            appConBind.mostraErroreToolbar("Errore nell'invio log");
+        }
+    }
+    
     public ListaMaterialiVisuale() {
         super();
         appConBind = ApplicationController.getDelegationLink();      
@@ -79,6 +88,7 @@ public class ListaMaterialiVisuale extends ListView {
                 appConBind.setCurrent((Materiale) newValue);
                 appConBind.setTitoloTxtToolbar("Scheda materiale – " + ((Materiale) newValue).getNominativo());
                 appConBind.aggiornaPannelloPrincipale();
+                inviaLog();
             }
         );
     }

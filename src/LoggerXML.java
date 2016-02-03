@@ -40,8 +40,8 @@ public class LoggerXML {
         inviaComeStringa(p, l);
     }
     
-    public static void logRicerca(int p, String ipc, String ips) throws IOException {
-        LogGestioneMagazzino l = new LogGestioneMagazzino("Ricerca", ipc, ips);
+    public static void logRicerca(int p, String ipc, String ips, String info) throws IOException {
+        LogGestioneMagazzino l = new LogGestioneMagazzino("Ricerca", ipc, ips, info);
         inviaComeStringa(p, l);
     }
     

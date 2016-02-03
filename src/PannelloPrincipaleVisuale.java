@@ -16,11 +16,11 @@ public class PannelloPrincipaleVisuale extends VBox {
     private final TextField[] informazioniTxt = new TextField[3];
     private ObservableList<IstanzaMateriale> listaOrdini;
     private final TableView<IstanzaMateriale> monitor = new TableView<>();
-    final private ApplicationController appConBind;
+    final private GUIGestioneMagazzino GUIGestioneMagBind;
     
     public void caricaMateriale(Materiale m) { //(1)
         informazioniTxt[0].setText(m.getNominativo());
-        informazioniTxt[1].setText(appConBind.getCategoria(m.getCategoria()).getDescrizione());
+        informazioniTxt[1].setText(GUIGestioneMagBind.getCategoria(m.getCategoria()).getDescrizione());
         informazioniTxt[2].setText(Integer.toString(m.getDisponibilita()));
         if(m.getDisponibilita() <= 0) {
             informazioniTxt[2].setStyle("-fx-text-fill: #E0082A;");
@@ -35,7 +35,7 @@ public class PannelloPrincipaleVisuale extends VBox {
             listaOrdini = m.getIstanze();
             monitor.setItems(listaOrdini);
         } catch (SQLException ex) {
-            appConBind.mostraErroreToolbar("Errore nel collegamento al DB");
+            GUIGestioneMagBind.mostraErroreToolbar("Errore nel collegamento al DB");
         }
      }
     
@@ -44,7 +44,7 @@ public class PannelloPrincipaleVisuale extends VBox {
             ConfigurazioneXMLParametri params = ConfigurazioneXML.getDelegationLink().getParams();
             LoggerXML.logModificaMonitor(params.getPort(), params.getIpClient(), params.getIpServer());
         } catch (Exception ex) {
-            appConBind.mostraErroreToolbar("Errore nell'invio log");
+            GUIGestioneMagBind.mostraErroreToolbar("Errore nell'invio log");
         }
     }
     
@@ -52,13 +52,13 @@ public class PannelloPrincipaleVisuale extends VBox {
         if(!newValue.equalsIgnoreCase("funzionante") && // a
            selezionato.getCliente().length() == 0 &&  // b
            selezionato.getStato().equalsIgnoreCase("Funzionante")) //c
-            appConBind.diminuisciDisponibilitaCurrent(); 
+            GUIGestioneMagBind.diminuisciDisponibilitaCurrent(); 
         else if (newValue.equalsIgnoreCase("funzionante") &&  //d
            !selezionato.getStato().equalsIgnoreCase("Funzionante") && //e
            selezionato.getCliente().length() == 0) //f
-            appConBind.aumentaDisponibilitaCurrent();
+            GUIGestioneMagBind.aumentaDisponibilitaCurrent();
         selezionato.setStato(newValue);                
-        appConBind.mostraModifiche();     
+        GUIGestioneMagBind.mostraModifiche();     
         inviaLog();
     }
     
@@ -66,15 +66,15 @@ public class PannelloPrincipaleVisuale extends VBox {
         if(newValue.equals("") && // a
             selezionato.getCliente().length() != 0 &&  // b
             selezionato.getStato().equalsIgnoreCase("funzionante")) { // c
-            appConBind.aumentaDisponibilitaCurrent();
+            GUIGestioneMagBind.aumentaDisponibilitaCurrent();
         }
         else if (newValue.length() > 0  && // d
                 selezionato.getCliente().length() == 0  && // e
                 selezionato.getStato().equalsIgnoreCase("funzionante")) { // f
-            appConBind.diminuisciDisponibilitaCurrent();
+            GUIGestioneMagBind.diminuisciDisponibilitaCurrent();
         }
         selezionato.setCliente(newValue);
-        appConBind.mostraModifiche();
+        GUIGestioneMagBind.mostraModifiche();
         inviaLog();
     }
     
@@ -143,7 +143,7 @@ public class PannelloPrincipaleVisuale extends VBox {
     
     public PannelloPrincipaleVisuale() {
         super(8);
-        appConBind = ApplicationController.getDelegationLink();
+        GUIGestioneMagBind = GUIGestioneMagazzino.getDelegationLink();
         visibilitaFigli = true;
         informazioni = new GridPane();
         informazioni.setId("informazioni");

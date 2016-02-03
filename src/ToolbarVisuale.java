@@ -7,7 +7,7 @@ import javafx.scene.layout.*;
 public class ToolbarVisuale extends BorderPane {
     private final Label labelTitolo;
     private final Button save;
-    private final ApplicationController appConBind;
+    private final GUIGestioneMagazzino GUIGestioneMagBind;
     
     public String getTitoloTxt() {
         return labelTitolo.getText();
@@ -46,7 +46,7 @@ public class ToolbarVisuale extends BorderPane {
             ConfigurazioneXMLParametri params = ConfigurazioneXML.getDelegationLink().getParams();
             LoggerXML.logPressionePulsante(params.getPort(), params.getIpClient(), params.getIpServer(), "Salva");
         } catch (Exception ex) {
-            appConBind.mostraErroreToolbar("Errore nell'invio log");
+            GUIGestioneMagBind.mostraErroreToolbar("Errore nell'invio log");
         }
     }
     
@@ -65,14 +65,14 @@ public class ToolbarVisuale extends BorderPane {
     
     private void configuraPulsanti() { 
         save.setOnAction((ActionEvent e) -> { // (4)
-            if(appConBind.getCurrent().isModificato()) {
+            if(GUIGestioneMagBind.getCurrent().isModificato()) {
                 try {
-                    appConBind.getCurrent().setModificato(false);
-                    appConBind.getCurrent().salvaModificheDB();
-                    appConBind.aggiornaPannelloPrincipale();
+                    GUIGestioneMagBind.getCurrent().setModificato(false);
+                    GUIGestioneMagBind.getCurrent().salvaModificheDB();
+                    GUIGestioneMagBind.aggiornaPannelloPrincipale();
                     titoloConEsitoOk("Materiale salvato con successo.");
                 } catch (SQLException ex) {
-                    appConBind.mostraErroreToolbar("Errore nel collegamento al DB");
+                    GUIGestioneMagBind.mostraErroreToolbar("Errore nel collegamento al DB");
                 }
             }
             inviaLog();
@@ -84,7 +84,7 @@ public class ToolbarVisuale extends BorderPane {
 
         this.save = new Button();
         this.labelTitolo = new Label(titolo);
-        appConBind = ApplicationController.getDelegationLink();      
+        GUIGestioneMagBind = GUIGestioneMagazzino.getDelegationLink();      
         
         configuraStileToolbar();
         posizionaComponenti();

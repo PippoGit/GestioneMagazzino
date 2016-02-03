@@ -1,7 +1,7 @@
 import javafx.geometry.Insets;
 import javafx.scene.layout.*;
 
-public class ApplicationController {      
+public class GUIGestioneMagazzino {      
     private ToolbarVisuale toolbar;
     private PannelloRicercaVisuale pannelloRicerca;
     private ListaMaterialiVisuale listaMateriali;
@@ -11,13 +11,13 @@ public class ApplicationController {
     private Materiale current; //(1)
     private Categoria[] listaCategorie; //(2)
     
-    private static final ApplicationController DELEGATIONLINK = new ApplicationController(); //(3)
+    private static final GUIGestioneMagazzino DELEGATIONLINK = new GUIGestioneMagazzino(); //(3)
     
-    private ApplicationController() {        
+    private GUIGestioneMagazzino() {        
         this.current = new Materiale(); 
     }    
     
-    public static ApplicationController getDelegationLink() { //(4)
+    public static GUIGestioneMagazzino getDelegationLink() { //(4)
         return DELEGATIONLINK;
     }
     
@@ -144,14 +144,14 @@ Categoria, viene utilizzato da tutti gli oggetti che utilizzano le categorie.
 Il metodo (3) viene utilizzato per richiedere una particolare categoria specificandone l'id. 
 Si usa la convenzione che l'indice nell'array delle categorie sia uguale all'id definito nel DB.
 
-3) Costruisco un'istanza static per l'oggetto ApplicationController secondo il Design Pattern 
+3) Costruisco un'istanza static per l'oggetto GUIGestioneMagazzino secondo il Design Pattern 
 Singleton. 
 
 4) Metodo più importante delle classe, realizza il legame di delega tra i componenti grafici
-e l'istanza di ApplicationController.
+e l'istanza di GUIGestioneMagazzino.
 
 4) 5) I metodi utilizzati per aumentare o diminuire la disponiblità in magazzino dell'oggetto
-current. L'operazione non viene mai eseguita "autonomamente" dall'ApplicationController, ma solo
+current. L'operazione non viene mai eseguita "autonomamente" dall'GUIGestioneMagazzino, ma solo
 se invocata da un altro elemento dell'interfaccia grafica (come ad esempio il Monitor delle 
 istanze di materiale in fase di edit).
 
@@ -162,7 +162,7 @@ sono inizialmente nascosti.
 7) 8) Metodi per dire alla Toolbar di cambiare il titolo.
 
 9) L'oggetto current ha subito delle modifiche in un altro componente grafico. Chiamando questo 
-metodo l'oggetto ApplicationController avvertirà il Pannello Principale di aggiornare la view.
+metodo l'oggetto GUIGestioneMagazzino avvertirà il Pannello Principale di aggiornare la view.
 Inoltre viene lasciato un flag che dice che quel Materiale è stato modificato (10).
 
 11) Comunica alla lista dei materiali di aggiornarsi.

@@ -12,21 +12,21 @@ public class PannelloRicercaVisuale extends VBox {
     private ToggleGroup gruppo;
     private HBox containerCategoria;
     private TextField barraRicerca;
-    private ApplicationController appConBind;
+    private GUIGestioneMagazzino GUIGestioneMagBind;
     
     public TextField getBarraRicerca(){
         return barraRicerca;
     }
     
-    private void inviaLog(boolean ricerca) {
+    private void inviaLog(boolean ricerca, String info) {
         try {
             ConfigurazioneXMLParametri params = ConfigurazioneXML.getDelegationLink().getParams();
             if(ricerca)
-                LoggerXML.logRicerca(params.getPort(), params.getIpClient(), params.getIpServer());
+                LoggerXML.logRicerca(params.getPort(), params.getIpClient(), params.getIpServer(), info);
             else 
-                LoggerXML.logPressionePulsante(params.getPort(), params.getIpClient(), params.getIpServer(), "SelettoreCategoria");
+                LoggerXML.logPressionePulsante(params.getPort(), params.getIpClient(), params.getIpServer(), info);
         } catch (Exception ex) {
-            appConBind.mostraErroreToolbar("Errore nell'invio log");
+            GUIGestioneMagBind.mostraErroreToolbar("Errore nell'invio log");
         }
     }
     
@@ -37,16 +37,16 @@ public class PannelloRicercaVisuale extends VBox {
 
         try {
             c = config.getParams().getCategorie();
-            appConBind.setListaCategorie(c);
+            GUIGestioneMagBind.setListaCategorie(c);
 
             for(int i=0; i<c.length; i++) {
                 c[i].setDisponibilita(am.caricaDisponibilitaCategorie(i));
             }
         } catch (Exception ex) {
             if (ex instanceof SQLException)
-                appConBind.mostraErroreToolbar("Errore nel collegamento al DB");
+                GUIGestioneMagBind.mostraErroreToolbar("Errore nel collegamento al DB");
             else {
-                appConBind.mostraErroreToolbar(ex.getMessage());
+                GUIGestioneMagBind.mostraErroreToolbar(ex.getMessage());
             }
         }
     }
@@ -57,13 +57,13 @@ public class PannelloRicercaVisuale extends VBox {
 
         if(gruppo.getSelectedToggle() != null) 
             categoria = (int) gruppo.getSelectedToggle().getUserData();
-        appConBind.ottieniDatiListaMaterialiDB(text, categoria);
+        GUIGestioneMagBind.ottieniDatiListaMaterialiDB(text, categoria);
         
-        inviaLog(true);
+        inviaLog(true, text);
     }
     
     private void configuraToggleCategorie() { //(3)
-        Categoria [] c = appConBind.getListaCategorie();
+        Categoria [] c = GUIGestioneMagBind.getListaCategorie();
         
         for(int i=0; i<c.length; i++) {
             toggleCategorie.add(new ToggleButton()); //(2)
@@ -81,7 +81,7 @@ public class PannelloRicercaVisuale extends VBox {
         this.barraRicerca = new TextField();
         this.gruppo = new ToggleGroup();
         this.containerCategoria = new HBox();
-        this.appConBind = ApplicationController.getDelegationLink();      
+        this.GUIGestioneMagBind = GUIGestioneMagazzino.getDelegationLink();      
         this.toggleCategorie = new ArrayList();
         
         super.setMinSize(300, 123);
@@ -107,8 +107,12 @@ public class PannelloRicercaVisuale extends VBox {
             @Override
             public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
                 if(newValue == null) barraRicerca.setPromptText("Ricerca nel database...");
-                else barraRicerca.setPromptText("Ricerca " + appConBind.getCategoria((int)newValue.getUserData()).getDescrizione() + " nel database...");
-                inviaLog(false);
+                else 
+                {
+                    String txt = GUIGestioneMagBind.getCategoria((int)newValue.getUserData()).getDescrizione();
+                    barraRicerca.setPromptText("Ricerca " + txt + " nel database...");
+                    inviaLog(false, "SelettoreCategoria: " + txt);
+                }
             }
         });
         barraRicerca.setOnKeyPressed(new EventHandler<KeyEvent>() {

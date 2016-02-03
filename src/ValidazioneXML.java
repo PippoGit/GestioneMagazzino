@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.IOException;
+import java.io.StringReader;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -28,6 +29,20 @@ public class ValidazioneXML {
                 System.out.println("Errore di validazione: " + e.getMessage());
             else
                 System.out.println(e.getMessage());    
+            return false;
+        }
+        return true;
+    }
+    
+    public static boolean valida(String xml, String xsdFile) {
+        try {
+            StringReader r = new StringReader(xml);
+            SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);     
+            Schema s = sf.newSchema(new StreamSource(new File(xsdFile + ".xsd"))); 
+            s.newValidator().validate(new StreamSource(r)); 
+        }
+        catch (SAXException | IOException e) {
+            System.out.println("Errore di validazione: " + e.getMessage());
             return false;
         }
         return true;

@@ -8,11 +8,11 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class GestioneMagazzino extends Application {    
-    private final ApplicationController controller;
+    private final GUIGestioneMagazzino GUIGestioneMagBind;
     private Scene scene;
 
     public GestioneMagazzino() {
-        controller = ApplicationController.getDelegationLink();
+        GUIGestioneMagBind = GUIGestioneMagazzino.getDelegationLink();
     }
     
     public void caricaPreferenzeXML() throws Exception {
@@ -24,16 +24,16 @@ public class GestioneMagazzino extends Application {
     
     private void caricaBin() throws IOException {
         final AppCache cache = new AppCache();
-        controller.setCurrent(cache.carica());            
-        controller.aggiornaPannelloPrincipale();            
-        controller.setTitoloTxtToolbar("Scheda materiale – " + controller.getCurrent().getNominativo());
+        GUIGestioneMagBind.setCurrent(cache.carica());            
+        GUIGestioneMagBind.aggiornaPannelloPrincipale();            
+        GUIGestioneMagBind.setTitoloTxtToolbar("Scheda materiale – " + GUIGestioneMagBind.getCurrent().getNominativo());
     }
     
     private void conservaBin() {
         final AppCache cache = new AppCache();
         try {
-            if (controller.getCurrent().getId() != -1) 
-                cache.salva(controller.getCurrent());          
+            if (GUIGestioneMagBind.getCurrent().getId() != -1) 
+                cache.salva(GUIGestioneMagBind.getCurrent());          
         }
         catch (IOException ex) {
             System.out.println(ex.getMessage());
@@ -43,17 +43,17 @@ public class GestioneMagazzino extends Application {
     private void caricaApp() {
         try {
             caricaPreferenzeXML();
-            controller.caricaCategorie();
+            GUIGestioneMagBind.caricaCategorie();
             caricaBin();
-            controller.ottieniDatiListaMaterialiDB();
+            GUIGestioneMagBind.ottieniDatiListaMaterialiDB();
         }
         catch (IOException e) {
-            controller.mostraErroreToolbar("Si è verificato un errore nell'apertura del file di cache");
-            controller.cambiaVisibilitaFigliPannelloPrincipale(false);
+            GUIGestioneMagBind.mostraErroreToolbar("Si è verificato un errore nell'apertura del file di cache");
+            GUIGestioneMagBind.cambiaVisibilitaFigliPannelloPrincipale(false);
         }
         catch (Exception e) {
             if(!(e instanceof SQLException))
-                controller.mostraErroreToolbar("Si è verificato un errore nell'apertura del file di configurazione");
+                GUIGestioneMagBind.mostraErroreToolbar("Si è verificato un errore nell'apertura del file di configurazione");
         }
     }
     
@@ -66,7 +66,7 @@ public class GestioneMagazzino extends Application {
                 LoggerXML.logTermine(params.getPort(), params.getIpClient(), params.getIpServer());
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
-            controller.mostraErroreToolbar("Errore nell'invio log");
+            GUIGestioneMagBind.mostraErroreToolbar("Errore nell'invio log");
         }
     }
     
@@ -75,7 +75,7 @@ public class GestioneMagazzino extends Application {
             ConfigurazioneXMLParametri params = ConfigurazioneXML.getDelegationLink().getParams();
             LoggerXML.logTermine(params.getPort(), params.getIpClient(), params.getIpServer());
         } catch (Exception ex) {
-            controller.mostraErroreToolbar("Errore nell'invio log");
+            GUIGestioneMagBind.mostraErroreToolbar("Errore nell'invio log");
         }
     }
     
@@ -83,7 +83,7 @@ public class GestioneMagazzino extends Application {
     public void start(Stage primaryStage) {
         final VBox root = new VBox();
         scene = new Scene(root, 900, 640); 
-        controller.preparaElementiGrafici(root);        
+        GUIGestioneMagBind.preparaElementiGrafici(root);        
         
         caricaApp();
         inviaLog(true);

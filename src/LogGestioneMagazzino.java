@@ -1,5 +1,5 @@
 import com.thoughtworks.xstream.XStream;
-import java.text.SimpleDateFormat;
+import com.thoughtworks.xstream.converters.basic.DateConverter;
 import java.util.Date;
 
 public class LogGestioneMagazzino {
@@ -7,8 +7,10 @@ public class LogGestioneMagazzino {
     private final String ipClient;
     private final String ipServer;
     private final String nomeApplicativo = "GestioneMagazzino";
-    private final String timestamp;
+    private final Date timestamp;
+    
     private String nomePulsante;
+    private String elementoRicercato;
 
     public String getCategoria() {
         return categoria;
@@ -26,7 +28,7 @@ public class LogGestioneMagazzino {
         return nomeApplicativo;
     }
 
-    public String getTimestamp() {
+    public Date getTimestamp() {
         return timestamp;
     }
 
@@ -40,7 +42,7 @@ public class LogGestioneMagazzino {
         l = (LogGestioneMagazzino) xs.fromXML(XML);
         this.categoria = l.categoria;
         this.ipClient = l.ipClient;
-        this.ipServer = l.ipServer;         
+        this.ipServer = l.ipServer;          
         this.timestamp = l.timestamp;
     }
 
@@ -48,10 +50,7 @@ public class LogGestioneMagazzino {
         categoria = c;
         ipClient = ipc;
         ipServer = ips;
-        
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-mm-dd – HH:mm:ss");
-        Date d = new Date();
-        timestamp = d.toString();
+        timestamp = new Date();
     }
     
     public LogGestioneMagazzino(String c, String ipc, String ips, String infoAggiuntive) {
@@ -60,11 +59,15 @@ public class LogGestioneMagazzino {
         if(c.equalsIgnoreCase("pressione")) {
             nomePulsante = infoAggiuntive;
         }
+        else if (c.equalsIgnoreCase("ricerca")) {
+            elementoRicercato = infoAggiuntive;
+        }
     }
     
     @Override
     public String toString() {
         XStream xs = new XStream();
+        xs.registerConverter(new DateConverter("yyyy-MM-dd – HH:mm:ss", null));
         return xs.toXML(this);
     }
 

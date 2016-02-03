@@ -5,14 +5,14 @@ import javafx.scene.control.ListView;
 
 public class ListaMaterialiVisuale extends ListView {
     private ObservableList<Materiale> materiali;   
-    private final ApplicationController appConBind;
+    private final GUIGestioneMagazzino GUIGestioneMagBind;
     private int MAX_ROWS;
 
     private void scambiaCurrentInLista() { //(1)
         int i=0;
         for(Materiale m: materiali) {
-            if(m.getId() == appConBind.getCurrent().getId()) {
-                materiali.set(i, appConBind.getCurrent());
+            if(m.getId() == GUIGestioneMagBind.getCurrent().getId()) {
+                materiali.set(i, GUIGestioneMagBind.getCurrent());
                 this.getSelectionModel().select(i);
                 return;
             }
@@ -26,7 +26,7 @@ public class ListaMaterialiVisuale extends ListView {
             materiali.addAll(am.caricaListaMateriali("", c));
             scambiaCurrentInLista();       
         } catch (SQLException ex) {
-            appConBind.mostraErroreToolbar("Errore nel collegamento al DB");
+            GUIGestioneMagBind.mostraErroreToolbar("Errore nel collegamento al DB");
         }
     }
     
@@ -37,7 +37,7 @@ public class ListaMaterialiVisuale extends ListView {
             materiali.addAll(am.caricaListaMateriali(txt, -1));
             scambiaCurrentInLista();       
         } catch (SQLException ex) {
-            appConBind.mostraErroreToolbar("Errore nel collegamento al DB");
+            GUIGestioneMagBind.mostraErroreToolbar("Errore nel collegamento al DB");
         }
     }
     
@@ -48,7 +48,7 @@ public class ListaMaterialiVisuale extends ListView {
             materiali.addAll(am.caricaListaMateriali(txt, c));      
             scambiaCurrentInLista();
         } catch (SQLException ex) {
-            appConBind.mostraErroreToolbar("Errore nel collegamento al DB");
+            GUIGestioneMagBind.mostraErroreToolbar("Errore nel collegamento al DB");
         }
     }
     
@@ -61,13 +61,13 @@ public class ListaMaterialiVisuale extends ListView {
             ConfigurazioneXMLParametri params = ConfigurazioneXML.getDelegationLink().getParams();
             LoggerXML.logListaMaterialiVisuale(params.getPort(), params.getIpClient(), params.getIpServer());
         } catch (Exception ex) {
-            appConBind.mostraErroreToolbar("Errore nell'invio log");
+            GUIGestioneMagBind.mostraErroreToolbar("Errore nell'invio log");
         }
     }
     
     public ListaMaterialiVisuale() {
         super();
-        appConBind = ApplicationController.getDelegationLink();      
+        GUIGestioneMagBind = GUIGestioneMagazzino.getDelegationLink();      
         materiali  = FXCollections.observableArrayList();
         
         ConfigurazioneXML config = ConfigurazioneXML.getDelegationLink();
@@ -75,7 +75,7 @@ public class ListaMaterialiVisuale extends ListView {
             MAX_ROWS = config.getParams().getMAX_QUERY_RESULT();
         }
         catch (Exception e) {
-            appConBind.mostraErroreToolbar(e.getMessage());
+            GUIGestioneMagBind.mostraErroreToolbar(e.getMessage());
         }
         
         this.setId("listaMateriali");
@@ -84,10 +84,10 @@ public class ListaMaterialiVisuale extends ListView {
         super.setMinSize(300, 183);
         super.setMaxSize(300, 183);
         this.getSelectionModel().selectedItemProperty().addListener((ObservableValue observable, Object oldValue, Object newValue) -> { //(3)
-            if(newValue == null || ((Materiale) newValue).getId() == appConBind.getCurrent().getId()) return;
-                appConBind.setCurrent((Materiale) newValue);
-                appConBind.setTitoloTxtToolbar("Scheda materiale – " + ((Materiale) newValue).getNominativo());
-                appConBind.aggiornaPannelloPrincipale();
+            if(newValue == null || ((Materiale) newValue).getId() == GUIGestioneMagBind.getCurrent().getId()) return;
+                GUIGestioneMagBind.setCurrent((Materiale) newValue);
+                GUIGestioneMagBind.setTitoloTxtToolbar("Scheda materiale – " + ((Materiale) newValue).getNominativo());
+                GUIGestioneMagBind.aggiornaPannelloPrincipale();
                 inviaLog();
             }
         );
@@ -98,7 +98,7 @@ public class ListaMaterialiVisuale extends ListView {
 /*
 Commenti
 Classe che si occupa di realizzare la lista dei risultati di ricerca.
-Viene popolata dal pannello di ricerca che invoca tramite l'ApplicationController
+Viene popolata dal pannello di ricerca che invoca tramite l'GUIGestioneMagazzino
 il metodo caricaMateriali() dopo aver eseguito la query al database.
 
 1) Metodo utilizzato per "selezionare" nella lista il materiale corrente dopo aver effettuato una ricerca

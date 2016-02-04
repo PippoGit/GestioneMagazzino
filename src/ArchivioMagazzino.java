@@ -1,5 +1,6 @@
 import java.sql.*;
 import javafx.collections.*;
+import javafx.scene.chart.XYChart;
 
 public class ArchivioMagazzino {
     private final static String LOCATION = "localhost";
@@ -76,6 +77,23 @@ public class ArchivioMagazzino {
             while(rs.next()) disponibilita = rs.getInt("disponibilita");
         }
         return disponibilita;
+    }
+    
+    public XYChart.Series<String, Number> caricaDatiGraficoProdotti() throws SQLException { //(4)
+        XYChart.Series <String, Number> list;
+        list = new XYChart.Series();
+        list.setName("Prodotti");
+        try (Connection co = DriverManager.getConnection("jdbc:mysql://" + LOCATION + "/" + DB_NAME, USR, PWD);
+             PreparedStatement  ps = co.prepareStatement("SELECT nominativo as prodotto, count(*) as popolarita \n" +
+                                                         "FROM Materiale LEFT JOIN IstanzaMateriale ON idMateriale=materiale\n" +
+                                                         "WHERE length(cliente)>0\n"+
+                                                         "GROUP BY prodotto ORDER BY popolarita DESC\n" +
+                                                         "LIMIT " + MAX_ROWS);
+            ) {
+            ResultSet rs = ps.executeQuery(); 
+            while (rs.next()) list.getData().add(new XYChart.Data<>(rs.getString("prodotto"), (Number)rs.getInt("popolarita")));
+        }       
+        return list;
     }
 }
 

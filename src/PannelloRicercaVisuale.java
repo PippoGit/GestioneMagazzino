@@ -79,6 +79,7 @@ public class PannelloRicercaVisuale extends VBox {
     
     private void inizializzaComponenti() { //(4)
         this.barraRicerca = new TextField();
+
         this.gruppo = new ToggleGroup();
         this.containerCategoria = new HBox();
         this.GUIGestioneMagBind = GUIGestioneMagazzino.getDelegationLink();      
@@ -115,13 +116,13 @@ public class PannelloRicercaVisuale extends VBox {
                 }
             }
         });
+       
         barraRicerca.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
                 if (keyEvent.getCode() == KeyCode.ENTER) effettuaRicerca();
             }
         });
-
         super.getChildren().addAll(containerCategoria, barraRicerca);
     }
 }

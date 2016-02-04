@@ -207,3 +207,27 @@
 .messaggioOk {
     -fx-text-fill: #088C74 !important;
 }
+
+/* Estensione */
+
+.chartButton {
+    -fx-background-color: rgb(242, 242, 242);
+    -fx-border-insets: 0;
+    -fx-border-radius: 2px;
+    -fx-border-width: 1px;
+    -fx-border-color: rgb(178, 168, 168);
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;    
+    
+    -fx-text-fill: rgb(63, 63, 63);
+}
+
+.chartButton:pressed {
+    -fx-color: -fx-focused-base;
+    -fx-background-color: #1678E5;
+    -fx-border-color: rgb(33, 110, 200);
+    -fx-background-insets: 0 0 0 0, 0, 0, 0;
+    -fx-background-radius: 0 0 0 0, 0, 0, 0;
+    -fx-text-fill: white;
+    -fx-inner-border: 3px;
+}

@@ -85,6 +85,7 @@ public class PannelloPrincipaleVisuale extends VBox {
         c.setEditable(!n.equalsIgnoreCase("codiceMateriale"));
         c.setCellValueFactory(new PropertyValueFactory<>(n) );
         c.setCellFactory(TextFieldTableCell.forTableColumn());
+        
         c.setOnEditCommit(new EventHandler<CellEditEvent<IstanzaMateriale, String>>() { //(4)
             @Override
             public void handle(CellEditEvent<IstanzaMateriale, String> event) {

@@ -11,29 +11,13 @@ public class LogGestioneMagazzino {
     
     private String nomePulsante;
     private String elementoRicercato;
-
-    public String getCategoria() {
-        return categoria;
-    }
-
+    
     public String getIpClient() {
         return ipClient;
     }
 
     public String getIpServer() {
         return ipServer;
-    }
-
-    public String getNomeApplicativo() {
-        return nomeApplicativo;
-    }
-
-    public Date getTimestamp() {
-        return timestamp;
-    }
-
-    public String getNomePulsante() {
-        return nomePulsante;
     }
     
     public LogGestioneMagazzino(String XML) {

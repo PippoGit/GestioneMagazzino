@@ -6,7 +6,7 @@ public class GUIGestioneMagazzino {
     private PannelloRicercaVisuale pannelloRicerca;
     private ListaMaterialiVisuale listaMateriali;
     private PannelloPrincipaleVisuale pannelloPrincipale;
-    private GraficoDisponibilitaVisuale graficoDisponibilita;
+    private GraficoDisponibilitaProdottiVisuale graficoDisponibilita;
     
     private Materiale current; //(1)
     private Categoria[] listaCategorie; //(2)
@@ -43,13 +43,13 @@ public class GUIGestioneMagazzino {
     public void aumentaDisponibilitaCurrent() { //(4)
         current.aumentaDisponibilita();
         listaCategorie[current.getCategoria()].aumentaDisponibilita();
-        graficoDisponibilita.aggiornaDati();        
+        graficoDisponibilita.aggiornaDatiDisponibilita();        
     }
     
     public void diminuisciDisponibilitaCurrent() { //(5)
         current.diminuisciDisponibilita();
         listaCategorie[current.getCategoria()].diminuisciDisponibilita();
-        graficoDisponibilita.aggiornaDati();
+        graficoDisponibilita.aggiornaDatiDisponibilita();
     }
 
     public void aggiornaPannelloPrincipale() { //(6)
@@ -115,7 +115,7 @@ public class GUIGestioneMagazzino {
         this.pannelloRicerca = new PannelloRicercaVisuale();
         this.pannelloPrincipale = new PannelloPrincipaleVisuale();
         this.listaMateriali = new ListaMaterialiVisuale();
-        this.graficoDisponibilita = new GraficoDisponibilitaVisuale();
+        this.graficoDisponibilita = new GraficoDisponibilitaProdottiVisuale();
         
         pannelloSx.setPadding(new Insets(16, 0, 0, 16));
         pannelloSx.getChildren().addAll(pannelloRicerca, listaMateriali, graficoDisponibilita);

@@ -61,6 +61,14 @@ public class GraficoDisponibilitaProdottiVisuale extends VBox {
         titolo.setText((r)?"Grafico prodotti":"Grafico disponibilita");
 
     }
+    private void inviaLog(boolean r) {
+        try {
+            ConfigurazioneXMLParametri params = ConfigurazioneXML.getDelegationLink().getParams();
+            LoggerXML.logPressionePulsante(params.getPort(), params.getIpClient(), params.getIpServer(), "CambioGrafico: " + ((r)?"Prodotti":"Disponibilita"));
+        } catch (Exception ex) {
+            GUIGestioneMagazzino.getDelegationLink().mostraErroreToolbar("Errore nell'invio log");
+        }
+    }
     
     private void configuraHeader(BorderPane header) {        
         Button headerButton[] = new Button[2];
@@ -71,6 +79,7 @@ public class GraficoDisponibilitaProdottiVisuale extends VBox {
             headerButton[i].setOnAction((ActionEvent e) -> {
                 Button source = (Button) e.getSource();
                 this.cambiaIstogramma(source.getText().equalsIgnoreCase(">"));
+                this.inviaLog(source.getText().equalsIgnoreCase(">"));
             });
         }
         

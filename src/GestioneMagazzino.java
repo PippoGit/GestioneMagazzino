@@ -48,12 +48,12 @@ public class GestioneMagazzino extends Application {
             GUIGestioneMagBind.ottieniDatiListaMaterialiDB();
         }
         catch (IOException e) {
-            GUIGestioneMagBind.mostraErroreToolbar("Si è verificato un errore nell'apertura del file di cache");
+            GUIGestioneMagBind.mostraErroreToolbar("#1002 Si è verificato un errore nell'apertura del file di cache");
             GUIGestioneMagBind.cambiaVisibilitaFigliPannelloPrincipale(false);
         }
         catch (Exception e) {
             if(!(e instanceof SQLException))
-                GUIGestioneMagBind.mostraErroreToolbar("Si è verificato un errore nell'apertura del file di configurazione");
+                GUIGestioneMagBind.mostraErroreToolbar("#1001 Si è verificato un errore nell'apertura del file di configurazione");
         }
     }
     
@@ -66,7 +66,7 @@ public class GestioneMagazzino extends Application {
                 LoggerXML.logTermine(params.getPort(), params.getIpClient(), params.getIpServer());
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
-            GUIGestioneMagBind.mostraErroreToolbar("Errore nell'invio log");
+            GUIGestioneMagBind.mostraErroreToolbar("#4001 Errore nell'invio log");
         }
     }
     
@@ -75,7 +75,7 @@ public class GestioneMagazzino extends Application {
             ConfigurazioneXMLParametri params = ConfigurazioneXML.getDelegationLink().getParams();
             LoggerXML.logTermine(params.getPort(), params.getIpClient(), params.getIpServer());
         } catch (Exception ex) {
-            GUIGestioneMagBind.mostraErroreToolbar("Errore nell'invio log");
+            GUIGestioneMagBind.mostraErroreToolbar("#4001 Errore nell'invio log");
         }
     }
     
@@ -100,3 +100,15 @@ public class GestioneMagazzino extends Application {
     }
     
 }
+
+/*
+CODICI ERRORE:
+
+1001 _ File config
+1002 _ XML
+
+4001 _ LOG
+
+6001 _ Conn DB
+6002 _ Query DB dei prodotti per Grafico 
+*/

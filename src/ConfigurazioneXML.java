@@ -27,7 +27,7 @@ public class ConfigurazioneXML {
     public ConfigurazioneXMLParametri getParams() throws Exception {
         if (params == null) {
             params = new ConfigurazioneXMLParametri(0, "", "", "", new Categoria[]{new Categoria(-1, "")}, "", "", -1);
-            throw new Exception("Errore nell'apertuda del file di configurazione");
+            throw new Exception("#1001 Errore nell'apertura del file di configurazione");
         }
         return params;
     }

@@ -72,7 +72,7 @@ public class ToolbarVisuale extends BorderPane {
                     GUIGestioneMagBind.aggiornaPannelloPrincipale();
                     titoloConEsitoOk("Materiale salvato con successo.");
                 } catch (SQLException ex) {
-                    GUIGestioneMagBind.mostraErroreToolbar("Errore nel collegamento al DB");
+                    GUIGestioneMagBind.mostraErroreToolbar("#6001 Errore nel collegamento al DB");
                 }
             }
             inviaLog();

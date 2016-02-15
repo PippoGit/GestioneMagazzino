@@ -35,7 +35,7 @@ public class PannelloPrincipaleVisuale extends VBox {
             listaOrdini = m.getIstanze();
             monitor.setItems(listaOrdini);
         } catch (SQLException ex) {
-            GUIGestioneMagBind.mostraErroreToolbar("Errore nel collegamento al DB");
+            GUIGestioneMagBind.mostraErroreToolbar("#6001 Errore nel collegamento al DB");
         }
      }
     
@@ -44,7 +44,7 @@ public class PannelloPrincipaleVisuale extends VBox {
             ConfigurazioneXMLParametri params = ConfigurazioneXML.getDelegationLink().getParams();
             LoggerXML.logModificaMonitor(params.getPort(), params.getIpClient(), params.getIpServer());
         } catch (Exception ex) {
-            GUIGestioneMagBind.mostraErroreToolbar("Errore nell'invio log");
+            GUIGestioneMagBind.mostraErroreToolbar("#4001 Errore nell'invio log");
         }
     }
     

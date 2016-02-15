@@ -26,7 +26,7 @@ public class ListaMaterialiVisuale extends ListView {
             materiali.addAll(am.caricaListaMateriali("", c));
             scambiaCurrentInLista();       
         } catch (SQLException ex) {
-            GUIGestioneMagBind.mostraErroreToolbar("Errore nel collegamento al DB");
+            GUIGestioneMagBind.mostraErroreToolbar("#6001 Errore nel collegamento al DB");
         }
     }
     
@@ -37,7 +37,7 @@ public class ListaMaterialiVisuale extends ListView {
             materiali.addAll(am.caricaListaMateriali(txt, -1));
             scambiaCurrentInLista();       
         } catch (SQLException ex) {
-            GUIGestioneMagBind.mostraErroreToolbar("Errore nel collegamento al DB");
+            GUIGestioneMagBind.mostraErroreToolbar("#6001 Errore nel collegamento al DB");
         }
     }
     
@@ -48,7 +48,7 @@ public class ListaMaterialiVisuale extends ListView {
             materiali.addAll(am.caricaListaMateriali(txt, c));      
             scambiaCurrentInLista();
         } catch (SQLException ex) {
-            GUIGestioneMagBind.mostraErroreToolbar("Errore nel collegamento al DB");
+            GUIGestioneMagBind.mostraErroreToolbar("#6001 Errore nel collegamento al DB");
         }
     }
     
@@ -61,7 +61,7 @@ public class ListaMaterialiVisuale extends ListView {
             ConfigurazioneXMLParametri params = ConfigurazioneXML.getDelegationLink().getParams();
             LoggerXML.logListaMaterialiVisuale(params.getPort(), params.getIpClient(), params.getIpServer());
         } catch (Exception ex) {
-            GUIGestioneMagBind.mostraErroreToolbar("Errore nell'invio log");
+            GUIGestioneMagBind.mostraErroreToolbar("#4001 Errore nell'invio log");
         }
     }
     

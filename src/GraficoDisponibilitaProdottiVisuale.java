@@ -39,7 +39,7 @@ public class GraficoDisponibilitaProdottiVisuale extends VBox {
             datiProdotti = am.caricaDatiGraficoProdotti();
             istogrammaProdotti.getData().addAll(datiProdotti);        
         } catch (SQLException ex) {
-            GUIGestioneMagazzino.getDelegationLink().mostraErroreToolbar("Errore caricamento dati prodotti");
+            GUIGestioneMagazzino.getDelegationLink().mostraErroreToolbar("#6002 Errore caricamento dati prodotti");
             System.out.println(ex.getMessage());
         }
 
@@ -66,7 +66,7 @@ public class GraficoDisponibilitaProdottiVisuale extends VBox {
             ConfigurazioneXMLParametri params = ConfigurazioneXML.getDelegationLink().getParams();
             LoggerXML.logPressionePulsante(params.getPort(), params.getIpClient(), params.getIpServer(), "CambioGrafico: " + ((r)?"Prodotti":"Disponibilita"));
         } catch (Exception ex) {
-            GUIGestioneMagazzino.getDelegationLink().mostraErroreToolbar("Errore nell'invio log");
+            GUIGestioneMagazzino.getDelegationLink().mostraErroreToolbar("#4001 Errore nell'invio log");
         }
     }
     

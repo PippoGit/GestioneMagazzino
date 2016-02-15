@@ -26,7 +26,7 @@ public class PannelloRicercaVisuale extends VBox {
             else 
                 LoggerXML.logPressionePulsante(params.getPort(), params.getIpClient(), params.getIpServer(), info);
         } catch (Exception ex) {
-            GUIGestioneMagBind.mostraErroreToolbar("Errore nell'invio log");
+            GUIGestioneMagBind.mostraErroreToolbar("#4001 Errore nell'invio log");
         }
     }
     
@@ -44,7 +44,7 @@ public class PannelloRicercaVisuale extends VBox {
             }
         } catch (Exception ex) {
             if (ex instanceof SQLException)
-                GUIGestioneMagBind.mostraErroreToolbar("Errore nel collegamento al DB");
+                GUIGestioneMagBind.mostraErroreToolbar("#6001 Errore nel collegamento al DB");
             else {
                 GUIGestioneMagBind.mostraErroreToolbar(ex.getMessage());
             }

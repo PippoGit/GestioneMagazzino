@@ -1,0 +1,16 @@
+<?xml version="1.0"?> 
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="LogGestioneMagazzino">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:string" name="categoria"/>
+        <xs:element type="xs:string" name="ipClient"/>
+        <xs:element type="xs:string" name="ipServer"/>
+        <xs:element type="xs:string" name="nomeApplicativo"/>
+        <xs:element type="xs:string" name="timestamp"/>
+        <xs:element type="xs:string" minOccurs="0" name="nomePulsante"/>
+        <xs:element type="xs:string" minOccurs="0" name="elementoRicercato"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

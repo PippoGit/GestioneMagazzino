@@ -1,0 +1,48 @@
+<LogGestioneMagazzino>
+  <categoria>Pressione</categoria>
+  <ipClient>localhost</ipClient>
+  <ipServer>localhost</ipServer>
+  <nomeApplicativo>GestioneMagazzino</nomeApplicativo>
+  <timestamp>2016-02-17 – 21:10:29</timestamp>
+  <nomePulsante>SelettoreCategoria: CCTV</nomePulsante>
+</LogGestioneMagazzino>
+<LogGestioneMagazzino>
+  <categoria>Pressione</categoria>
+  <ipClient>localhost</ipClient>
+  <ipServer>localhost</ipServer>
+  <nomeApplicativo>GestioneMagazzino</nomeApplicativo>
+  <timestamp>2016-02-17 – 21:10:31</timestamp>
+  <nomePulsante>SelettoreCategoria: Networking</nomePulsante>
+</LogGestioneMagazzino>
+<LogGestioneMagazzino>
+  <categoria>Pressione</categoria>
+  <ipClient>localhost</ipClient>
+  <ipServer>localhost</ipServer>
+  <nomeApplicativo>GestioneMagazzino</nomeApplicativo>
+  <timestamp>2016-02-17 – 21:10:32</timestamp>
+  <nomePulsante>SelettoreCategoria: CCTV</nomePulsante>
+</LogGestioneMagazzino>
+<LogGestioneMagazzino>
+  <categoria>Ricerca</categoria>
+  <ipClient>localhost</ipClient>
+  <ipServer>localhost</ipServer>
+  <nomeApplicativo>GestioneMagazzino</nomeApplicativo>
+  <timestamp>2016-02-17 – 21:10:34</timestamp>
+  <elementoRicercato>u</elementoRicercato>
+</LogGestioneMagazzino>
+<LogGestioneMagazzino>
+  <categoria>Pressione</categoria>
+  <ipClient>localhost</ipClient>
+  <ipServer>localhost</ipServer>
+  <nomeApplicativo>GestioneMagazzino</nomeApplicativo>
+  <timestamp>2016-02-17 – 21:10:35</timestamp>
+  <nomePulsante>SelettoreCategoria: Networking</nomePulsante>
+</LogGestioneMagazzino>
+<LogGestioneMagazzino>
+  <categoria>Pressione</categoria>
+  <ipClient>localhost</ipClient>
+  <ipServer>localhost</ipServer>
+  <nomeApplicativo>GestioneMagazzino</nomeApplicativo>
+  <timestamp>2016-02-17 – 21:10:36</timestamp>
+  <nomePulsante>SelettoreCategoria: CCTV</nomePulsante>
+</LogGestioneMagazzino>

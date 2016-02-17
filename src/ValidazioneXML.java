@@ -15,7 +15,7 @@ import org.xml.sax.SAXException;
 
 public class ValidazioneXML {
  
-    public static boolean valida(String name) {
+    public static boolean valida(String name) { //(1)
         try {  
             DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI); 
@@ -34,7 +34,7 @@ public class ValidazioneXML {
         return true;
     }
     
-    public static boolean valida(String xml, String xsdFile) {
+    public static boolean valida(String xml, String xsdFile) { //(2)
         try {
             StringReader r = new StringReader(xml);
             SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);     
@@ -48,3 +48,10 @@ public class ValidazioneXML {
         return true;
     }
 }
+/*
+Classe utilizzata dall'app e dal server per effettuare la validazione di un file XML a partire dal file XSD.
+
+1) Permette di validare un file xml di nome "name" utilizzando il file di grammatica "name.xsd";
+2) Permette di validare una stringa XML utilizzando il file di grammatica xsdFile.xsd
+
+*/

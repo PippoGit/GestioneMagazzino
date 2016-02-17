@@ -50,7 +50,7 @@ public class GraficoDisponibilitaProdottiVisuale extends VBox {
         inizializzaDatiDisponibilita();
     }
     
-    private void cambiaIstogramma(boolean r) {
+    private void cambiaIstogramma(boolean r) { //(4)
         Node rem = (r)?istogrammaDisponibilita:istogrammaProdotti;
         Node add = (r)?istogrammaProdotti:istogrammaDisponibilita;
         if(this.getChildren().contains(add)) return;
@@ -111,7 +111,7 @@ public class GraficoDisponibilitaProdottiVisuale extends VBox {
         istogrammaDisponibilita = new BarChart<>(xAxis,yAxis);        
         istogrammaProdotti = new BarChart<>(xAxis2, yAxis2);
         
-        configuraHeader(header);
+        configuraHeader(header); //(3)
         inizializzaComponenti(header);
         inizializzaDatiProdotti();
 
@@ -121,11 +121,18 @@ public class GraficoDisponibilitaProdottiVisuale extends VBox {
 
 /*
 Commenti
-Classe che si occupa di realizzare il pannello contenente l'istogrammaDisponibilita della disponibilità in
-magazzino delle varie categorie.
+Classe che si occupa di realizzare il pannello contenente l'istogramma della disponibilità del magazzino
+e dei prodotti più popolari.
 
 1) Aggiorna i datiDisponibilita a seguito di una modifica alla disponibilità di una categoria.
 
 2) Inizializza i datiDisponibilita del grafico. Viene chiamato dopo che vengono settate le categorie di 
 materiale (all'apertura del programma) prima che l'utente possa fare modifiche ai datiDisponibilita. 
+
+3) Costruisco l'header del pannello, ovvero pulsanti di switch + nome del grafico corrente.
+
+4) Il metodo si occupa di realizzare lo switch tra i grafici ed aggiorna la label del titolo. Viene passato un booleano
+per distinguere se è stato premuto il pulsante > o <. 
+
+5) Metodo chiamato all'avvio per popolare il grafico dei prodotti più popolari. In caso di errore visualizza un messaggio di errore. 
 */

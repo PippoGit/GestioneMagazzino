@@ -17,9 +17,9 @@ public class GestioneMagazzino extends Application {
     
     public void caricaPreferenzeXML() throws Exception {
         final ConfigurazioneXML config = ConfigurazioneXML.getDelegationLink();
-        Font.loadFont(GestioneMagazzino.class.getResource(config.getParams().getRegularFont()).toExternalForm(), 15);        
+        Font.loadFont(GestioneMagazzino.class.getResource(config.getParams().getRegularFont()).toExternalForm(), 15); //(6)        
         Font.loadFont(GestioneMagazzino.class.getResource(config.getParams().getMediumFont()).toExternalForm(), 15);
-        scene.getStylesheets().add(config.getParams().getCss());   
+        scene.getStylesheets().add(config.getParams().getCss());   //(6)
     }
     
     private void caricaBin() throws IOException {
@@ -40,7 +40,7 @@ public class GestioneMagazzino extends Application {
         }
     }
     
-    private void caricaApp() {
+    private void caricaApp() { //(1)
         try {
             caricaPreferenzeXML();
             GUIGestioneMagBind.caricaCategorie();
@@ -49,7 +49,7 @@ public class GestioneMagazzino extends Application {
         }
         catch (IOException e) {
             GUIGestioneMagBind.mostraErroreToolbar("#1002 Si è verificato un errore nell'apertura del file di cache");
-            GUIGestioneMagBind.cambiaVisibilitaFigliPannelloPrincipale(false);
+            GUIGestioneMagBind.cambiaVisibilitaFigliPannelloPrincipale(false); //(2)
         }
         catch (Exception e) {
             if(!(e instanceof SQLException))
@@ -83,12 +83,12 @@ public class GestioneMagazzino extends Application {
     public void start(Stage primaryStage) {
         final VBox root = new VBox();
         scene = new Scene(root, 900, 640); 
-        GUIGestioneMagBind.preparaElementiGrafici(root);        
+        GUIGestioneMagBind.preparaElementiGrafici(root);    //(5)    
         
         caricaApp();
-        inviaLog(true);
+        inviaLog(true); //(3)
         
-        primaryStage.setOnCloseRequest((WindowEvent ev) -> { conservaBin(); inviaLog(false); });
+        primaryStage.setOnCloseRequest((WindowEvent ev) -> { conservaBin(); inviaLog(false); }); //(4)
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
@@ -102,13 +102,17 @@ public class GestioneMagazzino extends Application {
 }
 
 /*
-CODICI ERRORE:
+Classe principale dell'applicazione.
 
-1001 _ File config
-1002 _ XML
+1) Il metodo viene utilizzato per caricare tutte le informazioni principali dell'app,
+le preferenze XML, le categorie ed il file di cache. In caso di errore nasconde il pannello principale (2)
 
-4001 _ LOG
+3) Invia un messaggio di log che comunica l'avio dell'app.
 
-6001 _ Conn DB
-6002 _ Query DB dei prodotti per Grafico 
+4) Alla chiusura conserva su file binario ed invia un log.
+
+5) Metodo chiamato per costruire l'interfaccia grafica.
+
+6) Carico dalle preferenze il nome del font e lo apro nell'app. Carico anche il file di CSS contenente lo stile.
+
 */
